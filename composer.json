@@ -1,0 +1,25 @@
+{
+  "name": "wp-basic-contact-form",
+  "version": "0.0.1",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "description": "The most basic contact-form ever",
+  "homepage": "http://github.com/benignware-labs/wp-basic-contact-form",
+  "authors": [
+    {
+      "name": "Rafael Nowrotek",
+      "email": "mail@benignware.com",
+      "homepage": "benignware.com"
+    }
+  ],
+  "keywords": [
+    "wordpress", "wordpress-plugin"
+  ],
+  "support": {
+    "issues": "https://github.com/benignware-labs/wp-basic-contact-form"
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "composer/installers": "~1.0"
+  }
+}
