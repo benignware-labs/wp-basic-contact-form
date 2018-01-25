@@ -117,49 +117,57 @@ function basic_contact_form_shortcode( $atts = array() ) {
 
   $form_data = basic_contact_form_get_post_data('basic-contact-form');
 
+  print_r($form_data);
+
   // If the <form> element is POSTed, run the following code
   if ( $form_data ) {
-      $form_errors = array();
+    $form_errors = array();
 
-      // If the required fields are empty, switch $error to TRUE and set the result text to the shortcode attribute named 'error_empty'
-      foreach ( $required_fields as $field ) {
-        $value = trim( $form_data[$field] );
-        if ( empty( $value ) ) {
-            $form_errors[$field] = $message_error_empty;
-        }
-      }
-
-      // And if the e-mail is not valid, switch $error to TRUE and set the result text to the shortcode attribute named 'error_noemail'
-      if ( ! is_email( $form_data['email'] ) ) {
-        $form_errors['email'] = $message_error_email_invalid;
-      }
-
-      if ( !count($form_errors) ) {
-        // Success
-        $success = true;
-
-        // Get message data
-        $user_email = $form_data['email'];
-        // TODO: Dynamic message
-        $mail_content = <<<EOT
-Hello Admin,\n
-a contact request has been issued by $user_email
-EOT;
-        // Actually send mail to admin
-        basic_contact_form_mail($to, 'Contact Form Request', $mail_content);
+    // If the required fields are empty, switch $error to TRUE and set the result text to the shortcode attribute named 'error_empty'
+    foreach ( $required_fields as $field ) {
+      $value = trim( $form_data[$field] );
+      if ( empty( $value ) ) {
+        $form_errors[$field] = $message_error_empty;
       }
     }
 
-    ob_start();
-    include $form_template;
-    $output = ob_get_contents();
-    ob_end_clean();
+    // And if the e-mail is not valid, switch $error to TRUE and set the result text to the shortcode attribute named 'error_noemail'
+    if ( ! is_email( $form_data['email'] ) ) {
+      $form_errors['email'] = $message_error_email_invalid;
+    }
 
-    // Sanitize form with identifier
-    $output = basic_contact_form_sanitize_form($output, 'basic-contact-form');
+    if ( !count($form_errors) ) {
+      // Success
+      $success = true;
 
-    return $output;
+      // Get message data
+      $user_email = $form_data['email'];
+      // TODO: Dynamic message
+      $mail_content = <<<EOT
+Hello Admin,\n
+a contact request has been issued by $user_email
+EOT;
+      // Actually send mail to admin
+      basic_contact_form_mail($to, 'Contact Form Request', $mail_content);
+    }
+  }
+
+  ob_start();
+  include $form_template;
+  $output = ob_get_contents();
+  ob_end_clean();
+
+  // Sanitize form with identifier
+  $output = basic_contact_form_sanitize_form($output, 'basic-contact-form');
+
+  return $output;
 }
 add_shortcode( 'basic_contact_form', 'basic_contact_form_shortcode' );
+
+
+function basic_contact_form_enqueue_scripts() {
+  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/basic-contact-form.js' );
+}
+add_action('wp_enqueue_scripts', 'basic_contact_form_enqueue_scripts');
 
 ?>

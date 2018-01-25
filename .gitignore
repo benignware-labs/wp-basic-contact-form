@@ -1,27 +1,19 @@
-# Eclipse
-.settings
-.project
-
-# GFM Preview
-.README.md.html
-
 # Mac OS
 .DS_Store
 
 # Composer
 composer.phar
 composer.lock
+vendor
+
+# Node
+node_modules
+**/node_modules
+npm-debug.log
 
 # Build
 tmp
 /dist
 
-# Test
-test
-
-# Vendor
-vendor
-
-# Include only jquery-findus from the assets directory
-/assets/*
-!assets/Swiper
+# Parcel
+.cache
