@@ -4,7 +4,7 @@
  Plugin Name: Basic Contact Form
  Plugin URI: http://github.com/benignware-labs/wp-basic-contact-form
  Description: The most basic contact-form ever
- Version: 0.0.2
+ Version: 0.0.3
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT

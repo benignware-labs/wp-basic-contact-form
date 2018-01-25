@@ -1,5 +1,4 @@
 import ajaxform from 'ajaxform';
-console.log('**** erwwerwHELLO');
 
 ajaxform('*[data-basic-contact-form]', {
   request: {
