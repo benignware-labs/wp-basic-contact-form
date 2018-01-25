@@ -1,18 +1,21 @@
-<div data-contactform class="<?= $class ?>">
+<div class="bcf">
+  <h3 class="bcf-title">Get in contact</h3>
   <?php if ($success) :?>
-    Success
+    <p>
+      Thanks for your e-mail!<br/>
+      We'll get back to you as soon as we can.
+    </p>
   <?php else: ?>
-    <h3 class="contactform-title">Get in contact</h3>
-    <form class="<?= $form_class ?>" method="POST" action="<?= $action ?>">
-      <p class="<?=  $field_class ?>">
-        <label for="bcf-email"><?= $label_email ?></label>
-        <input class="<?= $input_class ?>" placeholder="<?= $placeholder_email ?>" type="text" name="email" id="bcf_email" size="50" maxlength="50" value="<?= $form_data['email'] ?>" />
-        <?php if ($form_errors['email']): ?>
-          <span class="<?= $message_class ?> <?= $message_error_class ?>"><?= $form_errors['email'] ?></span>
+    <form class="bcf-form">
+      <p class="bcf-field">
+        <label for="bcf-email">E-mail</label>
+        <input class="bcf-email <?= $errors['email'] ? 'bcf-error' : '' ?>" placeholder="Please enter your E-mail" type="text" name="email" id="bcf_email" size="50" maxlength="50" value="<?= $fields['email'] ?>" />
+        <?php if ($errors['email']): ?>
+          <span class="bcf-message bcf-error"><?= $errors['email'] ?></span>
         <?php endif; ?>
       </p>
-      <p class="<?= $footer_class ?>">
-        <input class="<?= $button_class ?>" type="submit" value="<?= $label_submit ?>" name="send" id="bcf_send" />
+      <p class="bcf-footer">
+        <input class="bcf-submit" type="submit" value="Send" name="send" id="bcf_send" />
       </p>
     </form>
   <?php endif; ?>

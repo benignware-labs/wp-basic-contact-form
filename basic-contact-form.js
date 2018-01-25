@@ -1,3 +1,10 @@
 import ajaxform from 'ajaxform';
+console.log('**** erwwerwHELLO');
 
-ajaxform('*[data-contactform]');
+ajaxform('*[data-basic-contact-form]', {
+  request: {
+    headers: {
+      'X-Ajaxform': 'basic-contact-form'
+    }
+  }
+});
