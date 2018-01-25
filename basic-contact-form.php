@@ -117,8 +117,6 @@ function basic_contact_form_shortcode( $atts = array() ) {
 
   $form_data = basic_contact_form_get_post_data('basic-contact-form');
 
-  print_r($form_data);
-
   // If the <form> element is POSTed, run the following code
   if ( $form_data ) {
     $form_errors = array();
