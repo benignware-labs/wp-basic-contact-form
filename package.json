@@ -10,7 +10,7 @@
     "watch": "./node_modules/parcel-bundler/bin/cli.js watch ./basic-contact-form.js",
     "build": "./node_modules/parcel-bundler/bin/cli.js build ./basic-contact-form.js",
     "test": "./node_modules/mocha/bin/mocha ajaxform.spec.js",
-    "lint": "./node_modules/.bin/eslint"
+    "lint": "./node_modules/.bin/eslint ."
   },
   "keywords": [
     "ajax",
