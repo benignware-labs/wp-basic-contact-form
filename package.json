@@ -1,7 +1,7 @@
 {
-  "name": "basic-contact-form",
+  "name": "wp-basic-contact-form",
   "version": "0.0.3",
-  "description": "Simple ajaxform automation",
+  "description": "The most basic contact-form ever",
   "main": "basic-contact-form.js",
   "scripts": {
     "start": "npm run watch & npm run start-server",

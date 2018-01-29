@@ -10,6 +10,8 @@
  License: MIT
 */
 
+require_once 'basic-contact-form-helpers.php';
+
 function basic_contact_form_mail($to, $subject = '', $body = '', $headers = '') {
   $headers = array(
     'Content-Type: text/html; charset=UTF-8',
@@ -19,35 +21,6 @@ function basic_contact_form_mail($to, $subject = '', $body = '', $headers = '') 
 
   $result = wp_mail( $to, $subject, $body, $headers );
   return $result;
-}
-
-function basic_contact_form_get_request_headers() {
-    $headers = array();
-    foreach($_SERVER as $key => $value) {
-        if (substr($key, 0, 5) <> 'HTTP_') {
-            continue;
-        }
-        $header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
-        $headers[$header] = $value;
-    }
-    return $headers;
-}
-
-function basic_contact_form_get_request() {
-  $form_data = array();
-  // This part fetches everything that has been POSTed, sanitizes them and lets us use them as $form_data['subject']
-  foreach ( $_POST as $field => $value ) {
-    if ( get_magic_quotes_gpc() ) {
-      $value = stripslashes( $value );
-    }
-    $form_data[$field] = strip_tags( $value );
-  }
-  $request = array(
-    'headers' => basic_contact_form_get_request_headers(),
-    'fields' => $form_data,
-    'method' => $_SERVER['REQUEST_METHOD']
-  );
-  return $request;
 }
 
 function basic_contact_form_sanitize_output($html, $form_name = null) {
@@ -73,32 +46,10 @@ function basic_contact_form_sanitize_output($html, $form_name = null) {
   return $html;
 }
 
-function basic_contact_form_sanitize_atts($atts, $default) {
-  $result = array();
-  foreach($fields as $key => $value) {
-    if (array_key_exists($permitted) || in_array($key, $permitted)) {
-      $result[$key] = $value;
-    }
-  }
-  return $result;
-}
-
-function basic_contact_form_render($template, $fields) {
-  foreach($fields as $key => $value) {
-    $$key = $fields[$key];
-  }
-  ob_start();
-  include $template;
-  $output = ob_get_contents();
-  ob_end_clean();
-  return $output;
-}
-
 /**
  * Basic Contact Form Shortcode
  */
 function basic_contact_form_shortcode( $atts = array() ) {
-  $required = array( 'email' ); // Set required fields
   $messages = array(
     'empty' => 'This field cannot be empty',
     'email_invalid' => 'You have to enter a valid e-mail address'
@@ -106,8 +57,21 @@ function basic_contact_form_shortcode( $atts = array() ) {
 
   $atts = shortcode_atts(array(
     'to' => get_bloginfo('admin'),
+    'fields' => 'name,email,subject,message',
+    'required' => 'email',
+    'title' => __('Get in contact'),
+    'description' => __('Please use our contact form for your inquiry'),
     'template' => dirname(__FILE__) . '/basic-contact-form-template.php'
   ), $atts, 'basic_contact_form');
+
+  // Get arrays from string lists
+  if (is_string($atts['fields'])) {
+    $atts['fields'] = basic_contact_form_split_val($atts['fields']);
+  }
+
+  if (is_string($atts['required'])) {
+    $atts['required'] = basic_contact_form_split_val($atts['required']);
+  }
 
   // Extract attributes
   foreach($atts as $key => $value) {
@@ -117,21 +81,23 @@ function basic_contact_form_shortcode( $atts = array() ) {
   // Get request data
   $request = basic_contact_form_get_request();
 
+  $errors = array();
+
   // Check against method and header
-  if ( $request['method'] === 'POST' && $request['headers']['X-Ajaxform'] === 'basic-contact-form') {
-    $fields = $request['fields'];
-    $errors = array();
+  //&& $request['headers']['X-Ajaxform'] === 'basic-contact-form'
+  if ( $request['method'] === 'POST' ) {
+    $data = $request['data'];
 
     // If the required fields are empty, switch $error to TRUE and set the result text to the shortcode attribute named 'error_empty'
     foreach ( $required as $key ) {
-      $value = trim( $fields[$key] );
+      $value = trim( $data[$key] );
       if ( empty( $value ) ) {
         $errors[$key] = $messages['empty'];
       }
     }
 
     // And if the e-mail is not valid, switch $error to TRUE and set the result text to the shortcode attribute named 'error_noemail'
-    if ( ! is_email( $fields['email'] ) ) {
+    if ( !$errors['email'] && !is_email( $data['email'] ) ) {
       $errors['email'] = $messages['email_invalid'];
     }
 
@@ -140,22 +106,29 @@ function basic_contact_form_shortcode( $atts = array() ) {
       $success = true;
 
       // Get message data
-      $user_email = $fields['email'];
+      $user_email = $data['email'];
       // TODO: Dynamic message with template
       $mail_content = <<<EOT
 Hello Admin,\n
-a contact request has been issued by $user_email
+a contact request has been issued by $user_email.\n
 EOT;
+      foreach ($data as $key => $value) {
+        $mail_content.= "$key:\t\t\t\t$value\n";
+      }
       // Actually send mail to admin
       basic_contact_form_mail($to, 'Contact Form Request', $mail_content);
     }
   }
 
   $output = basic_contact_form_render($template, array(
+    'title' => $title,
+    'description' => $description,
+    'required' => $required,
+    'fields' => $fields,
     'success' => $success,
     'errors' => $errors,
     'action' => $action,
-    'fields' => $fields
+    'data' => $data
   ));
 
   // Sanitize form with identifier
@@ -166,7 +139,7 @@ EOT;
 add_shortcode( 'basic_contact_form', 'basic_contact_form_shortcode' );
 
 function basic_contact_form_enqueue_scripts() {
-  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/basic-contact-form.js' );
+  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/wp-basic-contact-form.js' );
 }
 add_action('wp_enqueue_scripts', 'basic_contact_form_enqueue_scripts');
 
