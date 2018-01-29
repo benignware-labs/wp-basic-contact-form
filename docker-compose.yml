@@ -43,6 +43,7 @@ services:
     - wordpress
     volumes:
     - ./composer.json:/var/www/html/composer.json
+    - ./composer.lock:/var/www/html/composer.lock
     - wordpress:/var/www/html
     links:
     - wordpress:wordpress
