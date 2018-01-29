@@ -1,6 +1,6 @@
 # wp-basic-contact-form
 
-The most basic contact-form ever
+Yet another Wordpress contact form plugin
 
 ## Usage
 

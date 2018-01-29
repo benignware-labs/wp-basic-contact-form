@@ -3,7 +3,9 @@
 /**
  Plugin Name: Basic Contact Form
  Plugin URI: http://github.com/benignware-labs/wp-basic-contact-form
- Description: The most basic contact-form ever
+ Description: Yet another Wordpress contact form plugin
+ Text Domain: basic-contact-form
+ Domain Path: /languages
  Version: 0.0.3
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
@@ -11,6 +13,19 @@
 */
 
 require_once 'basic-contact-form-helpers.php';
+
+
+
+/**
+ * Load plugin textdomain.
+ *
+ * @since 1.0.0
+ */
+function basic_contact_form_textdomain() {
+  load_plugin_textdomain( 'basic-contact-form', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
+add_action( 'plugins_loaded', 'basic_contact_form_textdomain' );
+
 
 function basic_contact_form_mail($to, $subject = '', $body = '', $headers = '') {
   $headers = array(
@@ -51,16 +66,16 @@ function basic_contact_form_sanitize_output($html, $form_name = null) {
  */
 function basic_contact_form_shortcode( $atts = array() ) {
   $messages = array(
-    'empty' => 'This field cannot be empty',
-    'email_invalid' => 'You have to enter a valid e-mail address'
+    'empty' => __('This field cannot be empty', 'basic-contact-form'),
+    'email_invalid' => __('You have to enter a valid e-mail address', 'basic-contact-form')
   );
 
   $atts = shortcode_atts(array(
     'to' => get_bloginfo('admin'),
     'fields' => 'name,email,subject,message',
     'required' => 'email',
-    'title' => __('Get in contact'),
-    'description' => __('Please use our contact form for your inquiry'),
+    'title' => __('Get in contact with us!', 'basic-contact-form'),
+    'description' => __('Please use our contact form for your inquiry', 'basic-contact-form'),
     'template' => dirname(__FILE__) . '/basic-contact-form-template.php'
   ), $atts, 'basic_contact_form');
 
@@ -84,8 +99,7 @@ function basic_contact_form_shortcode( $atts = array() ) {
   $errors = array();
 
   // Check against method and header
-  //&& $request['headers']['X-Ajaxform'] === 'basic-contact-form'
-  if ( $request['method'] === 'POST' ) {
+  if ( $request['method'] === 'POST' && $request['headers']['X-Ajaxform'] === 'basic-contact-form' ) {
     $data = $request['data'];
 
     // If the required fields are empty, switch $error to TRUE and set the result text to the shortcode attribute named 'error_empty'

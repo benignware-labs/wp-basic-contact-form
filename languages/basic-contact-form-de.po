@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Basic Contact Form\n"
+"POT-Creation-Date: 2018-01-29 23:07+0100\n"
+"PO-Revision-Date: 2018-01-29 23:07+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: basic-contact-form.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: basic-contact-form-template.php:9
+msgid "Thanks for your request! We'll get back to you as soon as we can."
+msgstr ""
+"Vielen Dank für ihre Kontaktaufnahme. Wir melden uns so schnell wie "
+"möglich."
+
+#: basic-contact-form-template.php:16
+msgid "Name"
+msgstr "Name"
+
+#: basic-contact-form-template.php:17
+msgid "Please enter your name"
+msgstr "Bitte geben Sie Ihren Namen ein"
+
+#: basic-contact-form-template.php:27
+msgid "E-mail"
+msgstr "E-mail"
+
+#: basic-contact-form-template.php:28
+msgid "Please enter your e-mail address"
+msgstr "Bitte geben Sie Ihre E-Mail-Adresse an"
+
+#: basic-contact-form-template.php:38
+msgid "Subject"
+msgstr "Betreff"
+
+#: basic-contact-form-template.php:39
+msgid "Please enter a subject"
+msgstr "Bitte geben Sie einen Betreff an"
+
+#: basic-contact-form-template.php:49
+msgid "Message"
+msgstr "Nachricht"
+
+#: basic-contact-form-template.php:50
+msgid "Please describe what your inquiry is about"
+msgstr "Beschreiben Sie, worum es bei Ihrer Anfrage geht"
+
+#: basic-contact-form-template.php:58
+msgid "Send"
+msgstr "Absenden"
+
+#: basic-contact-form.php:63
+msgid "This field cannot be empty"
+msgstr "Dieses Feld darf nicht leer sein"
+
+#: basic-contact-form.php:64
+msgid "You have to enter a valid e-mail address"
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+
+#: basic-contact-form.php:71
+msgid "Get in contact with us!"
+msgstr "Kontaktieren Sie uns!"
+
+#: basic-contact-form.php:72
+msgid "Please use our contact form for your inquiry"
+msgstr "Nutzen Sie bitte unser Kontaktformular für Ihre Anfrage"
+
+#. Plugin Name of the plugin/theme
+msgid "Basic Contact Form"
+msgstr "Basic Contact Form"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/benignware-labs/wp-basic-contact-form"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Yet another Wordpress contact form plugin"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Rafael Nowrotek, Benignware"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://benignware.com"
+msgstr ""
