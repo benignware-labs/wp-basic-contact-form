@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.0.3
+ Version: 0.0.5
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -50,7 +50,10 @@ function basic_contact_form_sanitize_output($html, $form_name = null) {
     // Get the form element
     $form = $doc->getElementsByTagName( 'form' )->item(0);
     if ($form) {
-      $form->setAttribute('method', 'POST');
+      $action = $form->getAttribute('action') ?: $_SERVER['REQUEST_URI'];
+      $form->setAttribute('action', $action);
+      $method = $form->getAttribute('method') ?: 'POST';
+      $form->setAttribute('method', $method);
     } else {
       // TODO: Handle error "Output must contain a form"
     }
@@ -99,7 +102,8 @@ function basic_contact_form_shortcode( $atts = array() ) {
   $errors = array();
 
   // Check against method and header
-  if ( $request['method'] === 'POST' && $request['headers']['X-Ajaxform'] === 'basic-contact-form' ) {
+  // && $request['headers']['X-Ajaxform'] === 'basic-contact-form'
+  if ( $request['method'] === 'POST') {
     $data = $request['data'];
 
     // If the required fields are empty, switch $error to TRUE and set the result text to the shortcode attribute named 'error_empty'
