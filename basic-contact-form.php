@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.0.5
+ Version: 0.0.6
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -14,17 +14,20 @@
 
 require_once 'basic-contact-form-helpers.php';
 
-
-
 /**
  * Load plugin textdomain.
  *
- * @since 1.0.0
+ * @since 0.0.6
  */
-function basic_contact_form_textdomain() {
-  load_plugin_textdomain( 'basic-contact-form', false, basename( dirname( __FILE__ ) ) . '/languages' );
+function basic_contact_form_load_textdomain() {
+  $path = basename(dirname( __FILE__ )) . '/languages';
+  $result = load_plugin_textdomain( 'basic-contact-form', false, $path );
+  if (!$result) {
+    echo "Plugin textdomain could not be loaded";
+    exit;
+  }
 }
-add_action( 'plugins_loaded', 'basic_contact_form_textdomain' );
+add_action( 'plugins_loaded', 'basic_contact_form_load_textdomain' );
 
 
 function basic_contact_form_mail($to, $subject = '', $body = '', $headers = '') {
