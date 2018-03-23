@@ -1,9 +1,9 @@
-import ajaxform from 'ajaxform';
+import remoteform from 'remoteform';
 
-ajaxform('*[data-basic-contact-form]', {
+remoteform('*[data-basic-contact-form]', {
   request: {
     headers: {
-      'X-Ajaxform': 'basic-contact-form'
+      'X-Remoteform': 'basic-contact-form'
     }
   }
 });

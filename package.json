@@ -1,6 +1,6 @@
 {
   "name": "wp-basic-contact-form",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Yet another Wordpress contact form plugin",
   "main": "basic-contact-form.js",
   "scripts": {
@@ -9,7 +9,6 @@
     "start-parcel": "./node_modules/parcel-bundler/bin/cli.js index.html",
     "watch": "./node_modules/parcel-bundler/bin/cli.js watch ./basic-contact-form.js",
     "build": "./node_modules/parcel-bundler/bin/cli.js build ./basic-contact-form.js",
-    "test": "./node_modules/mocha/bin/mocha ajaxform.spec.js",
     "lint": "./node_modules/.bin/eslint ."
   },
   "keywords": [
@@ -41,7 +40,6 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "ajaxform": "https://github.com/benignware-labs/ajaxform.git#master",
-    "get-form-data": "^2.0.0"
+    "remoteform": "^0.0.3"
   }
 }
