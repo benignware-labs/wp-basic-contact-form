@@ -15,7 +15,7 @@ Place shortcode inside post content
 Customize by programmatically adding attributes to shortcode
 
 ```php
-// Customize Basic Contact Form
+// Customize basic-contact-form shortcode
 function custom_shortcode_atts_basic_contact_form($out, $pairs, $atts, $shortcode) {
   $result = array_merge($out, array(
     'to' => 'admin@example.com', // By default, it sends to admin
@@ -38,9 +38,9 @@ Point terminal to your project root and start up the container.
 docker-compose up -d
 ```
 
-Open your browser at [http://localhost:8000](http://localhost:8000).
+Open your browser at [http://localhost:3010](http://localhost:3010).
 
-Go through Wordpress installation and activate Swiper Shortcode wordpress plugin.
+Go through Wordpress installation and activate this plugin.
 
 ### Useful docker commands
 

@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.0.8
+ Version: 0.0.9
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -39,32 +39,6 @@ function basic_contact_form_mail($to, $subject = '', $body = '', $headers = '') 
 
   $result = wp_mail( $to, $subject, $body, $headers );
   return $result;
-}
-
-function basic_contact_form_sanitize_output($html, $form_name = null) {
-  $is_valid = $form_name ? false : true;
-  if (!$is_valid) {
-    // Parse input
-    $doc = new DOMDocument();
-    @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
-    // Get the container element
-    $container = $doc->getElementsByTagName('body')->item(0)->firstChild;
-    $container->setAttribute("data-$form_name", 'test');
-    // Get the form element
-    $form = $doc->getElementsByTagName( 'form' )->item(0);
-    if ($form) {
-      $action = $form->getAttribute('action') ?: $_SERVER['REQUEST_URI'];
-      $form->setAttribute('action', $action);
-      $method = $form->getAttribute('method') ?: 'POST';
-      $form->setAttribute('method', $method);
-    } else {
-      // TODO: Handle error "Output must contain a form"
-    }
-    if (!$is_valid) {
-      $html = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML());
-    }
-  }
-  return $html;
 }
 
 /**
@@ -100,7 +74,9 @@ function basic_contact_form_shortcode( $atts = array() ) {
   }
 
   // Get request data
-  $request = basic_contact_form_get_request();
+  $request = basic_contact_form_get_request(array(
+    'field_prefix' => 'bcf_'
+  ));
 
   $errors = array();
 
@@ -154,7 +130,10 @@ EOT;
   ));
 
   // Sanitize form with identifier
-  $output = basic_contact_form_sanitize_output($output, 'basic-contact-form');
+  $output = basic_contact_form_sanitize_output($output, array(
+    'form_name' => 'basic-contact-form',
+    'field_prefix' => 'bcf_'
+  ));
 
   return $output;
 }
