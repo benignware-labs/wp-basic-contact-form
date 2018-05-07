@@ -25,9 +25,6 @@ function basic_contact_form_get_request($options = array()) {
   // Get post data
   $data = array();
 
-  echo "BEFORE";
-  print_r($_POST);
-  echo "AFTER";
   // This part fetches everything that has been POSTed, sanitizes them and lets us use them as $form_data['subject']
   foreach ( $_POST as $field => $value ) {
     if ( get_magic_quotes_gpc() ) {
