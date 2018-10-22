@@ -1,10 +1,10 @@
 <div class="bcf">
   <?php if ($success): ?>
     <?php if ($title): ?>
-      <h3 class="bcf-title"><?= __('Thanks for your request!') ?></h3>
+      <h3 class="bcf-title"><?= __('Thanks for your request!', 'basic-contact-form') ?></h3>
     <?php endif; ?>
     <?php if ($description): ?>
-      <p class="bcf-description"><?= __('We\'ll get back to you as soon as we can.') ?></p>
+      <p class="bcf-description"><?= __('We\'ll get back to you as soon as we can.', 'basic-contact-form') ?></p>
     <?php endif; ?>
   <?php else: ?>
     <?php if ($title): ?>
@@ -52,7 +52,7 @@
           <label class="bcf-label">
             <?= __('Message', 'basic-contact-form') ?><?= in_array('message', $required) ? '*' : ''; ?>
           </label>
-          <textarea class="bcf-input-textarea bcf-message <?= $errors['message'] ? 'bcf-error' : '' ?>" placeholder="<?= __('Please describe what your inquiry is about', 'basic-contact-form') ?>" name="message" rows="8"><?= $data['message'] ?></textarea>
+          <textarea class="bcf-input-textarea bcf-message <?= $errors['message'] ? 'bcf-error' : '' ?>" placeholder="<?= __('Please enter a message', 'basic-contact-form') ?>" name="message" rows="8"><?= $data['message'] ?></textarea>
           <?php if (array_key_exists('message', $errors)): ?>
             <span class="bcf-message bcf-error"><?= $errors['message'] ?></span>
           <?php endif; ?>

@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.1.0-beta.2
+ Version: 0.1.0-beta.3
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -14,38 +14,21 @@
 
 require_once 'basic-contact-form-helpers.php';
 
-/**
- * Load plugin textdomain.
- *
- * @since 0.0.6
- */
-function basic_contact_form_load_textdomain() {
-  $path = basename(dirname( __FILE__ )) . '/languages';
-  $result = load_plugin_textdomain( 'basic-contact-form', false, $path );
-  if (!$result) {
-    // TODO: Handle gracefully
-    // echo "Plugin textdomain could not be loaded";
-    // exit;
-  }
-}
-add_action( 'plugins_loaded', 'basic_contact_form_load_textdomain' );
+// Load plugin textdomain
+add_action( 'plugins_loaded', function() {
+  load_plugin_textdomain( 'basic-contact-form', false, basename(dirname( __FILE__ )) . '/languages' );
+});
 
-
-// function basic_contact_form_mail($to, $subject = '', $body = '', $headers = '') {
-//   $headers = array(
-//     'Content-Type: text/html; charset=UTF-8',
-//     'From: '. get_bloginfo('name') .' <'. get_bloginfo('admin_email') .'>'
-//   );
-//   $headers = 'From: '. get_bloginfo('name') .' <'. get_bloginfo('admin_email') .'>' . "\r\n";
-//
-//   $result = wp_mail( $to, $subject, $body, $headers );
-//   return $result;
-// }
+// Enqueue plugin scripts
+add_action('wp_enqueue_scripts', function() {
+  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/wp-basic-contact-form.js' );
+});
 
 /**
  * Basic Contact Form Shortcode
  */
-function basic_contact_form_shortcode( $atts = array() ) {
+
+add_shortcode( 'basic-contact-form', function( $atts = array() ) {
   global $post;
 
   $messages = array(
@@ -61,7 +44,7 @@ function basic_contact_form_shortcode( $atts = array() ) {
     'description' => __('Please use our contact form for your inquiry', 'basic-contact-form'),
     'form_template' => dirname(__FILE__) . '/templates/basic-contact-form.php',
     'mail_template' => dirname(__FILE__) . '/templates/basic-contact-form-mail.php',
-  ), $atts, 'basic_contact_form');
+  ), $atts, 'basic-contact-form');
 
   // Get arrays from string lists
   if (is_string($atts['fields'])) {
@@ -164,12 +147,6 @@ function basic_contact_form_shortcode( $atts = array() ) {
   ));
 
   return $output;
-}
-add_shortcode( 'basic_contact_form', 'basic_contact_form_shortcode' );
-
-function basic_contact_form_enqueue_scripts() {
-  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/wp-basic-contact-form.js' );
-}
-add_action('wp_enqueue_scripts', 'basic_contact_form_enqueue_scripts');
+});
 
 ?>

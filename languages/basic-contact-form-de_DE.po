@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Basic Contact Form\n"
-"POT-Creation-Date: 2018-01-29 23:07+0100\n"
-"PO-Revision-Date: 2018-01-29 23:07+0100\n"
+"POT-Creation-Date: 2018-10-22 17:33+0200\n"
+"PO-Revision-Date: 2018-10-22 17:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,63 +21,78 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: basic-contact-form-template.php:9
-msgid "Thanks for your request! We'll get back to you as soon as we can."
-msgstr ""
-"Vielen Dank für ihre Kontaktaufnahme. Wir melden uns so schnell wie "
-"möglich."
-
-#: basic-contact-form-template.php:16
-msgid "Name"
-msgstr "Name"
-
-#: basic-contact-form-template.php:17
-msgid "Please enter your name"
-msgstr "Bitte geben Sie Ihren Namen ein"
-
-#: basic-contact-form-template.php:27
-msgid "E-mail"
-msgstr "E-mail"
-
-#: basic-contact-form-template.php:28
-msgid "Please enter your e-mail address"
-msgstr "Bitte geben Sie Ihre E-Mail-Adresse an"
-
-#: basic-contact-form-template.php:38
-msgid "Subject"
-msgstr "Betreff"
-
-#: basic-contact-form-template.php:39
-msgid "Please enter a subject"
-msgstr "Bitte geben Sie einen Betreff an"
-
-#: basic-contact-form-template.php:49
-msgid "Message"
-msgstr "Nachricht"
-
-#: basic-contact-form-template.php:50
-msgid "Please describe what your inquiry is about"
-msgstr "Beschreiben Sie, worum es bei Ihrer Anfrage geht"
-
-#: basic-contact-form-template.php:58
-msgid "Send"
-msgstr "Absenden"
-
-#: basic-contact-form.php:63
+#: basic-contact-form.php:52
 msgid "This field cannot be empty"
 msgstr "Dieses Feld darf nicht leer sein"
 
-#: basic-contact-form.php:64
+#: basic-contact-form.php:53
 msgid "You have to enter a valid e-mail address"
 msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
 
-#: basic-contact-form.php:71
+#: basic-contact-form.php:60
 msgid "Get in contact with us!"
 msgstr "Kontaktieren Sie uns!"
 
-#: basic-contact-form.php:72
+#: basic-contact-form.php:61
 msgid "Please use our contact form for your inquiry"
 msgstr "Nutzen Sie bitte unser Kontaktformular für Ihre Anfrage"
+
+#: basic-contact-form.php:121
+msgid "Contact form request"
+msgstr "Kontaktformular"
+
+#: templates/basic-contact-form-mail.php:1
+#, php-format
+msgid "Hello %s,"
+msgstr "Hallo %s,"
+
+#: templates/basic-contact-form-mail.php:10
+msgid "Yours sincerely"
+msgstr "Mit freundlichen Grüßen"
+
+#: templates/basic-contact-form.php:4
+msgid "Thanks for your request!"
+msgstr "Vielen Dank für Ihre Anfrage!"
+
+#: templates/basic-contact-form.php:7
+msgid "We'll get back to you as soon as we can."
+msgstr "Wir antworten Ihnen so schnell wie möglich."
+
+#: templates/basic-contact-form.php:20
+msgid "Name"
+msgstr "Name"
+
+#: templates/basic-contact-form.php:22
+msgid "Please enter your name"
+msgstr "Bitte geben Sie Ihren Namen ein"
+
+#: templates/basic-contact-form.php:31
+msgid "E-mail"
+msgstr "E-mail"
+
+#: templates/basic-contact-form.php:33
+msgid "Please enter your e-mail address"
+msgstr "Bitte geben Sie Ihre E-Mail-Adresse an"
+
+#: templates/basic-contact-form.php:42
+msgid "Subject"
+msgstr "Betreff"
+
+#: templates/basic-contact-form.php:44
+msgid "Please enter a subject"
+msgstr "Bitte geben Sie einen Betreff an"
+
+#: templates/basic-contact-form.php:53
+msgid "Message"
+msgstr "Nachricht"
+
+#: templates/basic-contact-form.php:55
+msgid "Please enter a message"
+msgstr "Geben Sie bitte einen Text ein"
+
+#: templates/basic-contact-form.php:62
+msgid "Send"
+msgstr "Absenden"
 
 #. Plugin Name of the plugin/theme
 msgid "Basic Contact Form"
@@ -89,7 +104,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "Yet another Wordpress contact form plugin"
-msgstr ""
+msgstr "Noch ein Wordpress Kontakt Formular Plugin"
 
 #. Author of the plugin/theme
 msgid "Rafael Nowrotek, Benignware"
@@ -98,3 +113,6 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://benignware.com"
 msgstr ""
+
+#~ msgid "Please describe what your inquiry is about"
+#~ msgstr "Beschreiben Sie, worum es bei Ihrer Anfrage geht"
