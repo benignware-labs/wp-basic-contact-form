@@ -1,7 +1,7 @@
 {
   "name": "wp-basic-contact-form",
   "description": "Yet another Wordpress contact form plugin",
-  "version": "0.0.10",
+  "version": "0.1.0-beta.2",
   "type": "wordpress-plugin",
   "license": "MIT",
   "homepage": "http://github.com/benignware-labs/wp-basic-contact-form",
@@ -36,7 +36,6 @@
     "composer/installers": "~1.0"
   },
   "require-dev": {
-    "wemakecustom/wp-mu-loader": "*",
     "wptrt/theme-unit-test": "dev-master",
     "wpackagist-plugin/wp-mail-smtp":">=1.3.3"
   },
