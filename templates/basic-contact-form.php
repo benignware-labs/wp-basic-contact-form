@@ -1,14 +1,18 @@
 <div class="bcf">
-  <?php if ($title): ?>
-    <h3 class="bcf-title"><?= $title ?></h3>
-  <?php endif; ?>
-  <?php if ($description): ?>
-    <p class="bcf-description"><?= $description ?></p>
-  <?php endif; ?>
   <?php if ($success): ?>
-    <?= __('Thanks for your request! We\'ll get back to you as soon as we can.', 'basic-contact-form'); ?>
-    </p>
+    <?php if ($title): ?>
+      <h3 class="bcf-title"><?= __('Thanks for your request!') ?></h3>
+    <?php endif; ?>
+    <?php if ($description): ?>
+      <p class="bcf-description"><?= __('We\'ll get back to you as soon as we can.') ?></p>
+    <?php endif; ?>
   <?php else: ?>
+    <?php if ($title): ?>
+      <h3 class="bcf-title"><?= $title ?></h3>
+    <?php endif; ?>
+    <?php if ($description): ?>
+      <p class="bcf-description"><?= $description ?></p>
+    <?php endif; ?>
     <form class="bcf-form" method="POST">
       <?php if (in_array('name', $fields)) : ?>
         <p class="bcf-field">
