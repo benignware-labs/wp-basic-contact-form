@@ -58,7 +58,7 @@ function basic_contact_form_option_recipient_callback($data) {
       }
     }
 
-    if (!$valid){
+    if (!$valid) {
       add_settings_error(
         'hasEmailError',
         'validationError',
