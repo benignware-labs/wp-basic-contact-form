@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Basic Contact Form\n"
-"POT-Creation-Date: 2018-10-22 17:33+0200\n"
-"PO-Revision-Date: 2018-10-22 17:37+0200\n"
+"POT-Creation-Date: 2018-11-05 00:22+0100\n"
+"PO-Revision-Date: 2018-11-05 00:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,23 +21,35 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: basic-contact-form.php:52
+#: basic-contact-form-settings.php:22
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: basic-contact-form-settings.php:22
+msgid "Contact Form"
+msgstr "Kontaktformular"
+
+#: basic-contact-form-settings.php:38
+msgid "Separate multiple email-addresses by semicolon"
+msgstr "Trennen Sie mehrere E-Mail-Adressen durch Semikolon"
+
+#: basic-contact-form.php:36
 msgid "This field cannot be empty"
 msgstr "Dieses Feld darf nicht leer sein"
 
-#: basic-contact-form.php:53
+#: basic-contact-form.php:37
 msgid "You have to enter a valid e-mail address"
 msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
 
-#: basic-contact-form.php:60
+#: basic-contact-form.php:44
 msgid "Get in contact with us!"
 msgstr "Kontaktieren Sie uns!"
 
-#: basic-contact-form.php:61
+#: basic-contact-form.php:45
 msgid "Please use our contact form for your inquiry"
 msgstr "Nutzen Sie bitte unser Kontaktformular für Ihre Anfrage"
 
-#: basic-contact-form.php:121
+#: basic-contact-form.php:105
 msgid "Contact form request"
 msgstr "Kontaktformular"
 

@@ -6,13 +6,14 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.1.0-beta.4
+ Version: 0.1.0-beta.5
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
 */
 
 require_once 'basic-contact-form-helpers.php';
+require_once 'basic-contact-form-settings.php';
 
 // Load plugin textdomain
 add_action( 'plugins_loaded', function() {
@@ -37,7 +38,7 @@ add_shortcode( 'basic-contact-form', function( $atts = array() ) {
   );
 
   $atts = shortcode_atts(array(
-    'to' => get_bloginfo('admin_email'),
+    'to' => get_option('basic_contact_form_option_recipient') ?: get_bloginfo('admin_email'),
     'fields' => 'name,email,subject,message',
     'required' => 'email',
     'title' => __('Get in contact with us!', 'basic-contact-form'),
@@ -94,8 +95,8 @@ add_shortcode( 'basic-contact-form', function( $atts = array() ) {
 
       // Collect mail data
 
-      // Recipient
-      $mail_recipient = $to ? $to : get_bloginfo('admin_email');
+      // Recipients
+      $recipients = array_map('trim', explode(';', $data));
 
       // From
       $mail_from = $data['name'] . ($data['name'] ? ' <'. $data['email'] . '>' : $data['email']);
@@ -116,16 +117,12 @@ add_shortcode( 'basic-contact-form', function( $atts = array() ) {
       ));
 
       // Headers
-      $mail_headers = array(
-        // 'Content-Type: text/html; charset=UTF-8',
-        // 'From: '. $mail_from,
-        'Reply-To: ' . $mail_from
-      );
-
       $mail_headers = 'Reply-To: ' . $mail_from;
 
-      // Actually send mail
-      wp_mail( $mail_recipient, $mail_subject, $mail_body, $mail_headers );
+      // Actually send mail to recipients
+      foreach ($recipients as $email) {
+        wp_mail( trim($email), $mail_subject, $mail_body, $mail_headers );
+      }
     }
   }
 
