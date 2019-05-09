@@ -28,14 +28,14 @@ add_filter( 'shortcode_atts_basic_contact_form', 'custom_shortcode_atts_basic_co
 
 ## Options
 
-| Name          | Description           | Default     |
-| ------------- | --------------------- | ----------- |
-| `title`       | Form title            | `'Get in contact with us!'`
-| `description`       | Form description            | `'Please use our contact form for your inquiry`
-| `to`          | Recipient email       | Wordpress admin email
-| `fields`      | Comma-separated list of fields to be included in the form | `'name,email,subject,message'`
-| `required`    | Comma-separated list of required fields   | `'email'` |
-| `template`    | Template file   | The plugin's default template |
+| Name            | Description           | Default     |
+| --------------- | --------------------- | ----------- |
+| `title`         | Form title            | `'Get in contact with us!'`
+| `description`   | Form description      | `'Please use our contact form for your inquiry`
+| `to`            | Recipient email       | Wordpress admin email
+| `fields`        | Comma-separated list of fields to be included in the form | `'name,email,subject,message'`
+| `required`      | Comma-separated list of required fields   | `'email'` |
+| `form_template` | Template file         | The plugin's default template |
 
 
 ## Development
