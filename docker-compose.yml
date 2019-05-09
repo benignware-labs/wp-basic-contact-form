@@ -40,7 +40,7 @@ services:
       - ./bin/install-wp.sh:/usr/local/bin/install-wp
     links:
       - db
-    command: sh -c "sleep 20 && wp core install --path=/var/www/html --url=http://localhost:9030 --title='My Site' --admin_user=wordpress --admin_password=wordpress --admin_email=admin@example.com"
+    command: '--info'
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:

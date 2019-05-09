@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.1.0-beta.5
+ Version: 0.1.0-beta.6
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -29,7 +29,7 @@ add_action('wp_enqueue_scripts', function() {
  * Basic Contact Form Shortcode
  */
 
-add_shortcode( 'basic-contact-form', function( $atts = array() ) {
+add_shortcode( 'basic_contact_form', function( $atts = array() ) {
   global $post;
 
   $messages = array(
@@ -45,7 +45,7 @@ add_shortcode( 'basic-contact-form', function( $atts = array() ) {
     'description' => __('Please use our contact form for your inquiry', 'basic-contact-form'),
     'form_template' => dirname(__FILE__) . '/templates/basic-contact-form.php',
     'mail_template' => dirname(__FILE__) . '/templates/basic-contact-form-mail.php',
-  ), $atts, 'basic-contact-form');
+  ), $atts, 'basic_contact_form');
 
   // Get arrays from string lists
   if (is_string($atts['fields'])) {
