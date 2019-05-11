@@ -12,8 +12,8 @@
  License: MIT
 */
 
-require_once 'basic-contact-form-helpers.php';
-require_once 'basic-contact-form-settings.php';
+require_once 'lib/helpers.php';
+require_once 'lib/settings.php';
 
 // Load plugin textdomain
 add_action( 'plugins_loaded', function() {
@@ -22,7 +22,8 @@ add_action( 'plugins_loaded', function() {
 
 // Enqueue plugin scripts
 add_action('wp_enqueue_scripts', function() {
-  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/wp-basic-contact-form.js' );
+  wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/contact-form.js' );
+  wp_enqueue_style( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/contact-form.css' );
 });
 
 /**
@@ -43,8 +44,12 @@ add_shortcode( 'basic_contact_form', function( $atts = array() ) {
     'required' => 'email',
     'title' => __('Get in contact with us!', 'basic-contact-form'),
     'description' => __('Please use our contact form for your inquiry', 'basic-contact-form'),
-    'form_template' => dirname(__FILE__) . '/templates/basic-contact-form.php',
-    'mail_template' => dirname(__FILE__) . '/templates/basic-contact-form-mail.php',
+    'template' => dirname(__FILE__) . '/templates/contact-form.php',
+    'mail' => array(
+      'templates' => array(
+        'admin' => dirname(__FILE__) . '/templates/mail/contact-admin.php'
+      )
+    )
   ), $atts, 'basic_contact_form');
 
   // Get arrays from string lists
@@ -104,6 +109,9 @@ add_shortcode( 'basic_contact_form', function( $atts = array() ) {
       // Subject
       $mail_subject = $data['subject'] ? $data['subject'] : __('Contact form request', 'basic-contact-form');
 
+      // Template
+      $mail_template = $atts['mail']['templates']['admin'];
+
       // Body
       $mail_body = basic_contact_form_render($mail_template, array(
         'title' => $title,
@@ -126,7 +134,7 @@ add_shortcode( 'basic_contact_form', function( $atts = array() ) {
     }
   }
 
-  $output = basic_contact_form_render($form_template, array(
+  $output = basic_contact_form_render($template, array(
     'title' => $title,
     'description' => $description,
     'required' => $required,

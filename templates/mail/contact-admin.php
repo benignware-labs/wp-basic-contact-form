@@ -1,5 +1,5 @@
-<?= sprintf( esc_html__( 'Hello %s,', 'basic-contact-form' ), get_bloginfo( 'name' ) ); ?>
 
+<?= sprintf( esc_html__( 'Hello %s,', 'basic-contact-form' ), get_bloginfo( 'name' ) ); ?>
 
 <?php if ($data['message']): ?>
 <?= $data['message'] ?>
