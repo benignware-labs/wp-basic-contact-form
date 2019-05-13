@@ -22,3 +22,10 @@ add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $s
     'template' => get_theme_file_path() . '/contact-form.php'
   ), $atts);
 }, 10, 4);
+
+// Setup phpmailer
+add_action( 'phpmailer_init', function($phpmailer) {
+  $phpmailer->Host = 'mailhog';
+  $phpmailer->Port = 1025;
+  $phpmailer->IsSMTP();
+});

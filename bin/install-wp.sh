@@ -20,5 +20,8 @@ wp option update permalink_structure "/%year%/%monthnum%/%postname%/" --skip-the
 wp plugin activate wordpress-importer
 wp plugin activate basic-contact-form
 
+# Activate demo theme.
+wp theme activate basic-contact-form
+
 # Import demo content
 # wp import vendor/lib/wptrt/theme-unit-test --authors=skip

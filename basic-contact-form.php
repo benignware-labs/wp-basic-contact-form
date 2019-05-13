@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.1.0-beta.6
+ Version: 0.1.0
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -101,7 +101,7 @@ add_shortcode( 'basic_contact_form', function( $atts = array() ) {
       // Collect mail data
 
       // Recipients
-      $recipients = array_map('trim', explode(';', $data));
+      $recipients = array_map('trim', explode(';', $to));
 
       // From
       $mail_from = $data['name'] . ($data['name'] ? ' <'. $data['email'] . '>' : $data['email']);
@@ -128,8 +128,8 @@ add_shortcode( 'basic_contact_form', function( $atts = array() ) {
       $mail_headers = 'Reply-To: ' . $mail_from;
 
       // Actually send mail to recipients
-      foreach ($recipients as $email) {
-        wp_mail( trim($email), $mail_subject, $mail_body, $mail_headers );
+      foreach ($recipients as $recipient) {
+        wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
       }
     }
   }
