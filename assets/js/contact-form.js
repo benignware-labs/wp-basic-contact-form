@@ -4,7 +4,7 @@ import 'mdn-polyfills/Element.prototype.closest';
 import 'mdn-polyfills/Element.prototype.classList';
 import 'isomorphic-fetch';
 
-import remoteform from 'remoteform';
+import remoteform from 'remoteform/src/remoteform';
 
 remoteform('*[data-basic-contact-form]', {
   request: {
