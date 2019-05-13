@@ -24,7 +24,7 @@ add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $s
 }, 10, 4);
 ```
 
-See [/test/fixtures/themes/basic-contact-form/contact-form.php](here) for an example how to adjust form template for Bootstrap 4.
+An example on how to adjust form template for Bootstrap 4 can be found [here](/test/fixtures/themes/basic-contact-form/contact-form.php)
 
 
 ## Options
