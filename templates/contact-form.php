@@ -57,6 +57,14 @@
         </p>
       <?php endif; ?>
       <p class="contact-footer">
+        <?php if (basic_contact_form_has_captcha()): ?>
+          <div class="contact-field form-group">
+            <?php basic_contact_form_captcha(); ?>
+            <?php if (array_key_exists('captcha', $errors)): ?>
+              <span class="invalid-feedback contact-message"><?= $errors['captcha'] ?></span>
+            <?php endif; ?>
+          </div>
+        <?php endif; ?>
         <button class="contact-submit" type="submit"><?= __('Send', 'basic-contact-form'); ?></button>
       </p>
     </form>

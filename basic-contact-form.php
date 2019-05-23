@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.1.0
+ Version: 0.1.1
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -22,6 +22,9 @@ add_action( 'plugins_loaded', function() {
 
 // Enqueue plugin scripts
 add_action('wp_enqueue_scripts', function() {
+  if (basic_contact_form_has_captcha()) {
+    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true);
+  }
   wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/contact-form.js' );
   wp_enqueue_style( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/contact-form.css' );
 });
@@ -32,6 +35,8 @@ add_action('wp_enqueue_scripts', function() {
 
 add_shortcode( 'basic_contact_form', function( $atts = array() ) {
   global $post;
+
+  $captcha = get_option('basic_contact_form_option_captcha');
 
   $messages = array(
     'empty' => __('This field cannot be empty', 'basic-contact-form'),
@@ -92,6 +97,20 @@ add_shortcode( 'basic_contact_form', function( $atts = array() ) {
     // And if the e-mail is not valid, switch $error to TRUE and set the result text to the shortcode attribute named 'error_noemail'
     if ( !$errors['email'] && !is_email( $data['email'] ) ) {
       $errors['email'] = $messages['email_invalid'];
+    }
+
+    if (basic_contact_form_has_captcha()) {
+      if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+        $secret = $captcha['secret_key'];
+        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
+        $responseData = json_decode($verifyResponse);
+
+        if (!$responseData->success) {
+          $errors['captcha'] = 'Robot verification failed, please try again.';
+        }
+      } else {
+        $errors['captcha'] = 'Robot verification failed, please try again.';
+      }
     }
 
     if ( !count(array_keys($errors)) ) {

@@ -157,4 +157,29 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
   return $html;
 }
 
+function get_basic_contact_form_captcha() {
+  $captcha = get_option('basic_contact_form_option_captcha');
+
+  if (($captcha && $captcha['enabled'])) {
+    $site_key = $captcha['site_key'];
+
+    // $script = '<script src="https://www.google.com/recaptcha/api.js"></script>';
+
+    return '<div id="g-captcha" data-remoteform-permanent class="g-recaptcha" data-sitekey="' . $site_key . '"></div>';
+  }
+
+  return '';
+}
+
+function basic_contact_form_captcha() {
+  echo get_basic_contact_form_captcha();
+}
+
+function basic_contact_form_has_captcha() {
+  $captcha = get_option('basic_contact_form_option_captcha');
+
+  return ($captcha && $captcha['enabled']);
+}
+
+
 ?>

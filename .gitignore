@@ -6,8 +6,10 @@ node_modules
 **/node_modules
 npm-debug.log
 
+
 # PHP
 vendor
+!vendor/google/recaptcha
 composer.phar
 
 # Temp Dir

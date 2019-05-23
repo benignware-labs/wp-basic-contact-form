@@ -1,6 +1,6 @@
 {
   "name": "wp-basic-contact-form",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Yet another Wordpress contact form plugin",
   "main": "basic-contact-form.js",
   "scripts": {
@@ -39,6 +39,6 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
-    "remoteform": "git+https://github.com/benignware/remoteform.git#master"
+    "remoteform": "^0.0.4"
   }
 }

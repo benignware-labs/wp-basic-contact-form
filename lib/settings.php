@@ -1,10 +1,21 @@
 <?php
 
 function basic_contact_form_register_settings() {
+  // delete_option( 'basic_contact_form_option_captcha' );
    add_option( 'basic_contact_form_option_recipient', '');
-
+   add_option( 'basic_contact_form_option_captcha', array(
+     'enabled' => 0
+   ));
 
    register_setting( 'basic_contact_form_options_group', 'basic_contact_form_option_recipient', 'basic_contact_form_option_recipient_callback' );
+   register_setting( 'basic_contact_form_options_group', 'basic_contact_form_option_captcha', array(
+     // 'sanitize_callback' => 'basic_contact_form_option_captcha_callback',
+     'default' => array(
+       'enabled' => 0,
+       'site_key' => '',
+       'secret_key' => ''
+     )
+   ));
 }
 add_action( 'admin_init', 'basic_contact_form_register_settings' );
 
@@ -16,8 +27,20 @@ add_action('admin_menu', 'basic_contact_form_register_options_page');
 
 
 function basic_contact_form_options_page() {
+  $recipient = get_option('basic_contact_form_option_recipient');
+  $captcha = get_option('basic_contact_form_option_captcha');
+
   ?>
     <div class="wrap">
+      <style>
+        input[name='basic_contact_form_option_captcha[enabled]'] ~ div {
+          display: none;
+        }
+
+        input[name='basic_contact_form_option_captcha[enabled]']:checked ~ div {
+          display: block;
+        }
+      </style>
       <?php screen_icon(); ?>
       <h1><?= __('Settings'); ?> › <?= __('Contact Form', 'basic-contact-form'); ?></h1>
       <form method="post" action="options.php">
@@ -25,9 +48,9 @@ function basic_contact_form_options_page() {
         <table class="form-table">
           <tr valign="top">
             <th scope="row">
-              <label for="basic_contact_form_option_recipient">Recipient</label>
+              <label for="basic_contact_form_option_recipient"><?= __('Recipient', 'basic-contact-form'); ?></label>
             </th>
-            <td>
+            <td valign="top">
               <input
                 class="regular-text"
                 type="text"
@@ -36,6 +59,37 @@ function basic_contact_form_options_page() {
                 value="<?php echo get_option('basic_contact_form_option_recipient'); ?>"
               />
               <p class="description"><?= __('Separate multiple email-addresses by semicolon', 'basic-contact-form'); ?></p>
+            </td>
+          </tr>
+          <tr valign="top">
+            <th scope="row">
+              <label><?= __('Captcha', 'basic-contact-form'); ?></label>
+            </th>
+            <td>
+  						<input id="basic_contact_form_option_captcha[enabled]" type="checkbox" name="basic_contact_form_option_captcha[enabled]" value="1" <?php checked( $captcha['enabled'], 1 ); ?> />
+              <label for="basic_contact_form_option_captcha[enabled]">ReCaptcha</label>
+              <div class="basic-contact-form-option-group">
+                <div>
+                  <p><label for="basic_contact_form_option_captcha[site_key]"><?= __('Site Key', 'basic-contact-form'); ?></label></p>
+                  <input
+                    class="regular-text"
+                    type="text"
+                    id="basic_contact_form_option_captcha[site_key]"
+                    name="basic_contact_form_option_captcha[site_key]"
+                    value="<?php echo $captcha['site_key']; ?>"
+                  />
+                </div>
+                <div>
+                  <p><label for="basic_contact_form_option_captcha[secret_key]"><?= __('Secret Key', 'basic-contact-form'); ?></label></p>
+                  <input
+                    class="regular-text"
+                    type="text"
+                    id="basic_contact_form_option_captcha[secret_key]"
+                    name="basic_contact_form_option_captcha[secret_key]"
+                    value="<?php echo $captcha['secret_key']; ?>"
+                  />
+                </div>
+              </div>
             </td>
           </tr>
         </table>
