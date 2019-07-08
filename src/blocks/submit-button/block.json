@@ -1,6 +1,6 @@
 {
 	"name": "basic-contact-form/submit-button",
-	"category": "bootstrap",
+	"category": "forms",
 	"attributes": {
 		"url": {
 			"type": "string",

@@ -1,14 +1,10 @@
 {
-	"name": "basic-contact-form/textfield",
+	"name": "basic-contact-form/textarea",
 	"category": "forms",
 	"attributes": {
 		"name": {
 			"type": "string",
 			"required": true
-		},
-		"type": {
-			"type": "string",
-			"default": "text"
 		},
 		"label": {
 			"type": "string"

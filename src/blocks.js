@@ -11,6 +11,7 @@
 
 import './blocks/form';
 import './blocks/textfield';
+import './blocks/textarea';
 import './blocks/checkbox';
 import './blocks/select';
 import './blocks/submit-button';

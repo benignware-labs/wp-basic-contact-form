@@ -1,5 +1,4 @@
-import './editor.scss';
-import './style.scss';
+
 
 /**
  * External dependencies
@@ -38,7 +37,6 @@ class TextfieldEdit extends Component {
 
 	render() {
 		const {
-			clientId,
 			attributes,
 			className,
 			isSelected,
@@ -46,15 +44,32 @@ class TextfieldEdit extends Component {
 		} = this.props;
 
 		const {
+			type,
 			label,
 			name,
+			placeholder,
 			required
 		} = attributes;
 
 		return (
 			<Fragment>
 				<InspectorControls>
-					<PanelBody title={ __( 'Checkbox Settings' ) }>
+					<PanelBody title={ __( 'Textarea Settings' ) }>
+
+						<TextControl
+							label={ __( 'Label' ) }
+							value={ label }
+							onChange={(value) => setAttributes({
+								label: value,
+							})}
+						/>
+						<TextControl
+							label={ __( 'Placeholder' ) }
+							value={ placeholder }
+							onChange={(value) => setAttributes({
+								placeholder: value,
+							})}
+						/>
 						<TextControl
 							label={ __( 'Name' ) }
 							value={ name }
@@ -72,22 +87,12 @@ class TextfieldEdit extends Component {
 					</PanelBody>
 				</InspectorControls>
 				<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
-					<input
+					<label className="bcf-label">{label}{required ? '*' : ''}</label>
+					<textarea
 						required={required}
-						id={`bcf-input-${clientId}`}
-						name={name}
-						type="checkbox"
-						className="bcf-checkbox"
-					/>
-					<RichText
-						tagName="label"
-						format="string"
-						for={`bcf-input-${clientId}`}
-						className="bcf-checkbox-label"
-						onChange={(value) => setAttributes({
-							label: value
-						})}
-						value={label}
+						type={type}
+						placeholder={placeholder}
+						className="bcf-textarea"
 					/>
 					<div className="bcf-message"></div>
 				</div>

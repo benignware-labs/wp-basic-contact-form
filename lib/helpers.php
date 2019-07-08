@@ -115,16 +115,36 @@ function basic_contact_form_get_fields($html, $options = array()) {
   return $fields;
 }
 
-function basic_contact_form_render_data($html, $data, $errors = array()) {
+function basic_contact_form_render_data($html, $data = array(), $errors = array()) {
   $field_prefix = 'bcf_';
+  $parse_wrapper_id = 'basic-contact-form-parse-wrapper';
+  $has_errors = count(array_keys($errors)) > 0;
+  $has_data = count(array_keys($data)) > 0;
 
-  if (count(array_keys($errors)) >= 0) {
+  if ($has_errors || $has_data) {
     $doc = new DOMDocument();
-    @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
+    @$doc->loadHTML('<?xml encoding="utf-8" ?>' . '<div id="' . $parse_wrapper_id . '">' . $html . '</div>' );
     $xpath = new DOMXpath($doc);
+  }
+
+  if ($has_errors) {
+    $form = $doc->getElementsByTagName('form')->item(0);
+
+    if ($form) {
+      $form_classes = explode(' ', $form->getAttribute('class'));
+      $form_classes[] = 'is-invalid';
+
+      $form->setAttribute('class', implode(' ', array_unique($form_classes)));
+    }
 
     foreach ($errors as $name => $message) {
       $raw_name = $field_prefix ? $field_prefix . $name : $name;
+
+      $form_element = $xpath->query("//*[(local-name() = 'input' or local-name() = 'select' or local-name() = 'textarea')]")->item(0);
+
+      if ($form_element) {
+        $form_element->setAttribute('invalid', 'invalid');
+      }
 
       $message_element = $xpath->query("//*[(local-name() = 'input' or local-name() = 'select' or local-name() = 'textarea')][@name='" . $raw_name . "']/following-sibling::div")->item(0);
 
@@ -134,7 +154,9 @@ function basic_contact_form_render_data($html, $data, $errors = array()) {
         $message_element->appendChild($messageText);
       }
     }
+  }
 
+  if ($has_data) {
     $form_elements = $xpath->query("//input|//textarea|//select");
 
     foreach ($form_elements as $index => $form_element) {
@@ -154,6 +176,39 @@ function basic_contact_form_render_data($html, $data, $errors = array()) {
       if (isset($value)) {
         $form_element->setAttribute('value', $value);
       }
+
+      if (strtolower($form_element->nodeName) === 'select') {
+        $options = $form_element->getElementsByTagName('option');
+
+        foreach ($options as $option_element) {
+          $option_value = $option_element->getAttribute('value');
+
+          if ($option_value === $value) {
+            $option_element->setAttribute('selected', 'selected');
+          }
+        }
+      }
+    }
+  }
+
+  if ($has_errors || $has_data) {
+    $parse_wrapper_element = $doc->getElementById($parse_wrapper_id);
+
+    if ($parse_wrapper_element) {
+      $fragment = $doc->createDocumentFragment();
+
+      $children = array();
+
+      foreach ($parse_wrapper_element->childNodes as $child) {
+        $children[] = $child;
+      }
+
+      foreach ($children as $child) {
+        $fragment->appendChild($child);
+      }
+
+      $parse_wrapper_element->parentNode->insertBefore($fragment, $parse_wrapper_element);
+      $parse_wrapper_element->parentNode->removeChild($parse_wrapper_element);
     }
 
     $html = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML());
@@ -167,8 +222,11 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
   $options = array_merge(array(
     'form_name' => null,
     'hidden' => array(),
-    'field_prefix' => 'bcf_'
+    'field_prefix' => 'bcf_',
+    'theme' => isset($options['theme']) ? $options['theme'] : array()
   ), $options);
+
+  $theme_classes = $options['theme']['classes'] ?: array();
 
   $form_name = $options['form_name'];
   $hidden = $options['hidden'];
@@ -186,6 +244,7 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
     $container->setAttribute("data-$form_name", 'test');
     // Get the form element
     $form = $doc->getElementsByTagName( 'form' )->item(0);
+
     if ($form) {
       $action = $form->getAttribute('action') ?: basic_contact_form_get_url();
       $form->setAttribute('action', $action);
@@ -230,9 +289,34 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
           $form->appendChild($input_element);
         }
       }
+
+      $class_prefix = 'bcf-';
+      $theme_elements = $xpath->query('//*[contains(@class, "' . $class_prefix . '")]');
+
+      foreach ($theme_elements as $theme_element) {
+        $classes = explode(' ', $theme_element->getAttribute('class'));
+
+        $bcf_classes = array_filter($classes, function($class) use ($theme_classes) {
+          return in_array($class, array_keys($theme_classes));
+        });
+
+        foreach ($bcf_classes as $bcf_class) {
+          $theme_class = $theme_classes[$bcf_class];
+
+          if ($theme_class) {
+            $classes[] = $theme_class;
+
+            $theme_element->setAttribute('class', implode(' ', array_unique($classes)));
+          }
+        }
+      }
+
     } else {
       // TODO: Handle error "Output must contain a form"
     }
+
+
+
     if (!$is_valid) {
       $html = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML());
     }

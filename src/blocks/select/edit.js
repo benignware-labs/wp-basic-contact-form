@@ -98,14 +98,14 @@ class SelectEdit extends Component {
 					<PanelBody title={ __( 'Select Settings' ) }>
 						<TextControl
 							label={ __( 'Label' ) }
-							checked={ label }
+							value={ label }
 							onChange={(value) => setAttributes({
 								label: value,
 							})}
 						/>
 						<TextControl
 							label={ __( 'Name' ) }
-							checked={ name }
+							value={ name }
 							onChange={(value) => setAttributes({
 								name: value,
 							})}
@@ -165,7 +165,7 @@ class SelectEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={classnames('bcf-field', className)}>
+				<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
 					<label className="bcf-label">{label}{required ? '*' : ''}</label>
 					<select
 						name={name}

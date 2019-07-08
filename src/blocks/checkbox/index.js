@@ -20,13 +20,12 @@ import save from './save';
 
 const { name } = metadata;
 
-console.log('name', name);
-
 export { metadata, name };
 
 export const settings = {
 	title: __( 'Checkbox' ),
 	description: __( 'Checkbox block.' ),
+	parent: 'basic-contact-form/form',
 	icon,
 	keywords: [ __( 'checkbox' ) ],
 	supports: {

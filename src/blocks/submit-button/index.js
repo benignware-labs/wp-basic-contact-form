@@ -26,6 +26,7 @@ export { metadata, name };
 export const settings = {
 	title: __( 'Submit Button' ),
 	description: __( 'Button to trigger form submission.' ),
+	parent: 'basic-contact-form/form',
 	icon,
 	keywords: [ __( 'button' ) ],
 	supports: {

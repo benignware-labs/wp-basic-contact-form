@@ -55,6 +55,11 @@
   position: relative;
   z-index: 1; }
 
+.bcf-field.is-required .bcf-checkbox-label:after,
+.bcf-field.is-required .bcf-label:after {
+  content: '*';
+  display: inline; }
+
 .bcf-form-horizontal {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -136,6 +141,11 @@
   position: relative;
   z-index: 1; }
 
+.bcf-field.is-required .bcf-checkbox-label:after,
+.bcf-field.is-required .bcf-label:after {
+  content: '*';
+  display: inline; }
+
 .bcf-label {
   display: block; }
 /**
@@ -194,6 +204,75 @@
   display: inline-block;
   position: relative;
   z-index: 1; }
+
+.bcf-field.is-required .bcf-checkbox-label:after,
+.bcf-field.is-required .bcf-label:after {
+  content: '*';
+  display: inline; }
+
+.bcf-label {
+  display: block; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.bcf-required-mark {
+  display: inline-block; }
+
+.EditableList {
+  margin-bottom: 1rem; }
+
+.is-draggingOver {
+  /* Style component when dragging over */ }
+
+.EditableListItem {
+  userSelect: none;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  margin: 0 0 1rem 0; }
+
+.EditableListItem::after {
+  content: '';
+  clear: both;
+  display: table; }
+
+.EditableListItem.is-dragging {
+  /*background: var(--paletteLime500);*/ }
+
+.EditableListItem-handle {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center; }
+
+.EditableListItem-content {
+  width: 100%; }
+  .EditableListItem-content *:last-child {
+    margin-bottom: 0 !important; }
+
+.EditableListItem-dragHandle {
+  margin-right: 0.25rem;
+  display: -ms-inline-flexbox;
+  display: inline-flex; }
+
+.EditableListItem-removeHandle {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  display: inline-block;
+  position: relative;
+  z-index: 1; }
+
+.bcf-field.is-required .bcf-checkbox-label:after,
+.bcf-field.is-required .bcf-label:after {
+  content: '*';
+  display: inline; }
 
 .bcf-checkbox {
   display: inline-block;
@@ -265,6 +344,11 @@
   position: relative;
   z-index: 1; }
 
+.bcf-field.is-required .bcf-checkbox-label:after,
+.bcf-field.is-required .bcf-label:after {
+  content: '*';
+  display: inline; }
+
 .bcf-label {
   display: block; }
 /**
@@ -323,6 +407,11 @@
   display: inline-block;
   position: relative;
   z-index: 1; }
+
+.bcf-field.is-required .bcf-checkbox-label:after,
+.bcf-field.is-required .bcf-label:after {
+  content: '*';
+  display: inline; }
 
 .btn {
   cursor: pointer; }

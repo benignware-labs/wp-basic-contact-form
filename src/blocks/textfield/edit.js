@@ -51,6 +51,8 @@ class TextfieldEdit extends Component {
 			required
 		} = attributes;
 
+		console.log('placeholder...', placeholder);
+
 		return (
 			<Fragment>
 				<InspectorControls>
@@ -58,16 +60,23 @@ class TextfieldEdit extends Component {
 
 						<TextControl
 							label={ __( 'Label' ) }
-							checked={ label }
+							value={ label }
 							onChange={(value) => setAttributes({
 								label: value,
 							})}
 						/>
 						<TextControl
 							label={ __( 'Name' ) }
-							checked={ name }
+							value={ name }
 							onChange={(value) => setAttributes({
 								name: value,
+							})}
+						/>
+						<TextControl
+							label={ __( 'Placeholder' ) }
+							value={ placeholder }
+							onChange={(value) => setAttributes({
+								placeholder: value,
 							})}
 						/>
 						<SelectControl
@@ -90,7 +99,7 @@ class TextfieldEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={classnames('bcf-field', className)}>
+				<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
 					<label className="bcf-label">{label}{required ? '*' : ''}</label>
 					<input
 						required={required}

@@ -21,7 +21,8 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
       'templates' => array(
         'admin' => dirname(__FILE__) . '/templates/mail/contact-admin.php'
       )
-    )
+    ),
+    'redirect_to' => null
   ), $atts, 'basic_contact_form');
 
   // Get arrays from string lists
@@ -34,6 +35,12 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
   }
 
   $atts = apply_filters('basic_contact_form_options', $atts);
+
+  if (!$atts['theme']) {
+    $atts['theme'] = array(
+      'classes' => array()
+    );
+  }
 
   // Extract attributes
   foreach($atts as $key => $value) {
@@ -58,7 +65,8 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
     if ($content) {
       $content = basic_contact_form_sanitize_output($content, array(
         'form_name' => 'basic-contact-form',
-        'field_prefix' => 'bcf_' // bcf_
+        'field_prefix' => 'bcf_', // bcf_m,
+        'theme' => $atts['theme'] ?: array()
       ));
 
       $fields = basic_contact_form_get_fields($content);
@@ -139,11 +147,14 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
       foreach ($recipients as $recipient) {
         wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
       }
+
+      $output = "<script>window.location = '{$atts['redirect_to']}';</script>";
+
+      return $output;
     }
   }
 
   if ($content) {
-
     $output.= basic_contact_form_render_data($content, $data, $errors);
   } else {
     $output = basic_contact_form_render($template, array(
@@ -162,7 +173,8 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
 
   $output = basic_contact_form_sanitize_output($output, array(
     'form_name' => 'basic-contact-form',
-    'field_prefix' => 'bcf_' // bcf_
+    'field_prefix' => 'bcf_', // bcf_
+    'theme' => $atts['theme'] ?: array()
   ));
 
   return $output;

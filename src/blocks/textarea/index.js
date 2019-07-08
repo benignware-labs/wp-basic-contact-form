@@ -24,11 +24,11 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Select' ),
-	description: __( 'Select block.' ),
-	parent: 'basic-contact-form/form',
+	title: __( 'Textarea' ),
+	description: __( 'Textarea block.' ),
 	icon,
-	keywords: [ __( 'select' ) ],
+	parent: 'basic-contact-form/form',
+	keywords: [ __( 'textarea' ) ],
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,

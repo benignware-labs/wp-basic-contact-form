@@ -15,9 +15,14 @@ add_action('wp_enqueue_scripts', function() {
 // Customize Basic Contact Form
 add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $shortcode) {
   return array_merge($out, array(
-    'themme' => array(
+    'theme' => array(
       'classes' => array(
-        'bcf-input' => 'form-control'
+        'bcf-form' => 'needs-validation',
+        'is-invalid' => 'was-validated',
+        'bcf-field' => 'mb-3',
+        'bcf-input' => 'form-control',
+        'bcf-submit-button' => 'btn btn-primary',
+        'bcf-message' => 'invalid-feedback'
       )
     )
   ), $atts);

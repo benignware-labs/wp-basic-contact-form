@@ -28,7 +28,7 @@ class FormSave extends Component {
 		} = attributes;
 
 		return (
-			<div className={classnames('bcf-field', className)}>
+			<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
 				<input
 					id={`bcf-input-${clientId}`}
 					name={name}
@@ -36,7 +36,7 @@ class FormSave extends Component {
 					className="bcf-checkbox"
 					required={required}
 				/>
-				<label class="bcf-checkbox-label" for={`bcf-input-${clientId}`}><div dangerouslySetInnerHTML={ { __html: label } } /></label>
+				<label class="bcf-checkbox-label" for={`bcf-input-${clientId}`}><span dangerouslySetInnerHTML={ { __html: label } } />{required ? '*' : ''}</label>
 				<div className="bcf-message"></div>
 			</div>
 		);

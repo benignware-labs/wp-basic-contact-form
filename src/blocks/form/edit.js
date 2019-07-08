@@ -16,12 +16,16 @@ import { camelizeKeys } from 'humps';
  */
 const { __, _x } = wp.i18n;
 const {
-	InnerBlocks
+	InnerBlocks,
+	InspectorControls,
+	URLInput,
+	URLInputButton
 } = wp.editor;
 
 const { Component, Fragment } = wp.element;
 
 const {
+	PanelBody
 } = wp.components;
 
 const { withSelect } = wp.data;
@@ -35,23 +39,29 @@ const TEMPLATE = [
 	[ 'basic-contact-form/textfield', {
 		label: __('Name'),
 		name: 'name',
-		placeholder: _( 'Please enter your name' )
+		placeholder: __( 'Please enter your name' ),
+		required: true
 	} ],
 	[ 'basic-contact-form/textfield', {
 		type: 'email',
 		label: __('Email'),
 		name: 'email',
-		placeholder: _( 'Please enter your Email' )
+		placeholder: __( 'Please enter your Email' ),
+		required: true
 	} ],
-	[ 'basic-contact-form/select', {
-		label: __('Hello'),
-		options: [{
-			value: 'Hello World!'
-		}, {
-			value: 'Hello World 2!'
-		}]
+	[ 'basic-contact-form/textfield', {
+		label: __('Subject'),
+		name: 'subject',
+		placeholder: __( 'Please enter a subject' ),
+		required: true
 	} ],
-	[ 'basic-contact-form/textfield', {  type: 'submit', text: __('Submit') } ],
+	[ 'basic-contact-form/textarea', {
+		label: __('Content'),
+		name: 'content',
+		placeholder: __( 'Please enter your message' ),
+		required: true
+	} ],
+	[ 'basic-contact-form/submit-button', {  type: 'submit', text: __('Submit') } ],
 ];
 
 class FormEdit extends Component {
@@ -68,15 +78,34 @@ class FormEdit extends Component {
 		} = this.props;
 
 		const {
+			redirectTo
 		} = attributes;
 
+		console.log('redirectTo', redirectTo);
+
 		return (
-			<form className={className}>
-				<InnerBlocks
-					template={ TEMPLATE }
-					templateInsertUpdatesSelection={ false }
-				/>
-			</form>
+			<Fragment>
+				<InspectorControls>
+					<PanelBody title={ __( 'Form Settings' ) }>
+						<URLInput
+							label={ __('Redirect to') }
+							value={ redirectTo }
+							className="basic-contact-form-editor-panel-control"
+							/* eslint-disable jsx-a11y/no-autofocus */
+							// Disable Reason: The rule is meant to prevent enabling auto-focus, not disabling it.
+							autoFocus={ false }
+							/* eslint-enable jsx-a11y/no-autofocus */
+							onChange={ ( value ) => setAttributes( { redirectTo: value } ) }
+						/>
+					</PanelBody>
+				</InspectorControls>
+				<form className={className}>
+					<InnerBlocks
+						template={ TEMPLATE }
+						templateInsertUpdatesSelection={ false }
+					/>
+				</form>
+			</Fragment>
 		);
 	}
 }

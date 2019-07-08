@@ -2,6 +2,9 @@
 	"name": "basic-contact-form/form",
 	"category": "forms",
 	"attributes": {
-		
+		"redirectTo": {
+			"type": "string",
+			"default": ""
+		}
 	}
 }

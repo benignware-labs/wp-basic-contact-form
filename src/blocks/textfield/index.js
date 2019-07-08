@@ -21,15 +21,14 @@ import save from './save';
 
 const { name } = metadata;
 
-console.log('name', name);
-
 export { metadata, name };
 
 export const settings = {
 	title: __( 'Textfield' ),
 	description: __( 'Textfield block.' ),
+	parent: 'basic-contact-form/form',
 	icon,
-	keywords: [ __( 'textfieldw' ) ],
+	keywords: [ __( 'textfield' ) ],
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,

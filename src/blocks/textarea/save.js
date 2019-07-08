@@ -17,32 +17,27 @@ const { Component } = wp.element;
 
 const { withSelect } = wp.data;
 
-class SelectSave extends Component {
+class FormSave extends Component {
 	render() {
 		const { attributes, className, ...props } = this.props;
 		const {
-			name,
+			required,
 			label,
-			options,
-			required
+			placeholder,
 		} = attributes;
 
 		return (
 			<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
 				<label className="bcf-label">{label}</label>
-				<select
-					name={name}
+				<textarea
 					required={required}
-					className="bcf-select"
-				>
-					{options.map(({ value, label, id }) => (
-						<option data-id={id} key={value} value={value}>{label || value}</option>
-					))}
-				</select>
+					placeholder={placeholder}
+					className="bcf-textarea"
+				/>
 				<div className="bcf-message"></div>
 			</div>
 		);
 	}
 }
 
-export default SelectSave;
+export default FormSave;
