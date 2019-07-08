@@ -1,0 +1,38 @@
+.bcf-form {
+
+  &-horizontal {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    grid-gap: 1rem;
+    align-items: baseline;
+
+    > *:not(.bcf-field) {
+      grid-column: 1 / span 2;
+    }
+
+    > .bcf-field {
+      display: contents;
+
+      .bcf-label {
+        grid-column: 1;
+      }
+
+      .bcf-input {
+        grid-column: 2;
+      }
+
+      .bcf-message {
+        grid-column: 1 / span 2;
+      }
+    }
+  }
+
+  .bcf-message {
+    color: red;
+    color: var(--error, red);
+    line-height: 1em;
+    font-size: 80%;
+    min-height: 1em;
+  }
+}

@@ -1,0 +1,44 @@
+.EditableListItem {
+  userSelect: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 1rem 0;
+}
+
+.EditableListItem::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.EditableListItem.is-dragging {
+  /*background: var(--paletteLime500);*/
+}
+
+.EditableListItem-handle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.EditableListItem-content {
+  width: 100%;
+
+  *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+.EditableListItem-dragHandle {
+  margin-right: 0.25rem;
+  display: inline-flex;
+}
+
+.EditableListItem-removeHandle {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}

@@ -6,13 +6,15 @@ function basic_contact_form_split_val($string, $delimiter = ',') {
 
 function basic_contact_form_get_request($options = array()) {
   $options = array_merge(array(
-    'field_prefix' => ''
+    'field_prefix' => 'bcf_'
   ), $options);
 
   $field_prefix = $options['field_prefix'];
 
   // Get request method
   $method = $_SERVER['REQUEST_METHOD'];
+
+
   // Get request headers
   $headers = array();
   foreach($_SERVER as $key => $value) {
@@ -30,6 +32,7 @@ function basic_contact_form_get_request($options = array()) {
     if ( get_magic_quotes_gpc() ) {
       $value = stripslashes( $value );
     }
+
     if (!$field_prefix || basic_contact_form_starts_with($field, $field_prefix) ) {
       $field = $field_prefix ? basic_contact_form_remove_prefix($field, $field_prefix) : $field;
       $data[$field] = strip_tags( $value );
@@ -80,12 +83,91 @@ function basic_contact_form_remove_prefix($text, $prefix) {
   return $text;
 }
 
+
+// Sanitize form
+function basic_contact_form_get_fields($html, $options = array()) {
+  $field_prefix = 'bcf_';
+
+  $doc = new DOMDocument();
+  @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
+  $xpath = new DOMXpath($doc);
+
+  $form_elements = $xpath->query("//input|//textarea|//select");
+
+  $fields = array();
+
+  foreach ($form_elements as $index => $form_element) {
+    $raw_name = $form_element->getAttribute('name') ?: $field_prefix . 'field_' . strval($index);
+    $type = $form_element->nodeName === 'input' ? ($form_element->getAttribute('type') ?: 'text') : '';
+    $required = $form_element->hasAttribute('required');
+
+    $name = $field_prefix ? basic_contact_form_remove_prefix($raw_name, $field_prefix) : $raw_name;
+
+    if ($type !== 'submit') {
+      $fields[] = array(
+        'name' => $name,
+        'type' => $type,
+        'required' => $required
+      );
+    }
+  }
+
+  return $fields;
+}
+
+function basic_contact_form_render_data($html, $data, $errors = array()) {
+  $field_prefix = 'bcf_';
+
+  if (count(array_keys($errors)) >= 0) {
+    $doc = new DOMDocument();
+    @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
+    $xpath = new DOMXpath($doc);
+
+    foreach ($errors as $name => $message) {
+      $raw_name = $field_prefix ? $field_prefix . $name : $name;
+
+      $message_element = $xpath->query("//*[(local-name() = 'input' or local-name() = 'select' or local-name() = 'textarea')][@name='" . $raw_name . "']/following-sibling::div")->item(0);
+
+      if ($message_element) {
+        $messageText = $doc->createTextNode($message);
+
+        $message_element->appendChild($messageText);
+      }
+    }
+
+    $form_elements = $xpath->query("//input|//textarea|//select");
+
+    foreach ($form_elements as $index => $form_element) {
+      $raw_name = $form_element->getAttribute('name');
+
+      if (!$raw_name) {
+        $raw_name = 'field_' . strval($index);
+      }
+
+      if ($field_prefix && !basic_contact_form_starts_with($raw_name, $field_prefix)) {
+        $raw_name = $field_prefix . $raw_name;
+      }
+
+      $name = $field_prefix ? basic_contact_form_remove_prefix($raw_name, $field_prefix) : $raw_name;
+      $value = $data[$name];
+
+      if (isset($value)) {
+        $form_element->setAttribute('value', $value);
+      }
+    }
+
+    $html = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML());
+  }
+
+  return $html;
+}
+
 // Sanitize form
 function basic_contact_form_sanitize_output($html, $options = array()) {
   $options = array_merge(array(
     'form_name' => null,
     'hidden' => array(),
-    'field_prefix' => ''
+    'field_prefix' => 'bcf_'
   ), $options);
 
   $form_name = $options['form_name'];
@@ -97,6 +179,8 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
     // Parse input
     $doc = new DOMDocument();
     @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
+    $xpath = new DOMXpath($doc);
+
     // Get the container element
     $container = $doc->getElementsByTagName('body')->item(0)->firstChild;
     $container->setAttribute("data-$form_name", 'test');
@@ -107,27 +191,26 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
       $form->setAttribute('action', $action);
       $method = $form->getAttribute('method') ?: 'POST';
       $form->setAttribute('method', $method);
-      // Get elements
-      $input_elements = $form->getElementsByTagName( 'input' );
-      $textarea_elements = $form->getElementsByTagName( 'textarea' );
 
-      $form_elements = array();
-      foreach ($input_elements as $input_element) {
-        array_push($form_elements, $input_element);
-      }
-      foreach ($textarea_elements as $textarea_element) {
-        array_push($form_elements, $textarea_element);
-      }
+      $form->setAttribute('novalidate', 'novalidate');
+
+      // Get elements
+      $form_elements = $xpath->query("//input|//textarea|//select");
 
       $hidden_fields = array();
       // Go through present fields and add update values
-      foreach ($form_elements as $form_element) {
+      foreach ($form_elements as $index => $form_element) {
         $input_name = $form_element->getAttribute('name');
 
-        if ($field_prefix && !basic_contact_form_starts_with($input_name, $field_prefix)) {
-          $input_name = $field_prefix . $input_name;
-          $form_element->setAttribute('name', $input_name);
+        if (!$input_name) {
+          $input_name = 'field_' . strval($index);
         }
+
+        if ($field_prefix && !basic_contact_form_starts_with($input_name, $field_prefix)) {
+          $input_name = "{$field_prefix}{$input_name}";
+        }
+
+        $form_element->setAttribute('name', $input_name);
 
         if (strtolower($form_element->tagName) === 'input') {
           $input_type = $form_element->getAttribute('type');
@@ -182,4 +265,20 @@ function basic_contact_form_has_captcha() {
 }
 
 
-?>
+function basic_contact_form_snakeify_keys($array, $arrayHolder = array()) {
+  $result = !empty($arrayHolder) ? $arrayHolder : array();
+
+  foreach ($array as $key => $val) {
+    $str = $key;
+    $str[0] = strtolower($str[0]);
+    $func = create_function('$c', 'return "_" . strtolower($c[1]);');
+    $newKey = preg_replace_callback('/([A-Z])/', $func, $str);
+
+    if (!is_array($val)) {
+      $result[$newKey] = $val;
+    } else {
+      $result[$newKey] = basic_contact_form_snakeify_keys($val, $result[$newKey]);
+    }
+  }
+  return $result;
+}

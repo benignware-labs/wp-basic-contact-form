@@ -1,0 +1,18 @@
+.bcf-checkbox {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.bcf-checkbox-label {
+  margin-left: 0.5rem;
+  text-indent: 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.bcf-checkbox:required + .bcf-checkbox-label {
+  &:after {
+    content: '*';
+    display: inline;
+  }
+}

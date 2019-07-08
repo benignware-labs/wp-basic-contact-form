@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9353921781ab069f01ec9c98092695fd",
+    "content-hash": "8bd235f42d4cf797d9e4c17c1d495075",
     "packages": [
         {
             "name": "composer/installers",
@@ -130,13 +130,23 @@
     "packages-dev": [
         {
             "name": "benignware/bootstrap-hooks",
-            "version": "v0.1.0-beta.18",
+            "version": "v0.1.0-alpha.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/benignware/wp-bootstrap-hooks.git",
-                "reference": "v0.1.0-beta.18"
+                "reference": "v0.1.0-alpha.11"
             },
             "type": "wordpress-muplugin"
+        },
+        {
+            "name": "benignware/kicks-app",
+            "version": "v0.1.0-beta.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benignware-labs/wp-kicks-app.git",
+                "reference": "v0.1.0-beta.7"
+            },
+            "type": "wordpress-theme"
         },
         {
             "name": "wemakecustom/wp-mu-loader",
@@ -225,14 +235,15 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2019-04-14T11:46:16+00:00"
+            "time": "2019-05-12T05:00:52+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "wptrt/theme-unit-test": 20,
-        "benignware/bootstrap-hooks": 10
+        "benignware/bootstrap-hooks": 15,
+        "benignware/kicks-app": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
