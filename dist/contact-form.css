@@ -16,3 +16,11 @@
 .bcf-textarea:invalid ~ .bcf-message {
   color: red;
 }
+
+.bcf-checkbox-label.form-check-label {
+  margin-left: 0;
+}
+
+.bcf-checkbox.form-check-input {
+  left: 0;
+}

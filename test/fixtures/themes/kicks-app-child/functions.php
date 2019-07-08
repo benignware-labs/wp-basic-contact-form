@@ -20,9 +20,12 @@ add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $s
         'bcf-form' => 'needs-validation',
         'is-invalid' => 'was-validated',
         'bcf-field' => 'mb-3',
+        'bcf-field-checkbox' => 'form-check',
         'bcf-input' => 'form-control',
         'bcf-submit-button' => 'btn btn-primary',
-        'bcf-message' => 'invalid-feedback'
+        'bcf-message' => 'invalid-feedback',
+        'bcf-checkbox-label' => 'form-check-label',
+        'bcf-checkbox' => 'form-check-input'
       )
     )
   ), $atts);

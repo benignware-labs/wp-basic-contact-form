@@ -2,6 +2,9 @@
 	"name": "basic-contact-form/checkbox",
 	"category": "forms",
 	"attributes": {
+		"id": {
+			"type": "string"
+		},
 		"name": {
 			"type": "string",
 			"required": true

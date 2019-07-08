@@ -9,6 +9,8 @@ import { get } from 'lodash';
 import humanizeString from 'humanize-string';
 import { camelizeKeys } from 'humps';
 
+import { getUniqueId } from '../../utils';
+
 /**
  * WordPress dependencies
  */
@@ -36,9 +38,26 @@ class TextfieldEdit extends Component {
 		super( ...arguments );
 	}
 
+	componentDidMount() {
+		const {
+			attributes,
+			setAttributes,
+		} = this.props;
+
+		const {
+			id
+		} = attributes;
+
+		if (!id) {
+			setAttributes({
+				...attributes,
+				id: getUniqueId('checkbox')
+			});
+		}
+	}
+
 	render() {
 		const {
-			clientId,
 			attributes,
 			className,
 			isSelected,
@@ -46,6 +65,7 @@ class TextfieldEdit extends Component {
 		} = this.props;
 
 		const {
+			id,
 			label,
 			name,
 			required
@@ -71,10 +91,15 @@ class TextfieldEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
+				<div className={classnames(
+					'bcf-field',
+					'bcf-field-checkbox',
+					required ? 'is-required' : '',
+					className
+				)}>
 					<input
 						required={required}
-						id={`bcf-input-${clientId}`}
+						id={`bcf-input-${id}`}
 						name={name}
 						type="checkbox"
 						className="bcf-checkbox"
@@ -82,7 +107,7 @@ class TextfieldEdit extends Component {
 					<RichText
 						tagName="label"
 						format="string"
-						for={`bcf-input-${clientId}`}
+						for={`bcf-input-${id}`}
 						className="bcf-checkbox-label"
 						onChange={(value) => setAttributes({
 							label: value

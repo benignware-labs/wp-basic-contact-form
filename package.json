@@ -8,6 +8,7 @@
     "xbuild:blocks": "cgb-scripts build",
     "build:remoteform": "cpx './node_modules/remoteform/dist/**/*.*' dist",
     "build:main": "cpx './assets/js/contact-form.js' dist",
+    "build:main:css": "cpx './assets/css/contact-form.css' dist",
     "build": "run-p \"build:*\"",
     "eject": "cgb-scripts eject"
   },
