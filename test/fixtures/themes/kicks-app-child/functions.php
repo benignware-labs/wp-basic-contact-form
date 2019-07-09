@@ -22,6 +22,7 @@ add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $s
         'bcf-field' => 'mb-3',
         'bcf-field-checkbox' => 'form-check',
         'bcf-input' => 'form-control',
+        'bcf-textarea' => 'form-control',
         'bcf-submit-button' => 'btn btn-primary',
         'bcf-message' => 'invalid-feedback',
         'bcf-checkbox-label' => 'form-check-label',
