@@ -14,7 +14,6 @@ function basic_contact_form_get_request($options = array()) {
   // Get request method
   $method = $_SERVER['REQUEST_METHOD'];
 
-
   // Get request headers
   $headers = array();
   foreach($_SERVER as $key => $value) {
@@ -35,6 +34,8 @@ function basic_contact_form_get_request($options = array()) {
 
     if (!$field_prefix || basic_contact_form_starts_with($field, $field_prefix) ) {
       $field = $field_prefix ? basic_contact_form_remove_prefix($field, $field_prefix) : $field;
+
+      $value = is_array($value) ? $value[0] : $value;
       $data[$field] = strip_tags( $value );
     }
   }
@@ -220,7 +221,7 @@ function basic_contact_form_render_data($html, $data = array(), $errors = array(
 // Sanitize form
 function basic_contact_form_sanitize_output($html, $options = array()) {
   $options = array_merge(array(
-    'form_name' => null,
+    'form_id' => 'basic_contact_form',
     'hidden' => array(),
     'field_prefix' => 'bcf_',
     'theme' => isset($options['theme']) ? $options['theme'] : array()
@@ -228,11 +229,12 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
 
   $theme_classes = $options['theme']['classes'] ?: array();
 
-  $form_name = $options['form_name'];
+  $form_id = $options['form_id'];
   $hidden = $options['hidden'];
   $field_prefix = $options['field_prefix'];
 
-  $is_valid = $form_name ? false : true;
+  $is_valid = $form_id ? false : true;
+
   if (!$is_valid) {
     // Parse input
     $doc = new DOMDocument();
@@ -241,7 +243,12 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
 
     // Get the container element
     $container = $doc->getElementsByTagName('body')->item(0)->firstChild;
-    $container->setAttribute("data-$form_name", 'test');
+    $container->setAttribute("data-basic-contact-form", $form_id);
+
+    $hidden = array_merge($hidden, array(
+      'form_id' => $form_id
+    ));
+
     // Get the form element
     $form = $doc->getElementsByTagName( 'form' )->item(0);
 
@@ -280,12 +287,17 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
         }
       }
       // And add the missing hidden fields
-      foreach ($hidden as $field => $value) {
-        if (!in_array($field, $hidden_fields)) {
+      foreach ($hidden as $name => $value) {
+
+        if ($name && !basic_contact_form_starts_with($name, $field_prefix)) {
+          $name = "{$field_prefix}{$name}";
+        }
+
+        if (!in_array($name, $hidden_fields)) {
           $input_element = $doc->createElement('input');
           $input_element->setAttribute('type', 'hidden');
-          $input_element->setAttribute('name', $field);
-          $input_element->setAttribute('value', $hidden[$field]);
+          $input_element->setAttribute('name', $name);
+          $input_element->setAttribute('value', $value);
           $form->appendChild($input_element);
         }
       }

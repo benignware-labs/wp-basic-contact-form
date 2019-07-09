@@ -1,7 +1,133 @@
 <?php
 
+add_action('init', function() {
+  global $post;
+  global $basic_contact_form_errors;
+  global $basic_contact_form_data;
+
+  $messages = array(
+    'empty' => __('This field cannot be empty', 'basic-contact-form'),
+    'email_invalid' => __('You have to enter a valid e-mail address', 'basic-contact-form')
+  );
+
+  $request = basic_contact_form_get_request(array(
+    'field_prefix' => 'bcf_'
+  ));
+
+  if ( $request['method'] === 'POST' ) {
+    $data = $request['data'];
+
+    $post_id = $data['post_id'] ?: $post->ID;
+    $redirect_to = $data['redirect_to'] ?: null;
+    $form_id = $data['form_id'] ?: null;
+
+    $errors = array();
+
+    if ($post_id) {
+      $content_post = get_post($post_id);
+      $content = $content_post->post_content;
+      $content = apply_filters('the_content', $content);
+      $content = str_replace(']]>', ']]&gt;', $content);
+
+      // Only take the target form into account...
+      $doc = new DOMDocument();
+      @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $content . '</div>' );
+      $xpath = new DOMXpath($doc);
+      $form = $xpath->query('//form[@data-basic-contact-form="' . $form_id . '"]')->item(0);
+
+      if (!$form) {
+        return;
+      }
+
+      $content = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML($form));
+
+      $content = basic_contact_form_sanitize_output($content, array(
+        'form_id' => $form_id,
+        'field_prefix' => 'bcf_', // bcf_m
+      ));
+
+      $fields = basic_contact_form_get_fields($content);
+
+      foreach ($fields as $index => $field) {
+        $name = $field['name'];
+
+        if ($field['required'] && empty(trim($data[$name]))) {
+          $errors[$name] = $messages['empty'];
+        } else if ($field['type'] === 'email' && !is_email($data[$name])) {
+          $errors[$name] = $messages['email_invalid'];
+        }
+      }
+
+      if (basic_contact_form_has_captcha()) {
+        $captcha = get_option('basic_contact_form_option_captcha');
+
+        if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+          $secret = $captcha['secret_key'];
+          $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
+          $responseData = json_decode($verifyResponse);
+
+          if (!$responseData->success) {
+            $errors['captcha'] = 'Robot verification failed, please try again.';
+          }
+        } else {
+          $errors['captcha'] = 'Robot verification failed, please try again.';
+        }
+      }
+
+      if ( !count(array_keys($errors)) ) {
+        // Success
+        $success = true;
+
+        // Collect mail data
+
+        // Recipients
+        $recipients = array_map('trim', explode(';', $to));
+
+        // From
+        $mail_from = $data['name'] . ($data['name'] ? ' <'. $data['email'] . '>' : $data['email']);
+
+        // Subject
+        $mail_subject = $data['subject'] ? $data['subject'] : __('Contact form request', 'basic-contact-form');
+
+        // Template
+        $mail_template = $atts['mail']['templates']['admin'];
+
+        // Body
+        $mail_body = basic_contact_form_render($mail_template, array(
+          'title' => $title,
+          'description' => $description,
+          'required' => $required,
+          'fields' => $fields,
+          'success' => $success,
+          'errors' => $errors,
+          'action' => $action,
+          'data' => $data
+        ));
+
+        // Headers
+        $mail_headers = 'Reply-To: ' . $mail_from;
+
+        // Actually send mail to recipients
+        foreach ($recipients as $recipient) {
+          wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
+        }
+
+        if ($redirect_to) {
+          wp_redirect($redirect_to);
+          exit;
+        }
+      } else {
+        $basic_contact_form_errors = $errors;
+        $basic_contact_form_data = $data;
+      }
+    }
+  }
+});
+
 function basic_contact_form_shortcode( $atts = array(), $content ) {
   global $post;
+  global $basic_contact_form_errors;
+  global $basic_contact_form_data;
 
   $captcha = get_option('basic_contact_form_option_captcha');
 
@@ -11,6 +137,7 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
   );
 
   $atts = shortcode_atts(array(
+    'id' => null,
     'to' => get_option('basic_contact_form_option_recipient') ?: get_bloginfo('admin_email'),
     'fields' => 'name,email,subject,message',
     'required' => 'email',
@@ -42,140 +169,34 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
     );
   }
 
-  // Extract attributes
-  foreach($atts as $key => $value) {
-    $$key = $atts[$key];
-  }
-
   // Get request data
   $request = basic_contact_form_get_request(array(
     'field_prefix' => 'bcf_'
   ));
 
-  $errors = array();
-  $data = array(
-    'subject' => $post ? get_the_title($post) : ''
-  );
-
   // Check against method and header
   // && $request['headers']['X-Ajaxform'] === 'basic-contact-form'
-  if ( $request['method'] === 'POST' ) {
-    $data = array_merge($data, $request['data']);
+  $errors = $basic_contact_form_errors ?: array();
+  $data = $basic_contact_form_data ?: array();
 
-    if ($content) {
-      $content = basic_contact_form_sanitize_output($content, array(
-        'form_name' => 'basic-contact-form',
-        'field_prefix' => 'bcf_', // bcf_m,
-        'theme' => $atts['theme'] ?: array()
-      ));
+  $form_id = $atts['id'] ?: 'basic-contact-form-' . uniqid();
 
-      $fields = basic_contact_form_get_fields($content);
+  $content = basic_contact_form_sanitize_output($content, array(
+    'form_id' => $form_id,
+    'field_prefix' => 'bcf_', // bcf_m
+  ));
 
-      foreach ($fields as $index => $field) {
-        $name = $field['name'];
+  $content = basic_contact_form_render_data($content, $data, $errors);
 
-        if ($field['required'] && empty(trim($data[$name]))) {
-          $errors[$name] = $messages['empty'];
-        } else if ($field['type'] === 'email' && !is_email($data[$name])) {
-          $errors[$name] = $messages['email_invalid'];
-        }
-      }
-
-    } else {
-      // If the required fields are empty, switch $error to TRUE and set the result text to the shortcode attribute named 'error_empty'
-      foreach ( $required as $key ) {
-        $value = trim( $data[$key] );
-        if ( empty( $value ) ) {
-          $errors[$key] = $messages['empty'];
-        }
-      }
-
-      // And if the e-mail is not valid, switch $error to TRUE and set the result text to the shortcode attribute named 'error_noemail'
-      if ( !$errors['email'] && !is_email( $data['email'] ) ) {
-        $errors['email'] = $messages['email_invalid'];
-      }
-    }
-
-    if (basic_contact_form_has_captcha()) {
-      if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
-        $secret = $captcha['secret_key'];
-        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
-        $responseData = json_decode($verifyResponse);
-
-        if (!$responseData->success) {
-          $errors['captcha'] = 'Robot verification failed, please try again.';
-        }
-      } else {
-        $errors['captcha'] = 'Robot verification failed, please try again.';
-      }
-    }
-
-    if ( !count(array_keys($errors)) ) {
-      // Success
-      $success = true;
-
-      // Collect mail data
-
-      // Recipients
-      $recipients = array_map('trim', explode(';', $to));
-
-      // From
-      $mail_from = $data['name'] . ($data['name'] ? ' <'. $data['email'] . '>' : $data['email']);
-
-      // Subject
-      $mail_subject = $data['subject'] ? $data['subject'] : __('Contact form request', 'basic-contact-form');
-
-      // Template
-      $mail_template = $atts['mail']['templates']['admin'];
-
-      // Body
-      $mail_body = basic_contact_form_render($mail_template, array(
-        'title' => $title,
-        'description' => $description,
-        'required' => $required,
-        'fields' => $fields,
-        'success' => $success,
-        'errors' => $errors,
-        'action' => $action,
-        'data' => $data
-      ));
-
-      // Headers
-      $mail_headers = 'Reply-To: ' . $mail_from;
-
-      // Actually send mail to recipients
-      foreach ($recipients as $recipient) {
-        wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
-      }
-
-      $output = "<script>window.location = '{$atts['redirect_to']}';</script>";
-
-      return $output;
-    }
-  }
-
-  if ($content) {
-    $output.= basic_contact_form_render_data($content, $data, $errors);
-  } else {
-    $output = basic_contact_form_render($template, array(
-      'title' => $title,
-      'description' => $description,
-      'required' => $required,
-      'fields' => $fields,
-      'success' => $success,
-      'errors' => $errors,
-      'action' => $action,
-      'data' => $data
-    ));
-  }
-
-  // Sanitize form with identifier
-
-  $output = basic_contact_form_sanitize_output($output, array(
-    'form_name' => 'basic-contact-form',
+  $content = basic_contact_form_sanitize_output($content, array(
+    'form_id' => $form_id,
+    'hidden' => array(
+      'post_id' => get_the_ID(),
+      'redirect_to' => $atts['redirect_to']
+    ),
     'field_prefix' => 'bcf_', // bcf_
     'theme' => $atts['theme'] ?: array()
   ));
 
-  return $output;
+  return $content;
 }

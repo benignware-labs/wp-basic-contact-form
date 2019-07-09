@@ -62,6 +62,8 @@
 
 .basic-contact-form-editor-panel-control {
   max-width: 100%; }
+  .basic-contact-form-editor-panel-control input {
+    max-width: 100%; }
 
 /*
 .wp-block-basic-contact-form-form {

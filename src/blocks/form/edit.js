@@ -9,7 +9,7 @@ import { get } from 'lodash';
 import humanizeString from 'humanize-string';
 import { camelizeKeys } from 'humps';
 
-
+import { getUniqueId } from '../../utils';
 
 /**
  * WordPress dependencies
@@ -61,12 +61,30 @@ const TEMPLATE = [
 		placeholder: __( 'Please enter your message' ),
 		required: true
 	} ],
-	[ 'basic-contact-form/submit-button', {  type: 'submit', text: __('Submit') } ],
+	[ 'basic-contact-form/submit-button', { type: 'submit', text: __('Submit') } ],
 ];
 
 class FormEdit extends Component {
 	constructor() {
 		super( ...arguments );
+	}
+
+	componentDidMount() {
+		const {
+			attributes,
+			setAttributes,
+		} = this.props;
+
+		const {
+			id
+		} = attributes;
+
+		if (!id) {
+			setAttributes({
+				...attributes,
+				id: getUniqueId('form')
+			});
+		}
 	}
 
 	render() {
@@ -78,10 +96,9 @@ class FormEdit extends Component {
 		} = this.props;
 
 		const {
+			id,
 			redirectTo
 		} = attributes;
-
-		console.log('redirectTo', redirectTo);
 
 		return (
 			<Fragment>
@@ -99,7 +116,10 @@ class FormEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<form className={className}>
+				<form
+					data-basic-contact-form={id}
+					className={className}
+				>
 					<InnerBlocks
 						template={ TEMPLATE }
 						templateInsertUpdatesSelection={ false }

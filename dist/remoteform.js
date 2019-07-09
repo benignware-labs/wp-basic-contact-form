@@ -1064,29 +1064,36 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
     if (targetElement) {
       var remoteSelector = options.remoteSelector || unique_selector__WEBPACK_IMPORTED_MODULE_0___default()(targetElement);
       fetch(url, request).then(function (response) {
+        // Follow redirects
+        if (response.redirected) {
+          window.location.href = response.url;
+          return Promise.resolve();
+        }
+
         response.text().then(function (html) {
           // Parse html
           var dom = document.createElement('div');
           dom.innerHTML = html; // Find remote element
 
-          var remoteElement = dom.querySelector(remoteSelector); // Find permanent elements
-
-          _toConsumableArray(remoteElement.querySelectorAll('*[data-remoteform-permanent]')).map(function (remotePermanentElement) {
-            return {
-              remotePermanentElement: remotePermanentElement,
-              permanentElement: targetElement.querySelector("*[id='".concat(remotePermanentElement.getAttribute('id'), "']"))
-            };
-          }).filter(function (_ref) {
-            var permanentElement = _ref.permanentElement;
-            return permanentElement;
-          }).forEach(function (_ref2) {
-            var permanentElement = _ref2.permanentElement,
-                remotePermanentElement = _ref2.remotePermanentElement;
-            remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
-            remotePermanentElement.parentNode.removeChild(remotePermanentElement);
-          });
+          var remoteElement = dom.querySelector(remoteSelector);
 
           if (remoteElement) {
+            // Find permanent elements
+            _toConsumableArray(remoteElement.querySelectorAll('*[data-remoteform-permanent]')).map(function (remotePermanentElement) {
+              return {
+                remotePermanentElement: remotePermanentElement,
+                permanentElement: targetElement.querySelector("*[id='".concat(remotePermanentElement.getAttribute('id'), "']"))
+              };
+            }).filter(function (_ref) {
+              var permanentElement = _ref.permanentElement;
+              return permanentElement;
+            }).forEach(function (_ref2) {
+              var permanentElement = _ref2.permanentElement,
+                  remotePermanentElement = _ref2.remotePermanentElement;
+              remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
+              remotePermanentElement.parentNode.removeChild(remotePermanentElement);
+            });
+
             if (typeof options.update === 'function') {
               options.update(targetElement, remoteElement);
             }

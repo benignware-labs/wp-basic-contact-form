@@ -35,6 +35,6 @@
     "lodash": "^4.17.11",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^11.0.4",
-    "remoteform": "^0.0.5"
+    "remoteform": "^0.0.6"
   }
 }

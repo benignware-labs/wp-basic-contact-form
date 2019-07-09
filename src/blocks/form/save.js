@@ -21,11 +21,11 @@ class FormSave extends Component {
 	render() {
 		const { attributes, className, ...props } = this.props;
 		const {
-
+			id
 		} = attributes;
 
 		return (
-			<form className={ classnames('bcf-form', className) }>
+			<form data-basic-contact-form={id} className={ classnames('bcf-form', className) }>
 				<InnerBlocks.Content />
 			</form>
 		);
