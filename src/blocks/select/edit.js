@@ -51,11 +51,7 @@ class SelectEdit extends Component {
 
 		return (
 			<TextControl data-id={id} type="text" defaultValue={value} onChange={(value) => {
-				console.log('value', value, 'ID: ', id);
-
 				const nextOptions = options.map((option) => {
-					console.log('option!!!...', option.id, ' ----- ', id, option.id === id);
-
 					const result = option.id === id ? {
 						...option,
 						value,
