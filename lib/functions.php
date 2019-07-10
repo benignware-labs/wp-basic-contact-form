@@ -5,6 +5,12 @@ add_action('init', function() {
   global $basic_contact_form_errors;
   global $basic_contact_form_data;
 
+  $mail_template = plugin_dir_path( __DIR__ ) . 'templates/mail/contact-admin.php';
+
+  $hidden_fields = array(
+    'form_id', 'post_id', 'redirect_to'
+  );
+
   $messages = array(
     'empty' => __('This field cannot be empty', 'basic-contact-form'),
     'email_invalid' => __('You have to enter a valid e-mail address', 'basic-contact-form')
@@ -69,10 +75,10 @@ add_action('init', function() {
           $responseData = json_decode($verifyResponse);
 
           if (!$responseData->success) {
-            $errors['captcha'] = 'Robot verification failed, please try again.';
+            $errors['captcha'] = __('Robot verification failed, please try again.', 'basic-contact-form');
           }
         } else {
-          $errors['captcha'] = 'Robot verification failed, please try again.';
+          $errors['captcha'] = __('Robot verification failed, please try again.', 'basic-contact-form');
         }
       }
 
@@ -80,38 +86,45 @@ add_action('init', function() {
         // Success
         $success = true;
 
+        $mail_headers = array(
+          'Content-Type: text/html; charset=UTF-8',
+          'From: My Site Name &lt;support@example.com'
+        );
+
         // Collect mail data
 
         // Recipients
         $recipients = array_map('trim', explode(';', $recipient));
 
         // From
-        $mail_from = $data['name'] ? $data['name'] . ' <'. $data['email'] . '>' : $data['email'];
+        if ($data['name'] && $data['email']) {
+          $mail_from = $data['name'] ? $data['name'] . ' <'. $data['email'] . '>' : $data['email'];
+          $mail_headers[] = 'From: ' . $mail_from;
+          $mail_headers[] = 'Reply-To: ' . $mail_from;
+        } else {
+          $mail_headers[] = 'From: ' . get_bloginfo('name') . ' <' . get_bloginfo('admin_email') . '>';
+        }
 
         // Subject
-        $mail_subject = $data['subject'] ? $data['subject'] : __('Contact form request', 'basic-contact-form');
+        $mail_subject = $data['subject'] ? $data['subject'] : __('Contact Request', 'basic-contact-form');
 
-        // Template
-        $mail_template = $atts['mail']['templates']['admin'];
+        $mail_data = array_filter(
+          $data,
+          function ($key) use ($hidden_fields) {
+            return !in_array($key, $hidden_fields);
+          },
+          ARRAY_FILTER_USE_KEY
+        );
 
-        // Body
+        // Render Mail
         $mail_body = basic_contact_form_render($mail_template, array(
-          'title' => $title,
-          'description' => $description,
-          'required' => $required,
-          'fields' => $fields,
-          'success' => $success,
-          'errors' => $errors,
-          'action' => $action,
-          'data' => $data
+          'data' => $mail_data
         ));
 
         // Headers
-        $mail_headers = 'Reply-To: ' . $mail_from;
-
         // Actually send mail to recipients
         foreach ($recipients as $recipient) {
-          wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
+          $res = wp_mail($recipient, $mail_subject, $mail_body, $mail_headers );
         }
 
         if ($redirect_to) {

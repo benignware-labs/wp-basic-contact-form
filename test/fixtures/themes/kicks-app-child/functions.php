@@ -32,7 +32,8 @@ add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $s
   ), $atts);
 }, 10, 4);
 
-
-add_filter( 'pre_custom_archive_template', function($template, $post_id, $post_type) {
-  return 'archive-job.php';
-}, 11, 3);
+add_action( 'phpmailer_init', function($phpmailer) {
+  $phpmailer->Host = 'mailhog';
+  $phpmailer->Port = 1025;
+  $phpmailer->IsSMTP();
+});
