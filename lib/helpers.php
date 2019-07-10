@@ -280,7 +280,7 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
 
         if (strtolower($form_element->tagName) === 'input') {
           $input_type = $form_element->getAttribute('type');
-          if ($input_type === 'hidden' && array_key_exists($hidden, $input_name)) {
+          if ($input_type === 'hidden' && array_key_exists($input_name, $hidden)) {
             $hidden_fields[] = $input_name;
             $form_element->setAttribute('name', $hidden[$input_name]);
           }
