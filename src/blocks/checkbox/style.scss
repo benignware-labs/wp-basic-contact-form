@@ -1,13 +1,13 @@
 .bcf-checkbox {
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: text-top;
 }
 
 .bcf-checkbox-label {
   margin-left: 0.5rem;
   text-indent: 0;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: text-top;
 }
 
 .bcf-checkbox:required + .bcf-checkbox-label {
