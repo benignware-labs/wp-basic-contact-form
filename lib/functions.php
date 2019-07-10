@@ -10,6 +10,8 @@ add_action('init', function() {
     'email_invalid' => __('You have to enter a valid e-mail address', 'basic-contact-form')
   );
 
+  $recipient = get_option('basic_contact_form_option_recipient') ?: get_bloginfo('admin_email');
+
   $request = basic_contact_form_get_request(array(
     'field_prefix' => 'bcf_'
   ));
@@ -81,10 +83,10 @@ add_action('init', function() {
         // Collect mail data
 
         // Recipients
-        $recipients = array_map('trim', explode(';', $to));
+        $recipients = array_map('trim', explode(';', $recipient));
 
         // From
-        $mail_from = $data['name'] . ($data['name'] ? ' <'. $data['email'] . '>' : $data['email']);
+        $mail_from = $data['name'] ? $data['name'] . ' <'. $data['email'] . '>' : $data['email'];
 
         // Subject
         $mail_subject = $data['subject'] ? $data['subject'] : __('Contact form request', 'basic-contact-form');
@@ -109,8 +111,11 @@ add_action('init', function() {
 
         // Actually send mail to recipients
         foreach ($recipients as $recipient) {
+          echo 'SEND MAIL...'  . $recipient;
           wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
         }
+
+        exit;
 
         if ($redirect_to) {
           wp_redirect($redirect_to);
