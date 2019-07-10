@@ -111,11 +111,8 @@ add_action('init', function() {
 
         // Actually send mail to recipients
         foreach ($recipients as $recipient) {
-          echo 'SEND MAIL...'  . $recipient;
           wp_mail( trim($recipient), $mail_subject, $mail_body, $mail_headers );
         }
-
-        exit;
 
         if ($redirect_to) {
           wp_redirect($redirect_to);
