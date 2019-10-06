@@ -1043,9 +1043,7 @@ var closest = function closest(el, selector) {
 };
 
 var createSubmitHandler = function createSubmitHandler(selector, options) {
-	console.log('createSubmitHandler');
   return function (event) {
-		console.log('submit', options);
     var formElement = event.target;
     var formData = Object(get_form_data__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(formElement);
     var targetElement = closest(event.target, selector);
@@ -1057,8 +1055,6 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
       'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
     }, request.headers);
-
-		console.log('request: ', request);
 
     if (request.method === 'POST') {
       request.body = qs__WEBPACK_IMPORTED_MODULE_1___default.a.stringify(formData);
@@ -1112,9 +1108,6 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
 };
 
 function remoteform() {
-
-
-	console.log('options.request...', options);
   var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'form';
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   options = _objectSpread({
