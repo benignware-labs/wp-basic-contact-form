@@ -5,8 +5,6 @@ add_action('init', function() {
   global $basic_contact_form_errors;
   global $basic_contact_form_data;
 
-  $mail_template = plugin_dir_path( __DIR__ ) . 'templates/mail/contact-admin.php';
-
   $hidden_fields = array(
     'form_id', 'post_id', 'redirect_to'
   );
@@ -22,7 +20,18 @@ add_action('init', function() {
     'field_prefix' => 'bcf_'
   ));
 
-  if ( $request['method'] === 'POST' ) {
+
+  if ( $request['method'] === 'POST' && isset($request['headers']['X-Remoteform']) && strpos(
+    $request['headers']['X-Remoteform'], 'basic-contact-form'
+  ) !== false) {
+    // By default, we can find the nonce in the "_wpnonce" request parameter.
+    $nonce = $_REQUEST['_wpnonce'];
+
+    if ( ! wp_verify_nonce( $nonce, 'basic_contact_form' ) ) {
+      // Get out of here, the nonce is rotten!
+      exit;
+    }
+
     $data = $request['data'];
 
     $post_id = $data['post_id'] ?: $post->ID;
@@ -96,13 +105,13 @@ add_action('init', function() {
         // Recipients
         $recipients = array_map('trim', explode(';', $recipient));
 
-        // From
+        $mail_headers[] = 'From: ' . get_bloginfo('name') . ' <' . get_bloginfo('admin_email') . '>';
+
+        // Reply-To
         if ($data['name'] && $data['email']) {
           $mail_from = $data['name'] ? $data['name'] . ' <'. $data['email'] . '>' : $data['email'];
-          $mail_headers[] = 'From: ' . $mail_from;
+          // $mail_headers[] = 'From: ' . $mail_from;
           $mail_headers[] = 'Reply-To: ' . $mail_from;
-        } else {
-          $mail_headers[] = 'From: ' . get_bloginfo('name') . ' <' . get_bloginfo('admin_email') . '>';
         }
 
         // Subject
@@ -117,12 +126,15 @@ add_action('init', function() {
         );
 
         // Render Mail
+        $mail_template = plugin_dir_path( __DIR__ ) . 'templates/mail/contact-admin.php';
         $mail_body = basic_contact_form_render($mail_template, array(
           'data' => $mail_data
         ));
 
         // Headers
         // Actually send mail to recipients
+        echo 'send mail';
+        exit;
         foreach ($recipients as $recipient) {
           $res = wp_mail($recipient, $mail_subject, $mail_body, $mail_headers );
         }
@@ -189,8 +201,6 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
     'field_prefix' => 'bcf_'
   ));
 
-  // Check against method and header
-  // && $request['headers']['X-Ajaxform'] === 'basic-contact-form'
   $errors = $basic_contact_form_errors ?: array();
   $data = $basic_contact_form_data ?: array();
 
@@ -212,6 +222,10 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
     'field_prefix' => 'bcf_', // bcf_
     'theme' => $atts['theme'] ?: array()
   ));
+
+  // Add nonce field
+  $nonce_html = wp_nonce_field( 'basic_contact_form' );
+  $content = preg_replace('~</form>~', $nonce_html . '</form>', $content);
 
   return $content;
 }

@@ -1,5 +1,7 @@
-
 <?= sprintf( esc_html__( 'Hello %s Team,', 'basic-contact-form' ), get_bloginfo( 'name' ) ); ?>
+
+a Contact Form Request has been submitted.
+
 <br/>
 <br/>
 <table border="1">

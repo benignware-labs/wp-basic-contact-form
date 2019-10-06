@@ -236,6 +236,9 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
   $is_valid = $form_id ? false : true;
 
   if (!$is_valid) {
+
+
+
     // Parse input
     $doc = new DOMDocument();
     @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
