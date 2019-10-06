@@ -1,6 +1,6 @@
 {
   "name": "wp-basic-contact-form",
-  "version": "0.2.0-beta.9",
+  "version": "0.2.0-beta.10",
   "description": "Yet another Wordpress contact form plugin",
   "main": "basic-contact-form.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "classnames": "^2.2.6",
     "humanize-string": "^2.1.0",
     "humps": "^2.0.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^11.0.4",
     "remoteform": "^0.0.6"

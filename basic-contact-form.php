@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 0.2.0-beta.9
+ Version: 0.2.0-beta.10
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT

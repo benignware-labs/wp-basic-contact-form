@@ -133,8 +133,6 @@ add_action('init', function() {
 
         // Headers
         // Actually send mail to recipients
-        echo 'send mail';
-        exit;
         foreach ($recipients as $recipient) {
           $res = wp_mail($recipient, $mail_subject, $mail_body, $mail_headers );
         }
