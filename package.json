@@ -31,7 +31,7 @@
     "classnames": "^2.2.6",
     "humanize-string": "^2.1.0",
     "humps": "^2.0.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^11.0.4",
     "remoteform": "^0.0.4"
