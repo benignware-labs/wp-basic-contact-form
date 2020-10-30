@@ -4,6 +4,7 @@ add_action('init', function() {
   global $post;
   global $basic_contact_form_errors;
   global $basic_contact_form_data;
+  global $basic_contact_form_success;
 
   $hidden_fields = array(
     'form_id', 'post_id', 'redirect_to'
@@ -20,15 +21,17 @@ add_action('init', function() {
     'field_prefix' => 'bcf_'
   ));
 
-
   if ( $request['method'] === 'POST' && isset($request['headers']['X-Remoteform']) && strpos(
     $request['headers']['X-Remoteform'], 'basic-contact-form'
   ) !== false) {
+    // We got a request
+    $basic_contact_form_data = $data;
+
     // By default, we can find the nonce in the "_wpnonce" request parameter.
     $nonce = $_REQUEST['_wpnonce'];
 
     if ( ! wp_verify_nonce( $nonce, 'basic_contact_form' ) ) {
-      // Get out of here, the nonce is rotten!
+      // Get out of here, the nonce is rotten
       exit;
     }
 
@@ -42,7 +45,7 @@ add_action('init', function() {
 
     if ($post_id) {
       $content_post = get_post($post_id);
-      $content = $content_post->post_content;
+      $content = $content_post ? $content_post->post_content : '';
       $content = apply_filters('the_content', $content);
       $content = str_replace(']]>', ']]&gt;', $content);
 
@@ -52,15 +55,11 @@ add_action('init', function() {
       $xpath = new DOMXpath($doc);
       $form = $xpath->query('//form[@data-basic-contact-form="' . $form_id . '"]')->item(0);
 
-      if (!$form) {
-        return;
-      }
-
       $content = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML($form));
 
       $content = basic_contact_form_sanitize_output($content, array(
         'form_id' => $form_id,
-        'field_prefix' => 'bcf_', // bcf_m
+        'field_prefix' => 'bcf_',
       ));
 
       $fields = basic_contact_form_get_fields($content);
@@ -97,7 +96,6 @@ add_action('init', function() {
 
         $mail_headers = array(
           'Content-Type: text/html; charset=UTF-8',
-          'From: My Site Name &lt;support@example.com'
         );
 
         // Collect mail data
@@ -110,7 +108,6 @@ add_action('init', function() {
         // Reply-To
         if ($data['name'] && $data['email']) {
           $mail_from = $data['name'] ? $data['name'] . ' <'. $data['email'] . '>' : $data['email'];
-          // $mail_headers[] = 'From: ' . $mail_from;
           $mail_headers[] = 'Reply-To: ' . $mail_from;
         }
 
@@ -137,22 +134,26 @@ add_action('init', function() {
           $res = wp_mail($recipient, $mail_subject, $mail_body, $mail_headers );
         }
 
+        $basic_contact_form_success = true;
+
         if ($redirect_to) {
           wp_redirect($redirect_to);
           exit;
         }
       } else {
-        $basic_contact_form_errors = $errors;
         $basic_contact_form_data = $data;
+        $basic_contact_form_errors = $errors;
+        $basic_contact_form_success = false;
       }
     }
   }
 });
 
-function basic_contact_form_shortcode( $atts = array(), $content ) {
+function basic_contact_form_shortcode( $atts = array(), $content = null ) {
   global $post;
   global $basic_contact_form_errors;
   global $basic_contact_form_data;
+  global $basic_contact_form_success;
 
   $captcha = get_option('basic_contact_form_option_captcha');
 
@@ -201,12 +202,23 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
 
   $errors = $basic_contact_form_errors ?: array();
   $data = $basic_contact_form_data ?: array();
+  $success = $basic_contact_form_success;
 
   $form_id = $atts['id'] ?: 'basic-contact-form-' . uniqid();
 
+  $template = $atts['template'];
+
+  $template_data = array_merge($atts, array(
+    'data' => $data,
+    'errors' => $errors,
+    'success' => $success
+  ));
+
+  $content = $content ?: basic_contact_form_render($template, $template_data);
+
   $content = basic_contact_form_sanitize_output($content, array(
     'form_id' => $form_id,
-    'field_prefix' => 'bcf_', // bcf_m
+    'field_prefix' => 'bcf_',
   ));
 
   $content = basic_contact_form_render_data($content, $data, $errors);
@@ -217,7 +229,7 @@ function basic_contact_form_shortcode( $atts = array(), $content ) {
       'post_id' => get_the_ID(),
       'redirect_to' => $atts['redirect_to']
     ),
-    'field_prefix' => 'bcf_', // bcf_
+    'field_prefix' => 'bcf_',
     'theme' => $atts['theme'] ?: array()
   ));
 

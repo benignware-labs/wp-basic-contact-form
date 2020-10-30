@@ -1,4 +1,5 @@
 <div class="contact">
+  <?php print_r($errors); ?>
   <?php if ($title): ?>
     <h3 class="contact-title"><?= $title ?></h3>
   <?php endif; ?>
@@ -28,7 +29,7 @@
           <label class="contact-label">
             <?= __('E-mail', 'basic-contact-form') ?><?= in_array('email', $required) ? '*' : ''; ?>
           </label>
-          <input class="contact-input<?= $errors['email'] ? ' is-invalid error' : '' ?>" placeholder="<?= __('Please enter your e-mail address', 'basic-contact-form') ?>" type="text" name="email" size="50" maxlength="80" value="<?= $data['email'] ?>" />
+          <input class="contact-input<?= $errors['email'] ? ' is-invalid error' : '' ?>" placeholder="<?= __('Please enter your e-mail address', 'basic-contact-form') ?>" type="email" name="email" size="50" maxlength="80" value="<?= $data['email'] ?>" />
           <?php if (array_key_exists('email', $errors)): ?>
             <span class="contact-message is-invalid error"><?= $errors['email'] ?></span>
           <?php endif; ?>

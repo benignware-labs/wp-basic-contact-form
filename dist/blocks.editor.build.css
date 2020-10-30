@@ -57,6 +57,9 @@
   content: '*';
   display: inline; }
 
+.wp-block-basic-contact-form-form input, .wp-block-basic-contact-form-form textarea, .wp-block-basic-contact-form-form select {
+  pointer-events: none; }
+
 .basic-contact-form-editor-panel-control {
   max-width: 100%; }
   .basic-contact-form-editor-panel-control input {

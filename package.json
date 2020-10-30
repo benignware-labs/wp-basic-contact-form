@@ -6,9 +6,9 @@
   "scripts": {
     "start": "cgb-scripts start",
     "xbuild:blocks": "cgb-scripts build",
-    "build:remoteform": "cpx './node_modules/remoteform/dist/**/*.*' dist",
-    "build:main": "cpx './assets/js/contact-form.js' dist",
-    "build:main:css": "cpx './assets/css/contact-form.css' dist",
+    "build:remoteform": "copyfiles -f ./node_modules/remoteform/dist/**/*.* dist",
+    "build:js": "copyfiles -f ./assets/js/contact-form.js dist",
+    "build:css": "copyfiles -f ./assets/css/contact-form.css dist",
     "build": "run-p \"build:*\"",
     "eject": "cgb-scripts eject"
   },
@@ -19,10 +19,10 @@
   "author": "Rafael Nowrotek",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
+    "@babel/cli": "^7.12.1",
     "@babel/core": "^7.5.0",
-    "cgb-scripts": "1.18.1",
-    "cpx": "^1.5.0",
+    "cgb-scripts": "1.23.1",
+    "copyfiles": "^2.4.0",
     "npm-run-all": "^4.1.5",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
@@ -32,7 +32,7 @@
     "classnames": "^2.2.6",
     "humanize-string": "^2.1.0",
     "humps": "^2.0.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^11.0.4",
     "remoteform": "^0.0.6"

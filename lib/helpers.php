@@ -236,9 +236,6 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
   $is_valid = $form_id ? false : true;
 
   if (!$is_valid) {
-
-
-
     // Parse input
     $doc = new DOMDocument();
     @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html );
@@ -325,12 +322,9 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
           }
         }
       }
-
     } else {
       // TODO: Handle error "Output must contain a form"
     }
-
-
 
     if (!$is_valid) {
       $html = preg_replace('~(?:<\?[^>]*>|<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>)\s*~i', '', $doc->saveHTML());
@@ -344,8 +338,6 @@ function get_basic_contact_form_captcha() {
 
   if (($captcha && $captcha['enabled'])) {
     $site_key = $captcha['site_key'];
-
-    // $script = '<script src="https://www.google.com/recaptcha/api.js"></script>';
 
     return '<div id="g-captcha" data-remoteform-permanent class="g-recaptcha" data-sitekey="' . $site_key . '"></div>';
   }

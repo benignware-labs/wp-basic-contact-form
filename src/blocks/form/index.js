@@ -1,8 +1,3 @@
-import classnames from 'classnames';
-
-
-
-
 /**
  * WordPress dependencies
  */
@@ -12,16 +7,12 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
 /**
  * Internal dependencies
  */
-// import deprecated from './deprecated';
 import edit from './edit';
 import icon from './icon';
 import metadata from './block.json';
 import save from './save';
-// import transforms from './transforms';
 
 const { name } = metadata;
-
-console.log('name', name);
 
 export { metadata, name };
 
@@ -34,22 +25,8 @@ export const settings = {
 		align: [ 'wide', 'full' ],
 		html: false,
 	},
-	// transforms,
 	edit,
 	save,
-
-	/*
-	getEditWrapperProps( attributes ) {
-
-		const classes = classnames(
-			// className,
-			'bcf-form'
-		);
-
-		return {
-			className: classes,
-		};
-	},*/
 };
 
 registerBlockType(name, {

@@ -4,22 +4,16 @@ import './style.scss';
 /**
  * External dependencies
  */
-import classnames from 'classnames';
-import { get } from 'lodash';
-import humanizeString from 'humanize-string';
-import { camelizeKeys } from 'humps';
-
 import { getUniqueId } from '../../utils';
 
 /**
  * WordPress dependencies
  */
-const { __, _x } = wp.i18n;
+const { __ } = wp.i18n;
 const {
 	InnerBlocks,
 	InspectorControls,
 	URLInput,
-	URLInputButton
 } = wp.editor;
 
 const { Component, Fragment } = wp.element;
@@ -28,19 +22,17 @@ const {
 	PanelBody
 } = wp.components;
 
-const { withSelect } = wp.data;
-
 /**
  * Constants
  */
 const TEMPLATE = [
-	[ 'core/heading', { level: 2, className: 'bcf-title', placeholder: __( 'Title' ) } ],
-	[ 'core/paragraph', {  placeholder: __( 'Description' ) } ],
+	[ 'core/heading', { level: 2, className: 'bcf-title', placeholder: __( 'Get in contact with us!' ) } ],
+	[ 'core/paragraph', {  placeholder: __( 'Please use our contact form for your inquiry' ) } ],
 	[ 'basic-contact-form/textfield', {
 		label: __('Name'),
 		name: 'name',
 		placeholder: __( 'Please enter your name' ),
-		required: true
+		required: false
 	} ],
 	[ 'basic-contact-form/textfield', {
 		type: 'email',
@@ -53,13 +45,13 @@ const TEMPLATE = [
 		label: __('Subject'),
 		name: 'subject',
 		placeholder: __( 'Please enter a subject' ),
-		required: true
+		required: false
 	} ],
 	[ 'basic-contact-form/textarea', {
 		label: __('Content'),
 		name: 'content',
 		placeholder: __( 'Please enter your message' ),
-		required: true
+		required: false
 	} ],
 	[ 'basic-contact-form/submit-button', { type: 'submit', text: __('Submit') } ],
 ];

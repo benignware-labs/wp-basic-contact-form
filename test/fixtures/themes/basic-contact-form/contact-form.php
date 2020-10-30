@@ -28,7 +28,7 @@
           <label class="contact-label">
             <?= __('E-mail', 'basic-contact-form') ?><?= in_array('email', $required) ? '*' : ''; ?>
           </label>
-          <input class="form-control contact-input<?= $errors['email'] ? ' is-invalid' : '' ?>" placeholder="<?= __('Please enter your e-mail address', 'basic-contact-form') ?>" type="text" name="email" size="50" maxlength="80" value="<?= $data['email'] ?>" />
+          <input class="form-control contact-input<?= $errors['email'] ? ' is-invalid' : '' ?>" placeholder="<?= __('Please enter your e-mail address', 'basic-contact-form') ?>" type="email" name="email" size="50" maxlength="80" value="<?= $data['email'] ?>" />
           <?php if (array_key_exists('email', $errors)): ?>
             <span class="invalid-feedback contact-message"><?= $errors['email'] ?></span>
           <?php endif; ?>

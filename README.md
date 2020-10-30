@@ -84,6 +84,9 @@ add_action( 'phpmailer_init', function($phpmailer) {
 });
 ```
 
+Open up mailhog at [http://localhost:8025](http://localhost:8025).
+
+
 #### Watch front-end dependencies
 
 ```cli
