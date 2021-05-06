@@ -33,7 +33,7 @@
     "classnames": "^2.2.6",
     "humanize-string": "^2.1.0",
     "humps": "^2.0.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "lodash.template": ">=4.5.0",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^11.0.4",
