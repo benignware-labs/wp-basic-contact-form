@@ -41,5 +41,4 @@ add_action('wp_enqueue_scripts', function() {
  */
 add_shortcode( 'basic_contact_form', 'basic_contact_form_shortcode');
 
-
 ?>

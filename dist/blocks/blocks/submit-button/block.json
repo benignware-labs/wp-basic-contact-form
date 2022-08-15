@@ -1,0 +1,26 @@
+{
+  "name": "basic-contact-form/submit-button",
+  "category": "forms",
+  "attributes": {
+    "url": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "a",
+      "attribute": "href"
+    },
+    "title": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "a",
+      "attribute": "title"
+    },
+    "text": {
+      "type": "string",
+      "source": "html",
+      "selector": "button"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

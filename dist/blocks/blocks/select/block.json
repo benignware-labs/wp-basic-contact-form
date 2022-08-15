@@ -1,0 +1,42 @@
+{
+  "name": "basic-contact-form/select",
+  "category": "forms",
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean",
+      "default": false
+    },
+    "options": {
+      "type": "array",
+      "default": [],
+      "source": "query",
+      "selector": ".wp-block-basic-contact-form-select select option",
+      "query": {
+        "id": {
+          "source": "attribute",
+          "selector": "",
+          "attribute": "data-id"
+        },
+        "value": {
+          "source": "attribute",
+          "selector": "",
+          "attribute": "value"
+        },
+        "label": {
+          "type": "string",
+          "source": "text"
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

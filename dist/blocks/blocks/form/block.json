@@ -1,0 +1,16 @@
+{
+  "name": "basic-contact-form/form",
+  "category": "forms",
+  "attributes": {
+    "id": {
+      "type": "string"
+    },
+    "redirectTo": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

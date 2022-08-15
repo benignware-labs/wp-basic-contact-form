@@ -18,10 +18,11 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DEBUG: 1
+      WP_ENVIRONMENT_TYPE: 'local'
     depends_on:
       - db
       - mailhog
-    image: wordpress
     ports:
       - 8030:80
     restart: always
@@ -74,7 +75,7 @@ services:
     links:
       - wordpress:wordpress
   mailhog:
-    image: mailhog/mailhog:v1.0.0
+    image: mailhog/mailhog:v1.0.1
     ports:
       - 1025:1025 # smtp server
       - 8025:8025 # web ui

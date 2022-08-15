@@ -1,5 +1,5 @@
-import './editor.scss';
-import './style.scss';
+import './editor.css';
+import './style.css';
 
 import classnames from 'classnames';
 

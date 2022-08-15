@@ -1,5 +1,5 @@
-import './editor.scss';
-import './style.scss';
+import './editor.css';
+// import './style.scss';
 
 /**
  * External dependencies
@@ -7,7 +7,7 @@ import './style.scss';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import humanizeString from 'humanize-string';
-import { camelizeKeys } from 'humps';
+import { camelizeKeys } from 'humps';
 
 import { getUniqueId } from '../../utils';
 

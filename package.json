@@ -4,14 +4,19 @@
   "description": "Yet another Wordpress contact form plugin",
   "main": "basic-contact-form.js",
   "scripts": {
-    "start": "cgb-scripts start",
-    "xbuild:blocks": "cgb-scripts build",
+    "start": "wp-scripts start",
+    "build:blocks": "wp-scripts build",
     "build:remoteform": "copyfiles -f ./node_modules/remoteform/dist/**/*.* dist",
     "build:js": "copyfiles -f ./assets/js/contact-form.js dist",
     "build:css": "copyfiles -f ./assets/css/contact-form.css dist",
     "build": "run-p \"build:*\"",
-    "eject": "cgb-scripts eject"
+    "test": "wp-scripts test-unit-js",
+    "env:start": "wp-env start",
+    "env:start:debug": "wp-env start --xdebug",
+    "env:stop": "wp-env stop",
+    "packages-update": "wp-scripts packages-update"
   },
+  "prettier": "@wordpress/prettier-config",
   "keywords": [
     "ajax",
     "form"
@@ -19,15 +24,22 @@
   "author": "Rafael Nowrotek",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "cgb-scripts": "1.23.1",
-    "copyfiles": "^2.4.0",
-    "mem": ">=4.0.0",
+    "@wordpress/env": "^4.9.0",
+    "@wordpress/scripts": "^23.5.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "copyfiles": "^2.4.1",
+    "css-loader": "^6.7.1",
+    "extract-loader": "^5.1.0",
+    "file-loader": "^6.2.0",
+    "ignore-emit-webpack-plugin": "^2.0.6",
+    "mini-css-extract-plugin": "^2.6.1",
     "npm-run-all": "^4.1.5",
-    "postcss-import": "^12.0.1",
-    "postcss-loader": "^3.0.0",
-    "postcss-preset-env": "^6.6.0"
+    "postcss-import": "^14.1.0",
+    "postcss-loader": "^7.0.1",
+    "postcss-preset-env": "^7.7.2",
+    "sass": "^1.53.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -35,8 +47,8 @@
     "humps": "^2.0.1",
     "lodash": "^4.17.20",
     "lodash.template": ">=4.5.0",
-    "react": "^16.8.5",
-    "react-beautiful-dnd": "^11.0.4",
+    "react": "^17.0.0",
+    "react-beautiful-dnd": "^13.1.0",
     "remoteform": "^0.0.6"
   }
 }

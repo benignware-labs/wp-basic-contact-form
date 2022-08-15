@@ -1,0 +1,11 @@
+.bcf-checkbox + .editor-rich-text {
+  /* margin-left: 0.5rem; */
+  text-indent: 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.bcf-checkbox:required + .editor-rich-text .bcf-checkbox-label:after {
+  content: '*';
+  display: inline;
+}

@@ -1,5 +1,5 @@
 .EditableListItem {
-  userSelect: none;
+  user-select: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,10 +12,6 @@
   display: table;
 }
 
-.EditableListItem.is-dragging {
-  /*background: var(--paletteLime500);*/
-}
-
 .EditableListItem-handle {
   width: 100%;
   display: flex;
@@ -24,10 +20,10 @@
 
 .EditableListItem-content {
   width: 100%;
+}
 
-  *:last-child {
-    margin-bottom: 0 !important;
-  }
+.EditableListItem-content:last-child {
+  margin-bottom: 0 !important;
 }
 
 .EditableListItem-dragHandle {

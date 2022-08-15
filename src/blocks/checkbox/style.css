@@ -10,9 +10,7 @@
   vertical-align: text-top;
 }
 
-.bcf-checkbox:required + .bcf-checkbox-label {
-  &:after {
-    content: '*';
-    display: inline;
-  }
+.bcf-checkbox:required + .bcf-checkbox-label:after {
+  content: '*';
+  display: inline;
 }

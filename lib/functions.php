@@ -21,9 +21,11 @@ add_action('init', function() {
     'field_prefix' => 'bcf_'
   ));
 
-  if ( $request['method'] === 'POST' && isset($request['headers']['X-Remoteform']) && strpos(
-    $request['headers']['X-Remoteform'], 'basic-contact-form'
-  ) !== false) {
+  if (
+    $request['method'] === 'POST' &&
+    isset($request['headers']['X-Remoteform']) &&
+    strpos($request['headers']['X-Remoteform'], 'basic-contact-form') !== false
+  ) {
     // We got a request
     $basic_contact_form_data = $data;
 
@@ -123,13 +125,15 @@ add_action('init', function() {
         );
 
         // Render Mail
-        $mail_template = plugin_dir_path( __DIR__ ) . 'templates/mail/contact-admin.php';
+        $mail_template = plugin_dir_path( __DIR__ ) . 'template/mail/contact-admin.php';
         $mail_body = basic_contact_form_render($mail_template, array(
           'data' => $mail_data
         ));
 
         // Headers
         // Actually send mail to recipients
+        // echo 'SEND EMAIL...';
+        // exit;
         foreach ($recipients as $recipient) {
           $res = wp_mail($recipient, $mail_subject, $mail_body, $mail_headers );
         }
@@ -150,6 +154,10 @@ add_action('init', function() {
 });
 
 function basic_contact_form_shortcode( $atts = array(), $content = null ) {
+  if (is_admin() && !wp_doing_ajax()) {
+    return '';
+  }
+
   global $post;
   global $basic_contact_form_errors;
   global $basic_contact_form_data;
@@ -169,13 +177,16 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
     'required' => 'email',
     'title' => __('Get in contact with us!', 'basic-contact-form'),
     'description' => __('Please use our contact form for your inquiry', 'basic-contact-form'),
-    'template' => dirname(__FILE__) . '/templates/contact-form.php',
+    'template' => dirname(__FILE__) . '/template/contact-form.php',
     'mail' => array(
       'templates' => array(
-        'admin' => dirname(__FILE__) . '/templates/mail/contact-admin.php'
+        'admin' => dirname(__FILE__) . '/template/mail/contact-admin.php'
       )
     ),
-    'redirect_to' => null
+    'redirect_to' => null,
+    'theme' => [
+      'classes' => []
+    ]
   ), $atts, 'basic_contact_form');
 
   // Get arrays from string lists
@@ -189,16 +200,14 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
 
   $atts = apply_filters('basic_contact_form_options', $atts);
 
-  if (!$atts['theme']) {
-    $atts['theme'] = array(
-      'classes' => array()
-    );
-  }
-
   // Get request data
   $request = basic_contact_form_get_request(array(
     'field_prefix' => 'bcf_'
   ));
+
+  if ($request['method'] === 'POST' && !isset($request['headers']['X-Remoteform'])) {
+    return '';
+  }
 
   $errors = $basic_contact_form_errors ?: array();
   $data = $basic_contact_form_data ?: array();
@@ -223,15 +232,18 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
 
   $content = basic_contact_form_render_data($content, $data, $errors);
 
-  $content = basic_contact_form_sanitize_output($content, array(
+  $content = basic_contact_form_sanitize_output($content, [
     'form_id' => $form_id,
-    'hidden' => array(
+    'hidden' => [
       'post_id' => get_the_ID(),
       'redirect_to' => $atts['redirect_to']
-    ),
+    ],
     'field_prefix' => 'bcf_',
-    'theme' => $atts['theme'] ?: array()
-  ));
+    'theme' => array_merge(
+      [ 'classes' => [] ],
+      isset($atts['theme']) ? $atts['theme'] : []
+    )
+  ]);
 
   // Add nonce field
   $nonce_html = wp_nonce_field( 'basic_contact_form' );

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_filter( 'block_categories', function($categories, $post) {
+add_filter( 'block_categories_all', function($categories, $post) {
 	return array_merge(
 		$categories,
 		array(
@@ -46,7 +46,7 @@ add_action( 'init', function() { // phpcs:ignore
 	// Register block styles for both frontend + backend.
 	wp_register_style(
 		'basic-contact-form-css', // Handle.
-		plugins_url( 'dist/blocks.style.build.css',  __FILE__ ), // Block style CSS.
+		plugins_url( 'dist/blocks/style-blocks.css',  __FILE__ ), // Block style CSS.
 		array( 'wp-editor' ), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
 	);
@@ -54,7 +54,7 @@ add_action( 'init', function() { // phpcs:ignore
 	// Register block editor script for backend.
 	wp_register_script(
 		'basic-contact-form-js', // Handle.
-		plugins_url( '/dist/blocks.build.js',  __FILE__ ), // Block.build.js: We register the block here. Built with Webpack.
+		plugins_url( 'dist/blocks/blocks.js',  __FILE__ ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
 		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
@@ -63,7 +63,7 @@ add_action( 'init', function() { // phpcs:ignore
 	// Register block editor styles for backend.
 	wp_register_style(
     'basic-contact-form-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css',  __FILE__ ), // Block editor CSS.
+		plugins_url( 'dist/blocks/blocks.css',  __FILE__ ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
 	);

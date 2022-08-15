@@ -6,7 +6,7 @@ import { noop } from 'lodash';
 
 import { getUniqueId } from '../../utils';
 
-import './style.scss';
+import './style.css';
 
 /**
  * WordPress dependencies

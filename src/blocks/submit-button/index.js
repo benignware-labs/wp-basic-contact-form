@@ -8,8 +8,8 @@ import metadata from './block.json';
 import save from './save';
 
 
-import './editor.scss';
-import './style.scss';
+import './editor.css';
+import './style.css';
 
 /**
  * WordPress dependencies

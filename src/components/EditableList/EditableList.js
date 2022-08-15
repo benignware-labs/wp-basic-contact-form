@@ -4,9 +4,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import ItemHandle from './ItemHandle';
 
-const { BaseControl } = wp.components;
-
-
+const { BaseControl } = wp.components;
 
 export default class EditableList extends Component {
   static defaultProps = {

@@ -62,14 +62,15 @@
   "require-dev": {
     "wptrt/theme-unit-test": "dev-master",
     "wemakecustom/wp-mu-loader": ">=1.0.2",
-    "wpackagist-plugin/wordpress-importer": ">=0.6.4",
-    "benignware/bootstrap-hooks": "v0.1.0-alpha.11",
+    "benignware/bootstrap-hooks": "v0.1.0-alpha.12",
     "benignware/kicks-app": "v0.1.0-beta.7",
-    "wpackagist-plugin/wp-mail-smtp":">=1.3.3"
+    "wpackagist-plugin/wordpress-importer": ">=0.6.4",
+    "wpackagist-plugin/wp-mail-smtp":">=1.3.3",
+    "wpackagist-plugin/wp-mailhog-smtp": ">=1.0.1"
   },
   "scripts": {
     "post-autoload-dump": [
-      "php -r \"copy('wp-content/mu-plugins/mu-loader/mu-require.php', 'wp-content/mu-plugins/mu-require.php');\""
+      "php -r \"copy('wp-content/mu-plugtins/mu-loader/mu-require.php', 'wp-content/mu-plugins/mu-require.php');\""
     ]
   },
   "extra": {

@@ -1,0 +1,6 @@
+.wp-block-basic-contact-form-form{input,select,textarea{pointer-events:none}}.basic-contact-form-editor-panel-control{max-width:100%;input{max-width:100%}}
+
+
+.bcf-checkbox+.editor-rich-text{display:inline-block;text-indent:0;vertical-align:top}.bcf-checkbox:required+.editor-rich-text .bcf-checkbox-label:after{content:"*";display:inline}
+
+.wp-block-bootstrap-hooks-button .components-autocomplete{display:inline-flex;position:relative}

@@ -28,9 +28,9 @@ function basic_contact_form_get_request($options = array()) {
 
   // This part fetches everything that has been POSTed, sanitizes them and lets us use them as $form_data['subject']
   foreach ( $_POST as $field => $value ) {
-    if ( get_magic_quotes_gpc() ) {
-      $value = stripslashes( $value );
-    }
+    // if ( get_magic_quotes_gpc() ) {
+    //   $value = stripslashes( $value );
+    // }
 
     if (!$field_prefix || basic_contact_form_starts_with($field, $field_prefix) ) {
       $field = $field_prefix ? basic_contact_form_remove_prefix($field, $field_prefix) : $field;
@@ -224,10 +224,13 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
     'form_id' => 'basic_contact_form',
     'hidden' => array(),
     'field_prefix' => 'bcf_',
-    'theme' => isset($options['theme']) ? $options['theme'] : array()
+    'theme' => array_merge(
+      [ 'classes' => [] ],
+      isset($options['theme']) ? $options['theme'] : []
+    )
   ), $options);
 
-  $theme_classes = $options['theme']['classes'] ?: array();
+  $theme_classes = $options['theme']['classes'];
 
   $form_id = $options['form_id'];
   $hidden = $options['hidden'];
@@ -352,7 +355,7 @@ function basic_contact_form_captcha() {
 function basic_contact_form_has_captcha() {
   $captcha = get_option('basic_contact_form_option_captcha');
 
-  return ($captcha && $captcha['enabled']);
+  return $captcha && isset($captcha['enabled']) && $captcha['enabled'];
 }
 
 
@@ -362,7 +365,10 @@ function basic_contact_form_snakeify_keys($array, $arrayHolder = array()) {
   foreach ($array as $key => $val) {
     $str = $key;
     $str[0] = strtolower($str[0]);
-    $func = create_function('$c', 'return "_" . strtolower($c[1]);');
+    // $func = create_function('$c', 'return "_" . strtolower($c[1]);');
+    $func = function($c) {
+      return "_" . strtolower($c[1]);
+    };
     $newKey = preg_replace_callback('/([A-Z])/', $func, $str);
 
     if (!is_array($val)) {

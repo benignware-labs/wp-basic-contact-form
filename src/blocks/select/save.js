@@ -4,7 +4,7 @@
 import classnames from 'classnames';
 import { noop } from 'lodash';
 
-import './style.scss';
+import './style.css';
 
 /**
  * WordPress dependencies

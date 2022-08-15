@@ -10,7 +10,7 @@ import { camelizeKeys } from 'humps';
 
 import EditableList from '../../components/EditableList';
 
-import { getUniqueId } from '../../utils';
+import { getUniqueId } from '../../utils';
 
 /**
  * WordPress dependencies
