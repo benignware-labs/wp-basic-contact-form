@@ -91,6 +91,7 @@ class TextfieldEdit extends Component {
 					<textarea
 						required={required}
 						type={type}
+						name={name}
 						placeholder={placeholder}
 						className="bcf-textarea"
 					/>

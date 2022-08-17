@@ -24,12 +24,14 @@ class FormSave extends Component {
 			required,
 			label,
 			placeholder,
+			name,
 		} = attributes;
 
 		return (
 			<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
 				<label className="bcf-label">{label}</label>
 				<textarea
+					name={name}
 					required={required}
 					placeholder={placeholder}
 					className="bcf-textarea"

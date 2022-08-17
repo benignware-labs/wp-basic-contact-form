@@ -1,38 +1,35 @@
-.bcf-form {
+.bcf-form-horizontal {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  grid-gap: 1rem;
+  align-items: baseline;
+}
 
-  &-horizontal {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-    grid-gap: 1rem;
-    align-items: baseline;
+.bcf-form-horizontal > *:not(.bcf-field) {
+  grid-column: 1 / span 2;
+}
 
-    > *:not(.bcf-field) {
-      grid-column: 1 / span 2;
-    }
+.bcf-form-horizontal > .bcf-field {
+  display: contents;
+}
 
-    > .bcf-field {
-      display: contents;
+.bcf-form-horizontal > .bcf-field .bcf-label {
+  grid-column: 1;
+}
 
-      .bcf-label {
-        grid-column: 1;
-      }
+.bcf-form-horizontal > .bcf-field .bcf-input {
+  grid-column: 2;
+}
 
-      .bcf-input {
-        grid-column: 2;
-      }
+.bcf-form-horizontal > .bcf-field .bcf-message {
+  grid-column: 1 / span 2;
+}
 
-      .bcf-message {
-        grid-column: 1 / span 2;
-      }
-    }
-  }
-
-  .bcf-message {
-    color: red;
-    color: var(--error, red);
-    line-height: 1em;
-    font-size: 80%;
-    min-height: 1em;
-  }
+.bcf-message {
+  color: red;
+  color: var(--error, red);
+  line-height: 1em;
+  font-size: 80%;
+  min-height: 1em;
 }

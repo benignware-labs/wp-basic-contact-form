@@ -24,6 +24,7 @@ class FormSave extends Component {
 			type,
 			required,
 			label,
+			name,
 			placeholder,
 		} = attributes;
 
@@ -33,6 +34,7 @@ class FormSave extends Component {
 				<input
 					required={required}
 					type={type}
+					name={name}
 					placeholder={placeholder}
 					className="bcf-input"
 				/>

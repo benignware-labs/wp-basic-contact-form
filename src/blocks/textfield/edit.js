@@ -102,6 +102,7 @@ class TextfieldEdit extends Component {
 					<input
 						required={required}
 						type={type}
+						name={name}
 						placeholder={placeholder}
 						className="bcf-input"
 					/>

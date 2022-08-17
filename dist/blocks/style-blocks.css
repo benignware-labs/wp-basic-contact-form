@@ -1,4 +1,4 @@
-.bcf-form{&-horizontal{grid-gap:1rem;align-items:baseline;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto;>:not(.bcf-field){grid-column:1/span 2}>.bcf-field{display:contents;.bcf-label{grid-column:1}.bcf-input{grid-column:2}.bcf-message{grid-column:1/span 2}}}.bcf-message{color:red;color:var(--error,red);font-size:80%;line-height:1em;min-height:1em}}
+.bcf-form-horizontal{grid-gap:1rem;align-items:baseline;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto}.bcf-form-horizontal>:not(.bcf-field){grid-column:1/span 2}.bcf-form-horizontal>.bcf-field{display:contents}.bcf-form-horizontal>.bcf-field .bcf-label{grid-column:1}.bcf-form-horizontal>.bcf-field .bcf-input{grid-column:2}.bcf-form-horizontal>.bcf-field .bcf-message{grid-column:1/span 2}.bcf-message{color:red;color:var(--error,red);font-size:80%;line-height:1em;min-height:1em}
 .bcf-label{display:block}
 .bcf-label{display:block}
 .bcf-checkbox,.bcf-checkbox-label{display:inline-block;vertical-align:text-top}.bcf-checkbox-label{margin-left:.5rem;text-indent:0}.bcf-checkbox:required+.bcf-checkbox-label:after{content:"*";display:inline}

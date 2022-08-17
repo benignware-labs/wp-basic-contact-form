@@ -4,13 +4,37 @@ Yet another Wordpress contact form plugin
 
 ## Usage
 
-Place shortcode inside post content
+In order to create a basic contact form on your site, you can either assemble from Gutenberg blocks or use classic short code as described below.
+
+### Blocks
+
+Create a new page titled e.g. "Contact". Say what you want your users to appreciate before inquiring. Insert `basic-contact-form/form` block from the editor.
+
+#### Thank you page
+
+Create a new page titled e.g. "Thank you". Switch back to your contact page and select your form block. In block settings, set `redirectTo` to your newly created page.
+
+### Shortcode
+
+Place shortcode inside post content. 
 
 ```
 [basic_contact_form]
 ```
 
-## Customize
+#### Shortcode Attributes
+
+| Name            | Description           | Default     |
+| --------------- | --------------------- | ----------- |
+| `title`         | Form title            | `'Get in contact with us!'`
+| `description`   | Form description      | `'Please use our contact form for your inquiry`
+| `to`            | Recipient email       | Wordpress admin email
+| `fields`        | Comma-separated list of fields to be included in the form | `'name,email,subject,message'`
+| `required`      | Comma-separated list of required fields   | `'email'` |
+| `template`      | Template file         | The plugin's default template |
+
+
+#### Customize
 
 Customize programmatically by adding attributes to shortcode
 
@@ -26,17 +50,13 @@ add_filter('shortcode_atts_basic_contact_form', function($out, $pairs, $atts, $s
 
 An example on how to adjust form template for Bootstrap 4 can be found [here](/test/fixtures/themes/basic-contact-form/contact-form.php)
 
+## Plugin settings
 
-## Options
+#### Recipient email
 
-| Name            | Description           | Default     |
-| --------------- | --------------------- | ----------- |
-| `title`         | Form title            | `'Get in contact with us!'`
-| `description`   | Form description      | `'Please use our contact form for your inquiry`
-| `to`            | Recipient email       | Wordpress admin email
-| `fields`        | Comma-separated list of fields to be included in the form | `'name,email,subject,message'`
-| `required`      | Comma-separated list of required fields   | `'email'` |
-| `template`      | Template file         | The plugin's default template |
+The target email address, defaults to blog admin
+
+#### Captcha
 
 
 

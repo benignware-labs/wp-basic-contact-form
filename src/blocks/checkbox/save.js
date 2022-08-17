@@ -25,6 +25,7 @@ class FormSave extends Component {
 		const {
 			id,
 			type,
+			name,
 			label,
 			placeholder,
 			required
@@ -44,7 +45,8 @@ class FormSave extends Component {
 					className="bcf-checkbox"
 					required={required}
 				/>
-				<label class="bcf-checkbox-label" for={`bcf-input-${id}`}><span dangerouslySetInnerHTML={ { __html: label } } /></label>
+				<label class="bcf-checkbox-label" for={`bcf-input-${id}`}>
+					<span dangerouslySetInnerHTML={ { __html: label } } /></label>
 				<div className="bcf-message"></div>
 			</div>
 		);
