@@ -1,37 +1,18 @@
-import './editor.css';
-// import './style.scss';
-
-/**
- * External dependencies
- */
 import classnames from 'classnames';
-import { get } from 'lodash';
-import humanizeString from 'humanize-string';
-import { camelizeKeys } from 'humps';
-
 import { getUniqueId } from '../../utils';
+import './editor.css';
 
-/**
- * WordPress dependencies
- */
-const { __, _x } = wp.i18n;
+const { __ } = wp.i18n;
 const {
-	InnerBlocks,
 	InspectorControls,
 	RichText
-} = wp.editor;
-
-
+} = wp.blockEditor;
 const { Component, Fragment } = wp.element;
-
 const {
 	PanelBody,
-	SelectControl,
 	ToggleControl,
 	TextControl
 } = wp.components;
-
-const { withSelect } = wp.data;
 
 class TextfieldEdit extends Component {
 	constructor() {

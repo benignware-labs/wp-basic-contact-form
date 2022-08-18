@@ -1,59 +1,47 @@
-import './editor.css';
-// import './style.scss';
-
-/**
- * External dependencies
- */
 import { getUniqueId } from '../../utils';
+import './editor.css';
 
-/**
- * WordPress dependencies
- */
 const { __ } = wp.i18n;
 const {
 	InnerBlocks,
 	InspectorControls,
-	URLInput,
-} = wp.editor;
-
+	URLInput
+} = wp.blockEditor;
 const { Component, Fragment } = wp.element;
-
-const {
-	PanelBody
-} = wp.components;
+const { PanelBody } = wp.components;
 
 /**
  * Constants
  */
 const TEMPLATE = [
-	[ 'core/heading', { level: 2, className: 'bcf-title', placeholder: __( 'Get in contact with us!' ) } ],
-	[ 'core/paragraph', {  placeholder: __( 'Please use our contact form for your inquiry' ) } ],
+	[ 'core/heading', { level: 2, className: 'bcf-title', placeholder: __( 'Get in contact with us!', 'basic-contact-form' ) } ],
+	[ 'core/paragraph', {  placeholder: __( 'Please use our contact form for your inquiry', 'basic-contact-form' ) } ],
 	[ 'basic-contact-form/textfield', {
-		label: __('Name'),
+		label: __('Name', 'basic-contact-form'),
 		name: 'name',
-		placeholder: __( 'Please enter your name' ),
+		placeholder: __( 'Please enter your name', 'basic-contact-form' ),
 		required: false
 	} ],
 	[ 'basic-contact-form/textfield', {
 		type: 'email',
-		label: __('Email'),
+		label: __('Email', 'basic-contact-form'),
 		name: 'email',
-		placeholder: __( 'Please enter your Email' ),
+		placeholder: __( 'Please enter your Email', 'basic-contact-form' ),
 		required: true
 	} ],
 	[ 'basic-contact-form/textfield', {
-		label: __('Subject'),
+		label: __('Subject', 'basic-contact-form'),
 		name: 'subject',
-		placeholder: __( 'Please enter a subject' ),
+		placeholder: __( 'Please enter a subject', 'basic-contact-form' ),
 		required: false
 	} ],
 	[ 'basic-contact-form/textarea', {
-		label: __('Content'),
-		name: 'content',
-		placeholder: __( 'Please enter your message' ),
+		label: __('Message', 'basic-contact-form'),
+		name: 'message',
+		placeholder: __( 'Please enter a message', 'basic-contact-form' ),
 		required: false
 	} ],
-	[ 'basic-contact-form/submit-button', { type: 'submit', text: __('Submit') } ],
+	[ 'basic-contact-form/submit-button', { type: 'submit', text: __('Submit', 'basic-contact-form') } ],
 ];
 
 class FormEdit extends Component {
@@ -97,7 +85,7 @@ class FormEdit extends Component {
 				<InspectorControls>
 					<PanelBody title={ __( 'Form Settings' ) }>
 						<URLInput
-							label={ __('Redirect to') }
+							label={ __('Redirect to', 'basic-contact-form') }
 							value={ redirectTo }
 							className="basic-contact-form-editor-panel-control"
 							/* eslint-disable jsx-a11y/no-autofocus */

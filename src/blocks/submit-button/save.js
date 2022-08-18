@@ -8,8 +8,7 @@ import classnames from 'classnames';
  */
 const {
 	RichText,
-	getColorClassName,
-} = wp.editor;
+} = wp.blockEditor;
 
 export default function save( { attributes } ) {
 	const {

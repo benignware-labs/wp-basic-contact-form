@@ -76,7 +76,7 @@ function basic_contact_form_options_page() {
                     type="text"
                     id="basic_contact_form_option_captcha[site_key]"
                     name="basic_contact_form_option_captcha[site_key]"
-                    value="<?php echo $captcha['site_key']; ?>"
+                    value="<?= isset($captcha['site_key']) ? $captcha['site_key'] : ''; ?>"
                   />
                 </div>
                 <div>
@@ -86,7 +86,7 @@ function basic_contact_form_options_page() {
                     type="text"
                     id="basic_contact_form_option_captcha[secret_key]"
                     name="basic_contact_form_option_captcha[secret_key]"
-                    value="<?php echo $captcha['secret_key']; ?>"
+                    value="<?= isset($captcha['secret_key']) ? $captcha['secret_key'] : ''; ?>"
                   />
                 </div>
               </div>

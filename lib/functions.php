@@ -170,6 +170,8 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
     'email_invalid' => __('You have to enter a valid e-mail address', 'basic-contact-form')
   );
 
+  $default_template_dir = dirname(__DIR__) . '/template';
+
   $atts = shortcode_atts(array(
     'id' => null,
     'to' => get_option('basic_contact_form_option_recipient') ?: get_bloginfo('admin_email'),
@@ -177,10 +179,10 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
     'required' => 'email',
     'title' => __('Get in contact with us!', 'basic-contact-form'),
     'description' => __('Please use our contact form for your inquiry', 'basic-contact-form'),
-    'template' => dirname(__FILE__) . '/template/contact-form.php',
+    'template' => $default_template_dir . '/contact-form.php',
     'mail' => array(
       'templates' => array(
-        'admin' => dirname(__FILE__) . '/template/mail/contact-admin.php'
+        'admin' => $default_template_dir . '/template/mail/contact-admin.php'
       )
     ),
     'redirect_to' => null,

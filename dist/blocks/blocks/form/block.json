@@ -1,5 +1,7 @@
 {
   "name": "basic-contact-form/form",
+  "textdomain": "basic-contact-form",
+  "title": "Contact Form",
   "category": "forms",
   "attributes": {
     "id": {

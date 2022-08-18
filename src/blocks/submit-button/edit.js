@@ -9,21 +9,9 @@ import { camelizeKeys } from 'humps';
  */
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { compose } = wp.compose;
-const {
-	Dashicon,
-	IconButton,
-	withFallbackStyles,
-	ToggleControl
-} = wp.components;
 
 const {
-	URLInput,
 	RichText,
-	ContrastChecker,
-	InspectorControls,
-	withColors,
-	PanelColorSettings,
 } = wp.editor;
 
 class SubmitButtonEdit extends Component {

@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { noop } from 'lodash';
 
 import './style.css';
 
@@ -11,11 +10,11 @@ import './style.css';
  */
 const {
 	InnerBlocks
-} = wp.editor;
+} = wp.blockEditor;
 
 const { Component } = wp.element;
 
-const { withSelect } = wp.data;
+// const { withSelect } = wp.data;
 
 class FormSave extends Component {
 	render() {

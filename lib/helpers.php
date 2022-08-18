@@ -291,7 +291,6 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
       }
       // And add the missing hidden fields
       foreach ($hidden as $name => $value) {
-
         if ($name && !basic_contact_form_starts_with($name, $field_prefix)) {
           $name = "{$field_prefix}{$name}";
         }
@@ -302,6 +301,31 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
           $input_element->setAttribute('name', $name);
           $input_element->setAttribute('value', $value);
           $form->appendChild($input_element);
+        }
+      }
+
+
+      $field_classname = 'bcf-field';
+      $field_elements = $xpath->query('//*[contains(@class, "' . $field_classname . '")]');
+      $last_field = $field_elements->item($field_elements->length - 1);
+
+      // Insert captcha if not present already
+      $captcha = $xpath->query('//*[@data-captcha="g-captcha"]')->item(0);
+
+      if (!$captcha) {
+        $captcha_html = get_basic_contact_form_captcha();
+        // Load HTML into a string
+        $helper = new DOMDocument();
+        $helper->loadHTML($captcha_html);
+
+        $div = $doc->createElement('div');
+        $div->appendChild($doc->importNode($helper->documentElement, true));
+        $div->setAttribute('class', $field_classname);
+
+        if ($last_field->nextSibling) {
+          $last_field->parentNode->insertBefore($div, $last_field->nextSibling);
+        } else {
+          $last_field->parentNode->appendChild($div);
         }
       }
 
@@ -339,10 +363,12 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
 function get_basic_contact_form_captcha() {
   $captcha = get_option('basic_contact_form_option_captcha');
 
-  if (($captcha && $captcha['enabled'])) {
+  if ($captcha
+    && isset($captcha['enabled']) && $captcha['enabled']
+    && isset($captcha['site_key']) && $captcha['site_key']) {
     $site_key = $captcha['site_key'];
 
-    return '<div id="g-captcha" data-remoteform-permanent class="g-recaptcha" data-sitekey="' . $site_key . '"></div>';
+    return '<div id="g-captcha" data-captcha="g-captcha" data-remoteform-permanent class="g-recaptcha" data-sitekey="' . $site_key . '"></div>';
   }
 
   return '';

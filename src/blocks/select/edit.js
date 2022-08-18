@@ -4,9 +4,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { get } from 'lodash';
-import humanizeString from 'humanize-string';
-import { camelizeKeys } from 'humps';
 
 import EditableList from '../../components/EditableList';
 
@@ -15,28 +12,19 @@ import { getUniqueId } from '../../utils';
 /**
  * WordPress dependencies
  */
-const { __, _x } = wp.i18n;
+const { __ } = wp.i18n;
 const {
-	InnerBlocks,
 	InspectorControls,
-	RichText
-} = wp.editor;
-
+} = wp.blockEditor;
 
 const { Component, Fragment } = wp.element;
 
 const {
-	PanelRow,
 	PanelBody,
-	SelectControl,
 	ToggleControl,
 	TextControl,
-	Dashicon,
 	Button,
-	Panel
 } = wp.components;
-
-const { withSelect } = wp.data;
 
 class SelectEdit extends Component {
 	constructor() {
@@ -45,8 +33,8 @@ class SelectEdit extends Component {
 		this.createOptionInput = this.createOptionInput.bind(this);
 	}
 
-	createOptionInput(id, value = '', label = '') {
-		const { setAttributes, attributes } = this.props;
+	createOptionInput(id, value = '') {
+		const { setAttributes, attributes } = this.props;
 		const { options } = attributes;
 
 		return (
@@ -60,8 +48,6 @@ class SelectEdit extends Component {
 
 					return result;
 				});
-
-				console.log('nextOptions', nextOptions);
 
 				setAttributes({
 					...attributes,
