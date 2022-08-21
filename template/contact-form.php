@@ -1,5 +1,4 @@
 <div class="bcf">
-  <?php print_r($data); ?>
   <?php if ($title): ?>
     <h3 class="bcf-title"><?= $title ?></h3>
   <?php endif; ?>

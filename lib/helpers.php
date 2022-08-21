@@ -28,10 +28,6 @@ function basic_contact_form_get_request($options = array()) {
 
   // This part fetches everything that has been POSTed, sanitizes them and lets us use them as $form_data['subject']
   foreach ( $_POST as $field => $value ) {
-    // if ( get_magic_quotes_gpc() ) {
-    //   $value = stripslashes( $value );
-    // }
-
     if (!$field_prefix || basic_contact_form_starts_with($field, $field_prefix) ) {
       $field = $field_prefix ? basic_contact_form_remove_prefix($field, $field_prefix) : $field;
 
@@ -314,18 +310,21 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
 
       if (!$captcha) {
         $captcha_html = get_basic_contact_form_captcha();
-        // Load HTML into a string
-        $helper = new DOMDocument();
-        $helper->loadHTML($captcha_html);
 
-        $div = $doc->createElement('div');
-        $div->appendChild($doc->importNode($helper->documentElement, true));
-        $div->setAttribute('class', $field_classname);
+        if (strlen(trim($captcha_html))) {
+          // Load HTML into a string
+          $helper = new DOMDocument();
+          $helper->loadHTML($captcha_html);
 
-        if ($last_field->nextSibling) {
-          $last_field->parentNode->insertBefore($div, $last_field->nextSibling);
-        } else {
-          $last_field->parentNode->appendChild($div);
+          $div = $doc->createElement('div');
+          $div->appendChild($doc->importNode($helper->documentElement, true));
+          $div->setAttribute('class', $field_classname);
+
+          if ($last_field->nextSibling) {
+            $last_field->parentNode->insertBefore($div, $last_field->nextSibling);
+          } else {
+            $last_field->parentNode->appendChild($div);
+          }
         }
       }
 
