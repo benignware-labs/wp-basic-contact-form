@@ -24,7 +24,7 @@
             name="name"
             size="50"
             maxlength="80"
-            value="<?= isset($data['name']) && $data['name']; ?>"
+            value="<?= isset($data['name']) ? $data['name'] : ''; ?>"
           />
           <?php if (array_key_exists('name', $errors)): ?>
             <span class="invalid-feedback bcf-message"><?= $errors['name'] ?></span>
@@ -43,7 +43,7 @@
             name="email"
             size="50"
             maxlength="80"
-            value="<?= isset($data['email']) && $data['email'] ?>"
+            value="<?= isset($data['email']) ? $data['email'] : '' ?>"
           />
           <?php if (array_key_exists('email', $errors)): ?>
             <span class="invalid-feedback bcf-message"><?= $errors['email'] ?></span>
@@ -60,7 +60,7 @@
             name="subject"
             size="50"
             maxlength="256"
-            value="<?= isset($data['subject']) && $data['subject'] ?>"
+            value="<?= isset($data['subject']) ? $data['subject'] : '' ?>"
           />
           <?php if (array_key_exists('subject', $errors)): ?>
             <span class="invalid-feedback bcf-message"><?= $errors['subject'] ?></span>
@@ -78,7 +78,7 @@
             name="message"
             size="50"
             rows="8"
-          ><?= isset($data['message']) && $data['message'] ?></textarea>
+          ><?= isset($data['message']) ? $data['message'] : ''; ?></textarea>
           <?php if (array_key_exists('message', $errors)): ?>
             <span class="invalid-feedback bcf-message"><?= $errors['message'] ?></span>
           <?php endif; ?>
