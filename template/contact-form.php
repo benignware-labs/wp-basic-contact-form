@@ -76,7 +76,7 @@
             class="bcf-input<?= array_key_exists('message', $errors) && $errors['message'] ? ' is-invalid' : '' ?>"
             placeholder="<?= __('Please enter a message', 'basic-contact-form') ?>"
             name="message"
-            size="50"
+            maxlength="300"
             rows="8"
           ><?= isset($data['message']) ? $data['message'] : ''; ?></textarea>
           <?php if (array_key_exists('message', $errors)): ?>
@@ -86,10 +86,7 @@
       <?php endif; ?>
       <?php if (basic_contact_form_has_captcha()): ?>
         <div class="bcf-field">
-          <?php basic_contact_form_captcha(); ?>
-          <?php if (array_key_exists('captcha', $errors)): ?>
-            <span class="invalid-feedback bcf-message"><?= $errors['captcha'] ?></span>
-          <?php endif; ?>
+          <?php basic_contact_form_captcha($errors); ?>
         </div>
       <?php endif; ?>
       <p class="bcf-footer">

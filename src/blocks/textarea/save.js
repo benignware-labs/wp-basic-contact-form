@@ -29,6 +29,8 @@ class FormSave extends Component {
 					required={required}
 					placeholder={placeholder}
 					className="bcf-textarea"
+					rows={8}
+					maxlength={300}
 				/>
 				<div className="bcf-message"></div>
 			</div>

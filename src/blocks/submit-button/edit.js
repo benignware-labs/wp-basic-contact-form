@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { camelizeKeys } from 'humps';
 
 /**
  * WordPress dependencies
@@ -12,7 +11,7 @@ const { Component, Fragment } = wp.element;
 
 const {
 	RichText,
-} = wp.editor;
+} = wp.blockEditor;
 
 class SubmitButtonEdit extends Component {
 	constructor() {
@@ -32,7 +31,6 @@ class SubmitButtonEdit extends Component {
 		const {
 			attributes,
 			setAttributes,
-			isSelected,
 			className,
 		} = this.props;
 
@@ -42,18 +40,25 @@ class SubmitButtonEdit extends Component {
 
 		return (
 			<Fragment>
-				<div className={ className } ref={ this.bindRef }>
-					<RichText
-						tagName="button"
-						placeholder={ __( 'Add text…' ) }
-						value={ text }
-						onChange={ ( value ) => setAttributes( { text: value } ) }
-						formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-						className={ classnames(
-							'bcf-submit-button',
-						) }
-						keepPlaceholderOnFocus
-					/>
+				<div className={className}>
+					<button
+						className={
+							classnames(
+								'bcf-submit-button',
+								'bcf-button'
+							)
+						}
+						ref={ this.bindRef }
+					>
+						<RichText
+							tagName="span"
+							placeholder={ __( 'Add text…' ) }
+							value={ text }
+							onChange={ ( value ) => setAttributes( { text: value } ) }
+							allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
+							keepPlaceholderOnFocus
+						/>
+					</button>
 				</div>
 			</Fragment>
 		);

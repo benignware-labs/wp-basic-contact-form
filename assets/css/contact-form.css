@@ -11,9 +11,9 @@
   font-size: 90%;
 }
 
-.bcf-input:invalid ~ .bcf-message,
-.bcf-textarea:invalid ~ .bcf-message,
-.bcf-textarea:invalid ~ .bcf-message {
+.bcf-input:invalid ~ .bcf-message,
+.bcf-textarea:invalid ~ .bcf-message,
+.bcf-textarea:invalid ~ .bcf-message {
   color: red;
 }
 

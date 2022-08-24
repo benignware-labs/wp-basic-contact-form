@@ -215,7 +215,7 @@ function basic_contact_form_render_data($html, $data = array(), $errors = array(
 }
 
 // Sanitize form
-function basic_contact_form_sanitize_output($html, $options = array()) {
+function basic_contact_form_sanitize_output($html, $options = array(), $errors = []) {
   $options = array_merge(array(
     'form_id' => 'basic_contact_form',
     'hidden' => array(),
@@ -309,7 +309,7 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
       $captcha = $xpath->query('//*[@data-captcha="g-captcha"]')->item(0);
 
       if (!$captcha) {
-        $captcha_html = get_basic_contact_form_captcha();
+        $captcha_html = get_basic_contact_form_captcha($errors);
 
         if (strlen(trim($captcha_html))) {
           // Load HTML into a string
@@ -359,7 +359,7 @@ function basic_contact_form_sanitize_output($html, $options = array()) {
   return $html;
 }
 
-function get_basic_contact_form_captcha() {
+function get_basic_contact_form_captcha($errors = []) {
   $captcha = get_option('basic_contact_form_option_captcha');
 
   if ($captcha
@@ -367,14 +367,20 @@ function get_basic_contact_form_captcha() {
     && isset($captcha['site_key']) && $captcha['site_key']) {
     $site_key = $captcha['site_key'];
 
-    return '<div id="g-captcha" data-captcha="g-captcha" data-remoteform-permanent class="g-recaptcha" data-sitekey="' . $site_key . '"></div>';
+    $html = '<div id="g-captcha" data-captcha="g-captcha" data-remoteform-permanent class="g-recaptcha" data-sitekey="' . $site_key . '"></div>';
+
+    if (array_key_exists('captcha', $errors)) {
+      $html.= '<span class="invalid-feedback bcf-message">' . $errors['captcha'] . '</span>';
+    }
+
+    return $html;
   }
 
   return '';
 }
 
-function basic_contact_form_captcha() {
-  echo get_basic_contact_form_captcha();
+function basic_contact_form_captcha($errors = []) {
+  echo get_basic_contact_form_captcha($errors);
 }
 
 function basic_contact_form_has_captcha() {

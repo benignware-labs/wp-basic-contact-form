@@ -13,14 +13,14 @@ $green: #bada55;
 $red: orangered;
 
 
-@import './components/EditableList/EditableList.scss';
-@import './components/EditableList/ItemHandle.scss';
+// @import './components/EditableList/EditableList.scss';
+// @import './components/EditableList/ItemHandle.scss';
 
 
-.bcf-field.is-required .bcf-checkbox-label,
-.bcf-field.is-required .bcf-label {
-  &:after {
-    content: '*';
-    display: inline;
-  }
-}
+// .bcf-field.is-required .bcf-checkbox-label,
+// .bcf-field.is-required .bcf-label {
+//   &:after {
+//     content: '*';
+//     display: inline;
+//   }
+// }

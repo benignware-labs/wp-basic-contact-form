@@ -33,3 +33,9 @@
   font-size: 80%;
   min-height: 1em;
 }
+
+.bcf-field.is-required .bcf-checkbox-label::after,
+.bcf-field.is-required .bcf-label::after {
+  content: '*';
+  display: inline;
+}

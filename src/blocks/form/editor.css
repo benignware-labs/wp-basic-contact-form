@@ -1,13 +1,14 @@
-.wp-block-basic-contact-form-form {
-  input, textarea, select {
-    pointer-events: none;
-  }
+.wp-block-basic-contact-form-form input,
+.wp-block-basic-contact-form-form textarea,
+.wp-block-basic-contact-form-form select,
+.wp-block-basic-contact-form-form button {
+  pointer-events: none;
 }
 
 .basic-contact-form-editor-panel-control {
   max-width: 100%;
+}
 
-  input {
-    max-width: 100%;
-  }
+.basic-contact-form-editor-panel-control input {
+  max-width: 100%;
 }

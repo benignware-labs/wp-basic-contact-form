@@ -10,23 +10,21 @@ const {
 	RichText,
 } = wp.blockEditor;
 
-export default function save( { attributes } ) {
+export default function save( { attributes, className } ) {
 	const {
 		text
 	} = attributes;
 
-	const buttonClasses = classnames(
-		'bcf-submit-button',
-		'bcf-button'
-	);
-
 	return (
-		<div>
-			<RichText.Content
-				tagName="button"
-				className={ buttonClasses }
-				value={ text }
-			/>
+		<div className={className}>
+			<button className={ classnames(
+				'bcf-submit-button',
+				'bcf-button'
+			) }>
+				<RichText.Content
+					value={ text }
+				/>
+			</button>
 		</div>
 	);
 }

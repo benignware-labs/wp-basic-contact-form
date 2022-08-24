@@ -1,6 +1,8 @@
-.wp-block-basic-contact-form-form{input,select,textarea{pointer-events:none}}.basic-contact-form-editor-panel-control{max-width:100%;input{max-width:100%}}
+.wp-block-basic-contact-form-form button,.wp-block-basic-contact-form-form input,.wp-block-basic-contact-form-form select,.wp-block-basic-contact-form-form textarea{pointer-events:none}.basic-contact-form-editor-panel-control,.basic-contact-form-editor-panel-control input{max-width:100%}
 
 
 .bcf-checkbox+.editor-rich-text{display:inline-block;text-indent:0;vertical-align:top}.bcf-checkbox:required+.editor-rich-text .bcf-checkbox-label:after{content:"*";display:inline}
 
+.EditableList{margin-bottom:1rem}
+.EditableListItem{align-items:center;display:flex;justify-content:center;margin:0 0 1rem;-webkit-user-select:none;-moz-user-select:none;user-select:none}.EditableListItem:after{clear:both;content:"";display:table}.EditableListItem-handle{align-items:center;display:flex;width:100%}.EditableListItem-content{width:100%}.EditableListItem-content:last-child{margin-bottom:0!important}.EditableListItem-dragHandle{display:inline-flex;margin-right:.25rem}.EditableListItem-removeHandle{cursor:pointer;display:inline-block;margin-left:.5rem;position:relative;z-index:1}
 .wp-block-bootstrap-hooks-button .components-autocomplete{display:inline-flex;position:relative}

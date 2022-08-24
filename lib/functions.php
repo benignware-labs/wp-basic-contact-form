@@ -230,7 +230,7 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
   $content = basic_contact_form_sanitize_output($content, array(
     'form_id' => $form_id,
     'field_prefix' => 'bcf_',
-  ));
+  ), $errors);
 
   $content = basic_contact_form_render_data($content, $data, $errors);
 
@@ -245,7 +245,7 @@ function basic_contact_form_shortcode( $atts = array(), $content = null ) {
       [ 'classes' => [] ],
       isset($atts['theme']) ? $atts['theme'] : []
     )
-  ]);
+  ], $errors);
 
   // Add nonce field
   $nonce_html = wp_nonce_field( 'basic_contact_form' );

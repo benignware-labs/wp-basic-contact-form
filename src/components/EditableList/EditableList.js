@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
+import './EditableList.css';
+import './ItemHandle.css';
+
 import ItemHandle from './ItemHandle';
 
 const { BaseControl } = wp.components;
