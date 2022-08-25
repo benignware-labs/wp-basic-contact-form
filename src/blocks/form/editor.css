@@ -5,6 +5,15 @@
   pointer-events: none;
 }
 
+.wp-block-basic-contact-form-form input[type="text"],
+.wp-block-basic-contact-form-form input[type="email"],
+.wp-block-basic-contact-form-form input[type="url"],
+.wp-block-basic-contact-form-form textarea,
+.wp-block-basic-contact-form-form select {
+  width: 350px;
+  max-width: 100%;
+}
+
 .basic-contact-form-editor-panel-control {
   max-width: 100%;
 }
