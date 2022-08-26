@@ -216,6 +216,7 @@ function basic_contact_form_render_data($html, $data = array(), $errors = array(
 
 // Sanitize form
 function basic_contact_form_sanitize_output($html, $options = array(), $errors = []) {
+  $honeypot_name = 'bcf-hp-email-hp';
   $options = array_merge(array(
     'form_id' => 'basic_contact_form',
     'hidden' => array(),
@@ -263,6 +264,7 @@ function basic_contact_form_sanitize_output($html, $options = array(), $errors =
       $form_elements = $xpath->query("//input|//textarea|//select");
 
       $hidden_fields = array();
+
       // Go through present fields and add update values
       foreach ($form_elements as $index => $form_element) {
         $input_name = $form_element->getAttribute('name');
@@ -285,6 +287,7 @@ function basic_contact_form_sanitize_output($html, $options = array(), $errors =
           }
         }
       }
+
       // And add the missing hidden fields
       foreach ($hidden as $name => $value) {
         if ($name && !basic_contact_form_starts_with($name, $field_prefix)) {
@@ -300,13 +303,38 @@ function basic_contact_form_sanitize_output($html, $options = array(), $errors =
         }
       }
 
+      // Provide invisible honeypot field
+      $honeypot_input = $xpath->query(".//input[@name=\"$honeypot_name\"]", $form)->item(0);
+      $honeypot_input = $honeypot_input ?: $xpath->query(".//input[@name=\"$field_prefix$honeypot_name\"]", $form)->item(0);
 
+      if (!$honeypot_input) {
+        $honeypot_wrapper = $doc->createElement('div');
+
+        $hp_input = $doc->createElement('input');
+        $hp_input->setAttribute('style', 'display: none;');
+        $hp_input->setAttribute('required', 'required');
+        $hp_input->setAttribute('type', 'email');
+        $hp_input->setAttribute('name', $honeypot_name);
+        $hp_input->setAttribute('id', "$form_id-$honeypot_name");
+  
+        $hp_label = $doc->createElement('label');
+        $hp_label->setAttribute('style', 'display: none;');
+        $hp_label->setAttribute('for', $hp_input->getAttribute('id'));
+  
+        $honeypot_wrapper->appendChild($hp_label);
+        $honeypot_wrapper->appendChild($hp_input);
+  
+        $form->appendChild($honeypot_wrapper);
+      }
+
+
+      // Handle regular fields
       $field_classname = 'bcf-field';
-      $field_elements = $xpath->query('//*[contains(@class, "' . $field_classname . '")]');
+      $field_elements = $xpath->query('.//*[contains(@class, "' . $field_classname . '")]', $form);
       $last_field = $field_elements->item($field_elements->length - 1);
 
       // Insert captcha if not present already
-      $captcha = $xpath->query('//*[@data-captcha="g-captcha"]')->item(0);
+      $captcha = $xpath->query('.//*[@data-captcha="g-captcha"]', $form)->item(0);
 
       if (!$captcha) {
         $captcha_html = get_basic_contact_form_captcha($errors);

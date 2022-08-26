@@ -6,6 +6,8 @@ add_action('init', function() {
   global $basic_contact_form_data;
   global $basic_contact_form_success;
 
+  $honeypot_name = 'bcf-hp-email-hp';
+
   $hidden_fields = array(
     'form_id', 'post_id', 'redirect_to'
   );
@@ -24,7 +26,7 @@ add_action('init', function() {
   if (
     $request['method'] === 'POST' &&
     isset($request['headers']['X-Remoteform']) &&
-    strpos($request['headers']['X-Remoteform'], 'basic-contact-form') !== false
+    strpos($request['headers']['X-Remoteform'], 'basic-contact-form') !== false 
   ) {
     // We got a request
     $basic_contact_form_data = $data;
@@ -38,6 +40,16 @@ add_action('init', function() {
     }
 
     $data = $request['data'];
+
+    // Check honeypot
+    if (isset($data[$honeypot_name])) {
+      if (strlen(trim($data[$honeypot_name])) > 0) {
+        // Trapped in honeypot
+        exit;
+      }
+
+      unset($data[$honeypot_name]);
+    }
 
     $post_id = $data['post_id'] ?: $post->ID;
     $redirect_to = $data['redirect_to'] ?: null;
@@ -65,6 +77,10 @@ add_action('init', function() {
       ));
 
       $fields = basic_contact_form_get_fields($content);
+
+      $fields = array_values(array_filter($fields, function($field) use ($honeypot_name) {
+        return $field['name'] !== $honeypot_name;
+      }));
 
       foreach ($fields as $index => $field) {
         $name = $field['name'];
@@ -132,8 +148,6 @@ add_action('init', function() {
 
         // Headers
         // Actually send mail to recipients
-        // echo 'SEND EMAIL...';
-        // exit;
         foreach ($recipients as $recipient) {
           $res = wp_mail($recipient, $mail_subject, $mail_body, $mail_headers );
         }
