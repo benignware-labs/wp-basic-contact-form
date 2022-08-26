@@ -27,8 +27,7 @@
 }
 
 .bcf-message {
-  color: red;
-  color: var(--error, red);
+  color: var(--error, #ff0000);
   line-height: 1em;
   font-size: 80%;
   min-height: 1em;
