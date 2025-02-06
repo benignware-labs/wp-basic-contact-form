@@ -290,6 +290,10 @@ function basic_contact_form_sanitize_output($html, $options = array(), $errors =
 
       // And add the missing hidden fields
       foreach ($hidden as $name => $value) {
+        if (!$value) {
+          continue;
+        }
+
         if ($name && !basic_contact_form_starts_with($name, $field_prefix)) {
           $name = "{$field_prefix}{$name}";
         }

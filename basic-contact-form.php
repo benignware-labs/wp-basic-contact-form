@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 1.0.5
+ Version: 1.0.6
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -22,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Load plugin textdomain
-add_action( 'plugins_loaded', function() {
-  load_plugin_textdomain( 'basic-contact-form', false, basename(dirname( __FILE__ )) . '/languages' );
+add_action( 'after_setup_theme', function() {
+  load_plugin_textdomain( 'basic-contact-form', false, dirname(plugin_basename(__FILE__ )) . '/languages/' );
 });
 
 add_filter( 'block_categories_all', function($categories, $post) {
@@ -65,10 +65,11 @@ add_action( 'init', function() { // phpcs:ignore
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
 	);
 
+
 	wp_set_script_translations(
     'basic-contact-form-editor',
     'basic-contact-form',
-    plugin_dir_path( __FILE__ ) . 'languages'
+    plugin_dir_path( __FILE__ ) . 'languages/'
   );
 });
 

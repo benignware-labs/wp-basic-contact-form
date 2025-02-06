@@ -24,11 +24,11 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Submit Button' ),
-	description: __( 'Button to trigger form submission.' ),
+	title: __( 'Submit Button', 'basic-contact-form' ),
+	description: __( 'Button to trigger form submission.', 'basic-contact-form' ),
 	parent: 'basic-contact-form/form',
 	icon,
-	keywords: [ __( 'button' ) ],
+	keywords: [ __( 'button', 'basic-contact-form' ) ],
 	supports: {
 		align: true,
 		alignWide: false,

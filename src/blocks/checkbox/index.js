@@ -23,11 +23,11 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Checkbox' ),
-	description: __( 'Checkbox block.' ),
+	title: __( 'Checkbox', 'basic-contact-form' ),
+	description: __( 'Checkbox block.', 'basic-contact-form' ),
 	parent: 'basic-contact-form/form',
 	icon,
-	keywords: [ __( 'checkbox' ) ],
+	keywords: [ __( 'checkbox', 'basic-contact-form' ) ],
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,

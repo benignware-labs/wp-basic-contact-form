@@ -8,7 +8,7 @@ services:
       MYSQL_PASSWORD: wordpress
       MYSQL_USER: wordpress
       MYSQL_DATABASE: wordpress
-    image: mysql:5.7
+    image: mariadb:latest
     volumes:
       - db_data:/var/lib/mysql
     restart: always
@@ -36,6 +36,7 @@ services:
       - .mu-plugins:/var/www/html/wp-content/mu-plugins
     working_dir: /var/www/html
   wp:
+    working_dir: /var/www/html
     image: wordpress:cli
     user: '33:33'
     depends_on:
@@ -75,7 +76,7 @@ services:
     links:
       - wordpress:wordpress
   mailhog:
-    image: mailhog/mailhog:v1.0.1
+    image: mailhog/mailhog:latest
     ports:
       - 1025:1025 # smtp server
       - 8025:8025 # web ui

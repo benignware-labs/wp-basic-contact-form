@@ -17,10 +17,10 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Form' ),
-	description: __( 'Form block.' ),
+	title: __( 'Contact Form', 'basic-contact-form' ),
+	description: __( 'Form block.', 'basic-contact-form' ),
 	icon,
-	keywords: [ __( 'form' ) ],
+	keywords: [ __( 'contact-form', 'basic-contact-form' ) ],
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,

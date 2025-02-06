@@ -24,11 +24,11 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Select' ),
-	description: __( 'Select block.' ),
+	title: __( 'Select', 'basic-contact-form' ),
+	description: __( 'Select block.', 'basic-contact-form' ),
 	parent: 'basic-contact-form/form',
 	icon,
-	keywords: [ __( 'select' ) ],
+	keywords: [ __( 'select', 'basic-contact-form' ) ],
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,

@@ -35,31 +35,31 @@ class TextfieldEdit extends Component {
 		return (
 			<Fragment>
 				<InspectorControls>
-					<PanelBody title={ __( 'Textfield Settings' ) }>
+					<PanelBody title={ __( 'Textfield Settings', 'basic-contact-form' ) }>
 
 						<TextControl
-							label={ __( 'Label' ) }
+							label={ __( 'Label', 'basic-contact-form' ) }
 							value={ label }
 							onChange={(value) => setAttributes({
 								label: value,
 							})}
 						/>
 						<TextControl
-							label={ __( 'Name' ) }
+							label={ __( 'Name' ,'basic-contact-form' ) }
 							value={ name }
 							onChange={(value) => setAttributes({
 								name: value,
 							})}
 						/>
 						<TextControl
-							label={ __( 'Placeholder' ) }
+							label={ __( 'Placeholder', 'basic-contact-form' ) }
 							value={ placeholder }
 							onChange={(value) => setAttributes({
 								placeholder: value,
 							})}
 						/>
 						<SelectControl
-							label={__( 'Type' )}
+							label={__( 'Type', 'basic-contact-form' )}
 							value={ attributes.type }
 							options={ [ 'text', 'email' ].map((value) => ({
 								label: __(humanizeString(value)), value
@@ -70,7 +70,7 @@ class TextfieldEdit extends Component {
 							})}
 						/>
 						<ToggleControl
-							label={ __( 'Required' ) }
+							label={ __( 'Required' , 'basic-contact-form') }
 							checked={ required }
 							onChange={(value) => setAttributes({
 								required: value,

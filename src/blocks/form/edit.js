@@ -1,7 +1,8 @@
 import { getUniqueId } from '../../utils';
 import './editor.css';
+import { __ } from '@wordpress/i18n';
 
-const { __ } = wp.i18n;
+// const { __ } = wp.i18n;
 const {
 	InnerBlocks,
 	InspectorControls,
@@ -14,7 +15,7 @@ const { PanelBody } = wp.components;
  * Constants
  */
 const TEMPLATE = [
-	[ 'core/heading', { level: 2, className: 'bcf-title', placeholder: __( 'Get in contact with us!', 'basic-contact-form' ) } ],
+	[ 'core/heading', { level: 2, className: 'bcf-title', placeholder: __( 'Get in contact with us!', 'Basic Contact Form' ) } ],
 	[ 'core/paragraph', {  placeholder: __( 'Please use our contact form for your inquiry', 'basic-contact-form' ) } ],
 	[ 'basic-contact-form/textfield', {
 		label: __('Name', 'basic-contact-form'),
@@ -26,7 +27,7 @@ const TEMPLATE = [
 		type: 'email',
 		label: __('Email', 'basic-contact-form'),
 		name: 'email',
-		placeholder: __( 'Please enter your Email', 'basic-contact-form' ),
+		placeholder: __( 'Please enter your e-mail address', 'basic-contact-form' ),
 		required: true
 	} ],
 	[ 'basic-contact-form/textfield', {
@@ -83,7 +84,7 @@ class FormEdit extends Component {
 		return (
 			<Fragment>
 				<InspectorControls>
-					<PanelBody title={ __( 'Form Settings' ) }>
+					<PanelBody title={ __( 'Form Settings', 'basic-contact-form' ) }>
 						<URLInput
 							label={ __('Redirect to', 'basic-contact-form') }
 							value={ redirectTo }

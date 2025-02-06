@@ -24,11 +24,11 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Textfield' ),
-	description: __( 'Textfield block.' ),
+	title: __( 'Textfield', 'basic-contact-form' ),
+	description: __( 'Textfield block.', 'basic-contact-form' ),
 	parent: 'basic-contact-form/form',
 	icon,
-	keywords: [ __( 'textfield' ) ],
+	keywords: [ __( 'textfield', 'basic-contact-form' ) ],
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false,

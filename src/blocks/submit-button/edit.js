@@ -52,7 +52,7 @@ class SubmitButtonEdit extends Component {
 					>
 						<RichText
 							tagName="span"
-							placeholder={ __( 'Add text…' ) }
+							placeholder={ __( 'Add text…', 'basic-contact-form' ) }
 							value={ text }
 							onChange={ ( value ) => setAttributes( { text: value } ) }
 							allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }

@@ -42,7 +42,7 @@ class TextfieldEdit extends Component {
 		return (
 			<Fragment>
 				<InspectorControls>
-					<PanelBody title={ __( 'Textarea Settings' ) }>
+					<PanelBody title={ __( 'Textarea Settings', 'basic-contact-form' ) }>
 
 						<TextControl
 							label={ __( 'Label' ) }
@@ -52,21 +52,21 @@ class TextfieldEdit extends Component {
 							})}
 						/>
 						<TextControl
-							label={ __( 'Placeholder' ) }
+							label={ __( 'Placeholder', 'basic-contact-form' ) }
 							value={ placeholder }
 							onChange={(value) => setAttributes({
 								placeholder: value,
 							})}
 						/>
 						<TextControl
-							label={ __( 'Name' ) }
+							label={ __( 'Name', 'basic-contact-form') }
 							value={ name }
 							onChange={(value) => setAttributes({
 								name: value,
 							})}
 						/>
 						<ToggleControl
-							label={ __( 'Required' ) }
+							label={ __( 'Required' , 'basic-contact-form') }
 							checked={ required }
 							onChange={(value) => setAttributes({
 								required: value,

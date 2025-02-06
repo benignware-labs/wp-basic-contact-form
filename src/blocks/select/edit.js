@@ -77,30 +77,30 @@ class SelectEdit extends Component {
 		return (
 			<Fragment>
 				<InspectorControls>
-					<PanelBody title={ __( 'Select Settings' ) }>
+					<PanelBody title={ __( 'Select Settings', 'basic-contact-form' ) }>
 						<TextControl
-							label={ __( 'Label' ) }
+							label={ __( 'Label', 'basic-contact-form' ) }
 							value={ label }
 							onChange={(value) => setAttributes({
 								label: value,
 							})}
 						/>
 						<TextControl
-							label={ __( 'Name' ) }
+							label={ __( 'Name', 'basic-contact-form' ) }
 							value={ name }
 							onChange={(value) => setAttributes({
 								name: value,
 							})}
 						/>
 						<ToggleControl
-							label={ __( 'Required' ) }
+							label={ __( 'Required', 'basic-contact-form' ) }
 							checked={ required }
 							onChange={(value) => setAttributes({
 								required: value,
 							})}
 						/>
 						<EditableList
-							label={ __( 'Options' ) }
+							label={ __( 'Options', 'basic-contact-form' ) }
 							dropId={ `drop-container-${clientId}` }
 							onItemsChange={(items) => {
 								setAttributes({
@@ -137,7 +137,7 @@ class SelectEdit extends Component {
 													]
 												})
 
-				              }}>{ __('Add Option') }</Button>
+				              }}>{ __('Add Option', 'basic-contact-form') }</Button>
 				            ) : (
 				              <span>Item limit has been reached. Please remove an item before adding another one.</span>
 				            )}
