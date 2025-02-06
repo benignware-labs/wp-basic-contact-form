@@ -7,7 +7,12 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
+const { InspectorControls } = wp.blockEditor;
 const { Component, Fragment } = wp.element;
+const {
+	PanelBody,
+	TextControl
+} = wp.components;
 
 const {
 	RichText,
@@ -39,7 +44,19 @@ class SubmitButtonEdit extends Component {
 		} = attributes;
 
 		return (
+			
 			<Fragment>
+				<InspectorControls>
+					<PanelBody title={ __( 'Submit Button Settings', 'basic-contact-form' ) }>
+						<TextControl
+							label={ __( 'Label', 'basic-contact-form' ) }
+							value={ text }
+							onChange={(value) => setAttributes({
+								text: value,
+							})}
+						/>
+					</PanelBody>
+				</InspectorControls>
 				<div className={className}>
 					<button
 						className={

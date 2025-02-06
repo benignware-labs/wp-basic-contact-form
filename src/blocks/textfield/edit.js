@@ -36,7 +36,6 @@ class TextfieldEdit extends Component {
 			<Fragment>
 				<InspectorControls>
 					<PanelBody title={ __( 'Textfield Settings', 'basic-contact-form' ) }>
-
 						<TextControl
 							label={ __( 'Label', 'basic-contact-form' ) }
 							value={ label }
