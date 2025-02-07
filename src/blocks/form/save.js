@@ -1,20 +1,8 @@
-/**
- * External dependencies
- */
 import classnames from 'classnames';
-
 import './style.css';
 
-/**
- * WordPress dependencies
- */
-const {
-	InnerBlocks
-} = wp.blockEditor;
-
+const { InnerBlocks } = wp.blockEditor;
 const { Component } = wp.element;
-
-// const { withSelect } = wp.data;
 
 class FormSave extends Component {
 	render() {

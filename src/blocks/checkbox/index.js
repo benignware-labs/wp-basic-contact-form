@@ -1,23 +1,11 @@
+import { __ } from '../../utils/i18n';
 
-
-import classnames from 'classnames';
-
-/**
- * WordPress dependencies
- */
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-
-/**
- * Internal dependencies
- */
-// import deprecated from './deprecated';
 import edit from './edit';
 import icon from './icon';
 import metadata from './block.json';
 import save from './save';
-// import transforms from './transforms';
 
+const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { name } = metadata;
 
 export { metadata, name };

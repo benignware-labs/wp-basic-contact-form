@@ -18,14 +18,6 @@ export default function save( { attributes, className } ) {
 
 	return (
 		<div className={className}>
-			{/* <button className={ classnames(
-				'bcf-submit-button',
-				'bcf-button'
-			) }>
-				<RichText.Content
-					value={ text }
-				/>
-			</button> */}
 			<InnerBlocks.Content />
 		</div>
 	);

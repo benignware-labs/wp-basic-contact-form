@@ -45,7 +45,6 @@ class SubmitButtonEdit extends Component {
 		} = attributes;
 
 		return (
-			
 			<Fragment>
 				<div className={className}>
 					<InnerBlocks

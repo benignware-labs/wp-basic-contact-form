@@ -77,7 +77,7 @@ class TextfieldEdit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
+				<div className={classnames('bcf-field', required && 'is-required', className)}>
 					<label className="bcf-label">{label}</label>
 					<input
 						required={required}

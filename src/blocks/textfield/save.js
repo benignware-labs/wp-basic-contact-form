@@ -15,7 +15,7 @@ class FormSave extends Component {
 		} = attributes;
 
 		return (
-			<div className={classnames('bcf-field', required ? 'is-required' : '', className)}>
+			<div className={classnames('bcf-field', required && 'is-required', className)}>
 				<label className="bcf-label">{label}</label>
 				<input
 					required={required}
