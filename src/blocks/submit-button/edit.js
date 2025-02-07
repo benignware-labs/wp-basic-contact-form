@@ -47,40 +47,14 @@ class SubmitButtonEdit extends Component {
 		return (
 			
 			<Fragment>
-				{/* <InspectorControls>
-					<PanelBody title={ __( 'Submit Button Settings', 'basic-contact-form' ) }>
-						<TextControl
-							label={ __( 'Label', 'basic-contact-form' ) }
-							value={ text }
-							onChange={(value) => setAttributes({
-								text: value,
-							})}
-						/>
-					</PanelBody>
-				</InspectorControls> */}
 				<div className={className}>
 					<InnerBlocks
-						allowedBlocks={['core/button']}
-						template={[['core/button', { text: __('Send'), type: 'submit' }]]}
+						allowedBlocks={['core/buttons']}
+						template={[
+							['core/buttons', {}, [
+								['core/button', { text: __('Send'), type: 'submit' }]
+							]]]}
 					/>
-					{/* <button
-						className={
-							classnames(
-								'bcf-submit-button',
-								'bcf-button'
-							)
-						}
-						ref={ this.bindRef }
-					>
-						<RichText
-							tagName="span"
-							placeholder={ __( 'Add text…', 'basic-contact-form' ) }
-							value={ text }
-							onChange={ ( value ) => setAttributes( { text: value } ) }
-							allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
-							keepPlaceholderOnFocus
-						/>
-					</button> */}
 				</div>
 			</Fragment>
 		);

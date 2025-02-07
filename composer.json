@@ -1,7 +1,7 @@
 {
   "name": "benignware/basic-contact-form",
   "description": "Yet another Wordpress contact form plugin",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "wordpress-plugin",
   "license": "MIT",
   "homepage": "http://github.com/benignware-labs/wp-basic-contact-form",
