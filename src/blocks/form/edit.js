@@ -1,6 +1,6 @@
 import { getUniqueId } from '../../utils';
 import './editor.css';
-import { __ } from '@wordpress/i18n';
+import { __ } from '../../utils/i18n';
 
 // const { __ } = wp.i18n;
 const {

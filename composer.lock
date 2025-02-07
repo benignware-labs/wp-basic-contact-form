@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a5b61e032607292d0a62221cbabe3fe",
+    "content-hash": "9bee9c9d8cc10e4aba4fa6175ca69bd0",
     "packages": [
         {
             "name": "composer/installers",
@@ -160,14 +160,24 @@
     ],
     "packages-dev": [
         {
+            "name": "benignware/benignware-connect",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benignware/wp-benignware-connect.git",
+                "reference": "v1.0.6"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "benignware/bootstrap-hooks",
-            "version": "v0.1.0-alpha.12",
+            "version": "v1.1.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/benignware/wp-bootstrap-hooks.git",
-                "reference": "v0.1.0-alpha.12"
+                "reference": "v1.1.19"
             },
-            "type": "wordpress-muplugin"
+            "type": "wordpress-plugin"
         },
         {
             "name": "benignware/kicks-app",
@@ -178,53 +188,6 @@
                 "reference": "v0.1.0-beta.7"
             },
             "type": "wordpress-theme"
-        },
-        {
-            "name": "wemakecustom/wp-mu-loader",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wemakecustom/wp-mu-loader.git",
-                "reference": "36cb5b0939da619dc07392529fa0253d4017bde4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wemakecustom/wp-mu-loader/zipball/36cb5b0939da619dc07392529fa0253d4017bde4",
-                "reference": "36cb5b0939da619dc07392529fa0253d4017bde4",
-                "shasum": ""
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "suggest": {
-                "wemakecustom/wp-mu-composer": "Composer includer"
-            },
-            "type": "wordpress-muplugin",
-            "extra": {
-                "installer-name": "mu-loader"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "WeMakeCustom",
-                    "email": "info@wemakecustom.com",
-                    "homepage": "http://www.wemakecustom.com"
-                }
-            ],
-            "description": "Enables the loading of Wordpress plugins sitting in mu-plugins (as folders)",
-            "keywords": [
-                "plugins",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/wemakecustom/wp-mu-loader/issues",
-                "source": "https://github.com/wemakecustom/wp-mu-loader/tree/master"
-            },
-            "abandoned": true,
-            "time": "2015-01-21T14:32:26+00:00"
         },
         {
             "name": "wpackagist-plugin/debug-mo-translations",
@@ -331,7 +294,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "wptrt/theme-unit-test": 20,
-        "benignware/bootstrap-hooks": 15,
         "benignware/kicks-app": 10
     },
     "prefer-stable": false,

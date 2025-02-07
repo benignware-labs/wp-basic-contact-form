@@ -6,7 +6,7 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 1.0.7
+ Version: 1.0.8
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
@@ -48,15 +48,6 @@ add_action( 'init', function() { // phpcs:ignore
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
 	);
 
-	// Register block editor script for backend.
-	wp_register_script(
-		'basic-contact-form-editor', // Handle.
-		plugins_url( 'dist/blocks/blocks.js',  __FILE__ ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
-		true // Enqueue the script in the footer.
-	);
-
 	// Register block editor styles for backend.
 	wp_register_style(
     'basic-contact-form-editor', // Handle.
@@ -66,6 +57,30 @@ add_action( 'init', function() { // phpcs:ignore
 	);
 
 
+
+	// Register block editor script for backend.
+	wp_register_script(
+		'basic-contact-form-editor', // Handle.
+		plugins_url( 'dist/blocks/blocks.js',  __FILE__ ), // Block.build.js: We register the block here. Built with Webpack.
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
+		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+		true // Enqueue the script in the footer.
+	);
+
+
+	$data = get_translations_for_domain('basic-contact-form');
+	$entries = $data->entries;
+
+	wp_localize_script(
+		'basic-contact-form-editor',
+		'basicContactForm',
+		[
+			'i18n' => $entries
+		]
+	);
+
+
+	// 
 	wp_set_script_translations(
     'basic-contact-form-editor',
     'basic-contact-form',

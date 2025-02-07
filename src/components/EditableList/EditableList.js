@@ -70,7 +70,6 @@ export default class EditableList extends Component {
       destination.index < firstSortableIndex ||
       destination.index >= lastSortableIndex
     ) {
-      console.log('nothing changed');
       return;
     }
 
@@ -88,7 +87,6 @@ export default class EditableList extends Component {
 
     if (!changed) {
       // Nothing changed
-      console.log('nothing changed');
       return;
     }
 
@@ -152,7 +150,6 @@ export default class EditableList extends Component {
   }
 
   handleItemRemove(id) {
-    console.log('handle iten remoi');
     this.remove(this.state.items.find(item => item.id === id));
   }
 
@@ -165,7 +162,6 @@ export default class EditableList extends Component {
   };
 
   remove = item => {
-    console.log('remove');
     const items = this.state.items.slice();
     const itemIndex = items.findIndex(({ id }) => item.id === id);
 

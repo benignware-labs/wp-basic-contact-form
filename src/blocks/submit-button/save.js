@@ -8,6 +8,7 @@ import classnames from 'classnames';
  */
 const {
 	RichText,
+	InnerBlocks
 } = wp.blockEditor;
 
 export default function save( { attributes, className } ) {
@@ -17,14 +18,15 @@ export default function save( { attributes, className } ) {
 
 	return (
 		<div className={className}>
-			<button className={ classnames(
+			{/* <button className={ classnames(
 				'bcf-submit-button',
 				'bcf-button'
 			) }>
 				<RichText.Content
 					value={ text }
 				/>
-			</button>
+			</button> */}
+			<InnerBlocks.Content />
 		</div>
 	);
 }

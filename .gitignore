@@ -29,6 +29,7 @@ wp-config
 .plugins
 .mu-plugins
 .uploads
+.wp
 
 # WP-CLI
 wp-cli.phar

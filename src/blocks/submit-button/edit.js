@@ -2,12 +2,13 @@
  * External dependencies
  */
 import classnames from 'classnames';
-
+import { __ } from '../../utils/i18n';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-const { InspectorControls } = wp.blockEditor;
+
+
+const { InspectorControls, InnerBlocks } = wp.blockEditor;
 const { Component, Fragment } = wp.element;
 const {
 	PanelBody,
@@ -46,7 +47,7 @@ class SubmitButtonEdit extends Component {
 		return (
 			
 			<Fragment>
-				<InspectorControls>
+				{/* <InspectorControls>
 					<PanelBody title={ __( 'Submit Button Settings', 'basic-contact-form' ) }>
 						<TextControl
 							label={ __( 'Label', 'basic-contact-form' ) }
@@ -56,9 +57,13 @@ class SubmitButtonEdit extends Component {
 							})}
 						/>
 					</PanelBody>
-				</InspectorControls>
+				</InspectorControls> */}
 				<div className={className}>
-					<button
+					<InnerBlocks
+						allowedBlocks={['core/button']}
+						template={[['core/button', { text: __('Send'), type: 'submit' }]]}
+					/>
+					{/* <button
 						className={
 							classnames(
 								'bcf-submit-button',
@@ -75,7 +80,7 @@ class SubmitButtonEdit extends Component {
 							allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
 							keepPlaceholderOnFocus
 						/>
-					</button>
+					</button> */}
 				</div>
 			</Fragment>
 		);

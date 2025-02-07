@@ -1,7 +1,7 @@
 .wp-block-basic-contact-form-form input,
 .wp-block-basic-contact-form-form textarea,
-.wp-block-basic-contact-form-form select,
-.wp-block-basic-contact-form-form button {
+.wp-block-basic-contact-form-form select /*,
+.wp-block-basic-contact-form-form button */ {
   pointer-events: none;
 }
 

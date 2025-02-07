@@ -4,11 +4,11 @@
  * External dependencies
  */
 import classnames from 'classnames';
+import { __ } from '../../utils/i18n';
 
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
 const { InspectorControls } = wp.blockEditor;
 const { Component, Fragment } = wp.element;
 

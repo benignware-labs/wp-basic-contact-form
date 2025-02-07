@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import humanizeString from 'humanize-string';
+import { __ } from '../../utils/i18n';
 
-const { __ } = wp.i18n;
 const { InspectorControls } = wp.blockEditor;
 const { Component, Fragment } = wp.element;
 const {

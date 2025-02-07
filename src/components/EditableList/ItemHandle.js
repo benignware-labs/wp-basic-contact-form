@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 
-
 import DragHandle from './DragHandle';
 const { Dashicon } = wp.components;
 
-// import './ItemHandle.scss';
-
 class ItemHandle extends Component {
-
   static defaultProps = {
     sortable: true,
     removable: false,
@@ -24,8 +20,6 @@ class ItemHandle extends Component {
 
   handleRemove() {
     const { id, onRemove } = this.props;
-
-    console.log('item remove', id);
 
     onRemove && onRemove(id);
   }

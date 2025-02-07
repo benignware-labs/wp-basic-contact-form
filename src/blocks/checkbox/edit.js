@@ -2,7 +2,8 @@ import classnames from 'classnames';
 import { getUniqueId } from '../../utils';
 import './editor.css';
 
-const { __ } = wp.i18n;
+import { __ } from '../../utils/i18n';
+
 const {
 	InspectorControls,
 	RichText

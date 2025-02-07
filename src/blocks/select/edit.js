@@ -8,11 +8,11 @@ import classnames from 'classnames';
 import EditableList from '../../components/EditableList';
 
 import { getUniqueId } from '../../utils';
+import { __ } from '../../utils/i18n';
 
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
 const {
 	InspectorControls,
 } = wp.blockEditor;
@@ -73,7 +73,6 @@ class SelectEdit extends Component {
 			required
 		} = attributes;
 
-		console.log('options...', options);
 		return (
 			<Fragment>
 				<InspectorControls>
