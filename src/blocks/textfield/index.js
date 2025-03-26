@@ -6,7 +6,7 @@ import icon from './icon';
 import metadata from './block.json';
 import save from './save';
 
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { registerBlockType } = wp.blocks;
 const { name } = metadata;
 
 export { metadata, name };

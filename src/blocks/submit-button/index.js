@@ -15,9 +15,7 @@ import './style.css';
  * WordPress dependencies
  */
 const { __, _x } = wp.i18n;
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-
-
+const { registerBlockType } = wp.blocks;
 
 const { name } = metadata;
 

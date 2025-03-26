@@ -6,9 +6,10 @@ import { __ } from '../../utils/i18n';
 const {
 	InnerBlocks,
 	InspectorControls,
-	URLInput
+	URLInput,
+	useBlockProps
 } = wp.blockEditor;
-const { Component, Fragment } = wp.element;
+const { Fragment } = wp.element;
 const { PanelBody } = wp.components;
 
 /**
@@ -45,70 +46,45 @@ const TEMPLATE = [
 	[ 'basic-contact-form/submit-button', { type: 'submit', text: __('Submit', 'basic-contact-form') } ],
 ];
 
-class FormEdit extends Component {
-	constructor() {
-		super( ...arguments );
-	}
+export default function({
+	attributes,
+	className,
+	isSelected,
+	setAttributes,
+}) {
+	const blockProps = useBlockProps();
 
-	componentDidMount() {
-		const {
-			attributes,
-			setAttributes,
-		} = this.props;
+	const {
+		id = getUniqueId('form'),
+		redirectTo
+	} = attributes;
 
-		const {
-			id
-		} = attributes;
-
-		if (!id) {
-			setAttributes({
-				...attributes,
-				id: getUniqueId('form')
-			});
-		}
-	}
-
-	render() {
-		const {
-			attributes,
-			className,
-			isSelected,
-			setAttributes,
-		} = this.props;
-
-		const {
-			id,
-			redirectTo
-		} = attributes;
-
-		return (
-			<Fragment>
-				<InspectorControls>
-					<PanelBody title={ __( 'Form Settings', 'basic-contact-form' ) }>
-						<URLInput
-							label={ __('Redirect to', 'basic-contact-form') }
-							value={ redirectTo }
-							className="basic-contact-form-editor-panel-control"
-							/* eslint-disable jsx-a11y/no-autofocus */
-							// Disable Reason: The rule is meant to prevent enabling auto-focus, not disabling it.
-							autoFocus={ false }
-							/* eslint-enable jsx-a11y/no-autofocus */
-							onChange={ ( value ) => setAttributes( { redirectTo: value } ) }
-						/>
-					</PanelBody>
-				</InspectorControls>
-				<form
-					data-basic-contact-form={id}
-					className={className}
-				>
-					<InnerBlocks
-						template={ TEMPLATE }
-						templateInsertUpdatesSelection={ false }
+	return (
+		<Fragment>
+			<InspectorControls>
+				<PanelBody title={ __( 'Form Settings', 'basic-contact-form' ) }>
+					<URLInput
+						label={ __('Redirect to', 'basic-contact-form') }
+						value={ redirectTo }
+						className="basic-contact-form-editor-panel-control"
+						/* eslint-disable jsx-a11y/no-autofocus */
+						// Disable Reason: The rule is meant to prevent enabling auto-focus, not disabling it.
+						autoFocus={ false }
+						/* eslint-enable jsx-a11y/no-autofocus */
+						onChange={ ( value ) => setAttributes( { redirectTo: value } ) }
 					/>
-				</form>
-			</Fragment>
-		);
-	}
+				</PanelBody>
+			</InspectorControls>
+			<form
+				{...blockProps}
+				data-basic-contact-form={id}
+				className={className}
+			>
+				<InnerBlocks
+					template={ TEMPLATE }
+					templateInsertUpdatesSelection={ false }
+				/>
+			</form>
+		</Fragment>
+	);
 }
-
-export default FormEdit;

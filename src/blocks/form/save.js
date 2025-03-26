@@ -1,22 +1,21 @@
 import classnames from 'classnames';
 import './style.css';
 
-const { InnerBlocks } = wp.blockEditor;
-const { Component } = wp.element;
+const { InnerBlocks, useBlockProps } = wp.blockEditor;
 
-class FormSave extends Component {
-	render() {
-		const { attributes, className, ...props } = this.props;
-		const {
-			id
-		} = attributes;
+export default function({ attributes, className }) {
+	const blockProps = useBlockProps.save();
+	const {
+		id
+	} = attributes;
 
-		return (
-			<form data-basic-contact-form={id} className={ classnames('bcf-form', className) }>
-				<InnerBlocks.Content />
-			</form>
-		);
-	}
+	return (
+		<form
+			data-basic-contact-form={id}
+			className={ classnames('bcf-form', className)}
+			{...blockProps}
+		>
+			<InnerBlocks.Content />
+		</form>
+	);
 }
-
-export default FormSave;

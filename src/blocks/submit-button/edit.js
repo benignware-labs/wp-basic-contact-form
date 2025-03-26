@@ -8,7 +8,7 @@ import { __ } from '../../utils/i18n';
  */
 
 
-const { InspectorControls, InnerBlocks } = wp.blockEditor;
+const { InspectorControls, InnerBlocks, useBlockProps } = wp.blockEditor;
 const { Component, Fragment } = wp.element;
 const {
 	PanelBody,
