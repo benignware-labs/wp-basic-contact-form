@@ -6,17 +6,19 @@
  Description: Yet another Wordpress contact form plugin
  Text Domain: basic-contact-form
  Domain Path: /languages
- Version: 1.0.11
+ Version: 1.0.12
  Author: Rafael Nowrotek, Benignware
  Author URI: http://benignware.com
  License: MIT
 */
 
+require_once 'lib/mailer.php';
 require_once 'lib/functions.php';
 require_once 'lib/helpers.php';
 require_once 'lib/settings.php';
 require_once 'lib/shortcode.php';
 require_once 'lib/block.php';
+
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -121,4 +123,3 @@ add_action('wp_enqueue_scripts', function() {
   wp_enqueue_script( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/contact-form.js' );
   wp_enqueue_style( 'basic-contact-form', plugin_dir_url( __FILE__ ) . 'dist/contact-form.css' );
 });
-

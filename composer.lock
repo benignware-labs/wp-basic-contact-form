@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03eed898d7b5434529558709877e1fa0",
+    "content-hash": "e18a2d74070485fa65928f5439663b49",
     "packages": [
         {
             "name": "composer/installers",
@@ -227,15 +227,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-mail-smtp",
-            "version": "4.4.0",
+            "version": "4.5.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-mail-smtp/",
-                "reference": "tags/4.4.0"
+                "reference": "tags/4.5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.4.4.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.4.5.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -263,15 +263,15 @@
         },
         {
             "name": "wpackagist-theme/twentyseventeen",
-            "version": "3.8",
+            "version": "3.9",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentyseventeen/",
-                "reference": "3.8"
+                "reference": "3.9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentyseventeen.3.8.zip"
+                "url": "https://downloads.wordpress.org/theme/twentyseventeen.3.9.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
